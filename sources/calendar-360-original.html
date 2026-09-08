@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 360-Degree Symmetrical Calendar</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #38bdf8;
+            --grid-border: #334155;
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        .dashboard { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1200px; width: 100%; }
+        @media (min-width: 768px) { .dashboard { grid-template-columns: 2fr 1fr; } }
+        .card { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .clock-container { text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .time-display { font-size: 3rem; font-weight: bold; font-family: monospace; color: var(--accent-color); margin: 1rem 0; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .btn { background-color: var(--accent-color); color: var(--bg-color); border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn:hover { opacity: 0.9; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; text-align: center; }
+        .weekday-header { font-weight: bold; color: var(--accent-color); padding: 0.5rem 0; border-bottom: 2px solid var(--grid-border); }
+        .day-cell { padding: 1rem 0; background-color: rgba(255, 255, 255, 0.03); border-radius: 6px; border: 1px solid var(--grid-border); }
+        pre { background-color: #020617; padding: 1rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--grid-border); }
+        code { font-family: monospace; color: #34d399; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The 360&deg; Symmetrical Calendar</h1>
+        <p>12 Months &bull; 30 Days &bull; 6-Day Weeks &bull; Completely Free Society</p>
+    </header>
+    <div class="dashboard">
+        <div class="card">
+            <div class="controls">
+                <button class="btn" id="prevBtn">&#9664; Prev</button>
+                <h2 id="monthTitle">March</h2>
+                <button class="btn" id="nextBtn">Next &#9654;</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <div class="weekday-header">Mon</div>
+                <div class="weekday-header">Tue</div>
+                <div class="weekday-header">Wed</div>
+                <div class="weekday-header">Thu</div>
+                <div class="weekday-header">Fri</div>
+                <div class="weekday-header">Sun</div>
+            </div>
+        </div>
+        <div class="display-cells" style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="card clock-container">
+                <h3>Symmetrical Space Clock</h3>
+                <p><small>1 Day = 24.35 Standard Hours</small></p>
+                <div class="time-display" id="newClock">00:00:00</div>
+                <p style="font-size: 0.85rem; color: #94a3b8;">
+                    This clock runs exactly <strong>2.43% slower</strong> to perfectly distribute 360 days across the Earth's real solar revolution.
+                </p>
+            </div>
+            <div class="card">
+                <h3>The Pace of Time Math</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Embedded Python concept framework:</p>
+                <pre><code># Core Math Engine
+std_day_secs = 86400
+solar_year_secs = 365.242189 * std_day_secs
+new_day_secs = solar_year_secs / 360
+
+print(f"New Day: {new_day_secs:.2f}s")
+# Result: 87658.13 seconds
+# (+20 mins, 58.13 secs per day)</code></pre>
+            </div>
+        </div>
+    </div>
+    <script>
+        const months = ["March","April","May","June","July","August","September","October","November","December","January","February"];
+        let currentMonthIndex = 0;
+        const monthTitle = document.getElementById("monthTitle");
+        const calendarGrid = document.getElementById("calendarGrid");
+        function renderCalendar(monthIdx) {
+            monthTitle.innerText = months[monthIdx];
+            const headers = calendarGrid.querySelectorAll('.weekday-header');
+            calendarGrid.innerHTML = '';
+            headers.forEach(h => calendarGrid.appendChild(h));
+            for (let day = 1; day <= 30; day++) {
+                const dayCell = document.createElement("div");
+                dayCell.classList.add("day-cell");
+                dayCell.innerText = day;
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+        document.getElementById("prevBtn").addEventListener("click", () => { currentMonthIndex = (currentMonthIndex === 0) ? 11 : currentMonthIndex - 1; renderCalendar(currentMonthIndex); });
+        document.getElementById("nextBtn").addEventListener("click", () => { currentMonthIndex = (currentMonthIndex === 11) ? 0 : currentMonthIndex + 1; renderCalendar(currentMonthIndex); });
+        renderCalendar(currentMonthIndex);
+        const timeDilationFactor = 86400 / (365.242189 * 86400 / 360);
+        function updateClock() {
+            const now = new Date();
+            const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const stdMillisPassed = now - startOfDay;
+            const newMillisPassed = stdMillisPassed * timeDilationFactor;
+            let totalSeconds = Math.floor(newMillisPassed / 1000);
+            let hours = Math.floor(totalSeconds / 3600) % 24;
+            let minutes = Math.floor((totalSeconds % 3600) / 60);
+            let seconds = totalSeconds % 60;
+            document.getElementById("newClock").innerText = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        }
+        setInterval(updateClock, 100);
+        updateClock();
+    </script>
+</body>
+</html>

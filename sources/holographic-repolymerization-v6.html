@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCIENCE COHERENCE | Holographic Cosmic Repolymerization v6.0</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              900: '#134e4a',
+              950: '#042f2e',
+            },
+            deep: {
+              800: '#0b0f19',
+              850: '#070a12',
+              900: '#030712',
+              950: '#010309'
+            },
+            accent: {
+              cyan: '#06b6d4',
+              violet: '#8b5cf6',
+              amber: '#f59e0b',
+              emerald: '#10b981',
+              rose: '#f43f5e',
+              cosmos: '#6366f1'
+            }
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- KaTeX for Scientific & Mathematical Formula Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '\\(', right: '\\)', display: false},
+      {left: '$', right: '$', display: false}
+    ],
+    throwOnError: false
+  });"></script>
+
+  <style>
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+
+    .glow-cyan { box-shadow: 0 0 40px -8px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(6,182,212,0.06); }
+    .glow-brand { box-shadow: 0 0 40px -8px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(20,184,166,0.06); }
+    .glow-violet { box-shadow: 0 0 40px -8px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(139,92,246,0.06); }
+    .glow-cosmos { box-shadow: 0 0 50px -8px rgba(99, 102, 241, 0.25); }
+
+    .scientific-callout { border-left: 2px solid #14b8a6; background: rgba(11, 15, 25, 0.6); backdrop-filter: blur(8px); }
+    .eli5-box { background: linear-gradient(135deg, rgba(20, 184, 166, 0.04) 0%, rgba(139, 92, 246, 0.04) 100%); border: 1px dashed rgba(45, 212, 191, 0.25); }
+    .psychedelic-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, rgba(244, 63, 94, 0.06) 100%); border: 1px solid rgba(139, 92, 246, 0.25); }
+
+    @keyframes pulse-slow { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.04); opacity: 1; } }
+    .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .animate-float { animation: float 8s ease-in-out infinite; }
+
+    @keyframes glow-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+    /* Progress bar */
+    #scroll-progress { position: fixed; top: 64px; left: 0; height: 2px; background: linear-gradient(90deg, #14b8a6, #06b6d4, #8b5cf6); z-index: 100; transition: width 0.1s; width: 0%; }
+
+    /* Hero canvas */
+    #hero-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* Tab transitions */
+    .tab-pane { opacity: 0; transition: opacity 0.4s ease; }
+    .tab-pane.tab-active { opacity: 1; }
+    .tab-pane.hidden { display: none; }
+
+    /* Nav pills */
+    .nav-pill { position: relative; overflow: hidden; }
+    .nav-pill::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: #14b8a6; transition: all 0.3s; transform: translateX(-50%); }
+    .nav-pill.active::after { width: 80%; }
+
+    /* Mobile nav */
+    #mobile-nav { transform: translateX(100%); transition: transform 0.3s ease; }
+    #mobile-nav.open { transform: translateX(0); }
+
+    /* Fortnightly cycle visualization */
+    .cycle-day { transition: all 0.3s; cursor: pointer; }
+    .cycle-day:hover { transform: scale(1.08); }
+    .cycle-day.active { ring: 2px; }
+
+    /* Cephalopod gradient text */
+    .gradient-text { background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 40%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Hero section */
+    .hero-section { position: relative; overflow: hidden; min-height: 70vh; display: flex; align-items: center; }
+    .hero-bg-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(20,184,166,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(99,102,241,0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(244,63,94,0.04) 0%, transparent 50%); }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+    }
+  </style>
+</head>
+<body class="bg-deep-900 text-slate-200 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen leading-relaxed">
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress" class="no-print"></div>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-50 bg-deep-950/85 backdrop-blur-xl border-b border-slate-800/50 no-print">
+    <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" onclick="switchTab('hero');return false" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-600 via-accent-cyan to-accent-violet flex items-center justify-center font-display font-bold text-black text-lg group-hover:scale-105 transition">
+          Ψ
+        </div>
+        <div>
+          <span class="text-sm font-bold tracking-wider text-slate-100 block font-display">SCIENCE COHERENCE</span>
+          <span class="text-[10px] text-brand-400 font-mono tracking-tight">HOLOGRAPHIC REPOLYMERIZATION v6.0</span>
+        </div>
+      </a>
+
+      <nav class="hidden xl:flex items-center space-x-0.5 font-mono text-[11px]">
+        <button onclick="switchTab('holographic')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="holographic">1. Holographic Biophysics</button>
+        <button onclick="switchTab('protocol')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="protocol">2. Master Protocol</button>
+        <button onclick="switchTab('epigenetics')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="epigenetics">3. Epigenetic Repolymerization</button>
+        <button onclick="switchTab('matrix')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="matrix">4. Biophysics &amp; Shielding</button>
+        <button onclick="switchTab('meditation')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="meditation">5. Mind Recoding Engine</button>
+        <button onclick="switchTab('lexicon')" class="nav-tab-btn nav-pill px-2.5 py-1.5 rounded text-slate-400 hover:text-white transition" data-tab="lexicon">6. Lexicon &amp; Diagnostics</button>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <span class="hidden sm:inline px-2.5 py-1 rounded bg-brand-950/80 border border-brand-500/20 text-brand-400 text-[10px] font-mono">
+          ENTROPIC REVERSAL
+        </span>
+        <button onclick="toggleMobileNav()" class="xl:hidden w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <div id="mobile-nav" class="fixed inset-y-0 right-0 w-72 bg-deep-950/95 backdrop-blur-xl border-l border-slate-800/50 z-[60] p-6 space-y-2 no-print">
+    <button onclick="toggleMobileNav()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="pt-8 space-y-1 font-mono text-sm">
+      <button onclick="switchTab('hero');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">Home</button>
+      <button onclick="switchTab('holographic');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">1. Holographic Biophysics</button>
+      <button onclick="switchTab('protocol');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">2. Master Protocol</button>
+      <button onclick="switchTab('epigenetics');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">3. Epigenetic Repolymerization</button>
+      <button onclick="switchTab('matrix');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">4. Biophysics &amp; Shielding</button>
+      <button onclick="switchTab('meditation');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">5. Mind Recoding Engine</button>
+      <button onclick="switchTab('lexicon');toggleMobileNav()" class="w-full text-left px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/60">6. Lexicon &amp; Diagnostics</button>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-0">
+
+    <!-- ========================================================================= -->
+    <!-- HERO LANDING -->
+    <!-- ========================================================================= -->
+    <section id="tab-hero" class="tab-pane hero-section rounded-b-3xl mb-8">
+      <div class="hero-bg-gradient"></div>
+      <canvas id="hero-canvas"></canvas>
+      <div class="relative z-10 max-w-4xl mx-auto text-center py-24 sm:py-32 px-4">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-950/60 border border-brand-500/20 text-brand-400 font-mono text-[11px] mb-8 animate-float">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-ping"></span>
+          SCIENCE COHERENCE INSTITUTE · OPERATING DOCUMENT
+        </div>
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight text-white leading-[1.1] mb-6">
+          Holographic Cosmic<br>
+          <span class="gradient-text">Repolymerization</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10 font-sans">
+          Non-equilibrium thermodynamics, informational entropy reversal, and chromatin architecture restoration. A protocol for projecting localized negentropic counter-currents across the genome-water-consciousness axis.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+          <button onclick="switchTab('holographic')" class="px-5 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-display font-semibold text-sm transition">Enter the Protocol</button>
+          <button onclick="switchTab('lexicon')" class="px-5 py-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 font-display font-semibold text-sm border border-slate-700/50 transition">Master Lexicon</button>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+          <div class="p-3 rounded-xl bg-deep-850/60 border border-slate-800/50 backdrop-blur">
+            <div class="text-2xl font-display font-bold text-white">18.5h</div>
+            <div class="text-[10px] font-mono text-slate-500 mt-0.5">Daily Fast</div>
+          </div>
+          <div class="p-3 rounded-xl bg-deep-850/60 border border-slate-800/50 backdrop-blur">
+            <div class="text-2xl font-display font-bold text-white">42.5h</div>
+            <div class="text-[10px] font-mono text-slate-500 mt-0.5">Extended Fast</div>
+          </div>
+          <div class="p-3 rounded-xl bg-deep-850/60 border border-slate-800/50 backdrop-blur">
+            <div class="text-2xl font-display font-bold text-white">14d</div>
+            <div class="text-[10px] font-mono text-slate-500 mt-0.5">Fortnight Cycle</div>
+          </div>
+          <div class="p-3 rounded-xl bg-deep-850/60 border border-slate-800/50 backdrop-blur">
+            <div class="text-2xl font-display font-bold text-brand-400">ΔS→0</div>
+            <div class="text-[10px] font-mono text-slate-500 mt-0.5">Entropy Target</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: HOLOGRAPHIC BIOPHYSICS (§ 1.0) -->
+    <!-- ========================================================================= -->
+    <section id="tab-holographic" class="tab-pane space-y-10">
+      <!-- Title Block -->
+      <div class="border-b border-slate-800 pb-8 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-500/30 text-brand-400 font-mono text-xs">
+          <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+          SCIENCE COHERENCE MONOGRAPH | SECTION 1.0
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white font-display">
+          Holographic Biophysics: Entropic Isomorphism &amp; Cosmic Redux
+        </h1>
+        <p class="text-base sm:text-lg text-slate-400 max-w-4xl leading-relaxed">
+          Non-equilibrium thermodynamics, informational entropy reversal, and chromatin architecture restoration connecting cellular biology to macroscopic universal negentropy[cite: 1, 2].
+        </p>
+      </div>
+
+      <!-- 1.0 Holographic Entropy Isomorphism Box -->
+      <div class="bg-deep-850 p-6 sm:p-8 rounded-2xl border border-slate-800 relative overflow-hidden glow-cosmos">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-accent-cosmos/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-accent-cyan mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan"></span> 1.0 The Holographic Boundary &amp; Entropic Continuum
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+          Under the <strong>Holographic Principle</strong> (Bekenstein, 't Hooft, Susskind), all bulk informational degrees of freedom inside a spatial volume ($V$) are mathematically encoded on its bounding surface area ($A$) according to the Bekenstein-Hawking bound:
+        </p>
+        <div class="p-3 bg-deep-900 rounded font-mono text-xs text-brand-400 border border-slate-800 my-3 text-center">
+          $$S_{max} = \frac{k_B c^3 A}{4 G \hbar} = \frac{A}{4 \ell_P^2}$$
+        </div>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Local biological degeneration—manifesting as $5\text{mC}$ methylome drift, loss of heterochromatin scaffolding ($H3K9me3$), abasic lesions ($8\text{-oxo-dG}$), and retrotransposon awakening—is the microscopic projection of an entropic gradient ($\Delta S > 0$)[cite: 1, 2]. This identical thermodynamic decay drives institutional noise, infrastructural decay, and societal collapse. By establishing an invariant zero-entropy boundary operator ($\Delta S \rightarrow 0$) across the chromatin-water matrix, the observer projects a localized negentropic counter-current that stabilizes cellular biology and external field dynamics[cite: 1, 2].
+        </p>
+      </div>
+
+      <!-- Comparative Scale Matrix Table -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-mono text-slate-300 font-bold uppercase tracking-wider">Holographic Scale Continuum: Genome, Society &amp; Cosmos</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300 font-mono border border-slate-800 rounded-xl overflow-hidden">
+            <thead class="bg-deep-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Scale of Observation</th>
+                <th class="p-3">Entropic Collapse ($\Delta S > 0$)</th>
+                <th class="p-3">Degenerative Mechanism</th>
+                <th class="p-3">Holographic Reversal Operator</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-deep-850/60 text-[11px]">
+              <tr>
+                <td class="p-3 font-bold text-brand-400">Genomic / Chromatin (Micro)</td>
+                <td class="p-3">Loss of $H3K9me3$; aberrant $5\text{mC}$ drift; accumulated $8\text{-oxo-dG}$ lesions[cite: 1, 2].</td>
+                <td class="p-3">LINE-1 retrotransposon derepression; cytosolic cDNA; cGAS-STING-TBK1 inflammation[cite: 1, 2].</td>
+                <td class="p-3">TET1–3 demethylation + $\text{Pol }\beta$ gap resynthesis + SIRT6/SUV39H1 heterochromatin lock[cite: 1, 2].</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">Interfacial Water (Meso)</td>
+                <td class="p-3">EZ water collapse into bulk fluid ($\varepsilon_r \approx 80$); loss of proton charge separation[cite: 1].</td>
+                <td class="p-3">High ATP synthase rotor drag; mitochondrial electron leakage ($O_2^{\bullet-}$); ferroptosis[cite: 1].</td>
+                <td class="p-3">660/850 nm PBM + GXM polysaccharide lattice + Nrf2/GPx4 lipid shield[cite: 1].</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-amber">Societal / Institutional (Macro)</td>
+                <td class="p-3">Degradation of institutional trust, moral heterochromatin, and structural coherence.</td>
+                <td class="p-3">Decoupled collective feedback loops; parasitic memetic entropy; infrastructure breakdown.</td>
+                <td class="p-3">Coherent decentralized networks; cultural negentropic boundary stabilization.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cosmos">Cosmological (Universal)</td>
+                <td class="p-3">Thermodynamic heat death; cosmic expansion horizon information redistribution.</td>
+                <td class="p-3">Cosmological horizon dilation; dissipation of free energetic phase coherence.</td>
+                <td class="p-3">Conscious observer boundary operator projecting localized invariance[cite: 1, 2].</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 1.1 Thermodynamic Definition of Senescence -->
+      <div class="scientific-callout p-6 rounded-r-2xl space-y-3">
+        <h3 class="font-mono text-xs font-bold text-brand-400 uppercase tracking-wider">1.1 The Thermodynamic Definition of Senescence</h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Biological aging represents a systematic accumulation of <strong class="text-white">informational entropy ($\Delta S > 0$)</strong> within an open, non-equilibrium thermodynamic system[cite: 1, 2]. This structural degradation is driven by coupled molecular failures[cite: 1]:
+        </p>
+        <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside font-mono">
+          <li><strong class="text-slate-200">Chromatin De-condensation:</strong> Progressive loss of constitutive heterochromatin scaffolding (<span class="text-accent-violet">$H3K9me3$</span>), exposing ancient parasitic <strong class="text-slate-200">LINE-1 retrotransposons</strong> that transcribe into toxic cytosolic cDNA[cite: 1].</li>
+          <li><strong class="text-slate-200">Cytosine Methylome Drift:</strong> Stochastic accumulation of aberrant $5\text{-methylcytosine}$ ($5\text{mC}$) marks at tumor-suppressor CpG islands alongside global genomic hypomethylation[cite: 1].</li>
+          <li><strong class="text-slate-200">Interfacial Water Desiccation:</strong> Breakdown of structured <strong class="text-slate-200">Exclusion Zone (EZ) water ($H_3O_2^-$)</strong> into disordered bulk water, elevating nucleoplasmic dielectric permittivity ($\varepsilon_r \approx 80$) and disabling Grotthuss proton conduction[cite: 1].</li>
+        </ul>
+      </div>
+
+      <!-- 1.2 Longevity Ketosis, Caloric Restriction & 18-6 Dry Fasting Baseline -->
+      <div class="bg-deep-850 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
+        <h3 class="font-mono text-amber-400 font-bold uppercase text-xs">1.2 Longevity Ketosis, Caloric Restriction &amp; 18-6 Dry Fasting Matrix</h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          To maximize epigenetic maintenance and silence inflammatory transcription, the systemic baseline operates in a <strong class="text-white">10–20% caloric restriction deficit</strong> coupled with a targeted ketogenic substrate profile and an <strong class="text-white">18-hour intermittent dry fast</strong>[cite: 1]:
+        </p>
+        <div class="grid md:grid-cols-3 gap-4 font-mono text-xs text-slate-300 pt-1">
+          <div class="p-4 bg-deep-900 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-brand-400 font-bold block uppercase font-sans text-xs">A. Animal Fat Base (80–85% Fat Energy)</span>
+            <p class="text-slate-400 font-sans text-xs leading-relaxed">
+              Anchored by <strong class="text-slate-200">pastured pork fat (lard)</strong> and <strong class="text-slate-200">bovine bone marrow</strong>[cite: 1]. High in stearic acid ($C18:0$) and alkylglycerols[cite: 1]. Stearic acid stimulates Mitofusin-1/2 ($Mfn1/2$) mitochondrial fusion, maximizing ATP flux while eliminating cardiolipin-peroxidizing seed oils[cite: 1].
+            </p>
+          </div>
+          <div class="p-4 bg-deep-900 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-accent-cyan font-bold block uppercase font-sans text-xs">B. Marine Proteome &amp; Phospholipids</span>
+            <p class="text-slate-400 font-sans text-xs leading-relaxed">
+              Sourced from <strong class="text-slate-200">squid, octopus, and lisa fish (striped mullet)</strong>[cite: 1]. Provides dense endogenous taurine, structural glycine triplets, selenium, zinc, and preformed marine phospholipids ($sn\text{-}2\text{ EPA/DHA}$) to regenerate photoreceptor outer segments and nuclear membranes[cite: 1].
+            </p>
+          </div>
+          <div class="p-4 bg-deep-900 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-accent-rose font-bold block uppercase font-sans text-xs">C. 18-Hour Dry Fasting Thermodynamics</span>
+            <p class="text-slate-400 font-sans text-xs leading-relaxed">
+              Absolute cessation of exogenous liquids and solids from 18:00 to 12:00 next day (with 07:00 Phase 1 absorption window)[cite: 1]. Drives rapid autophagy/mitophagy and synthesizes pure mitochondrial <strong class="text-slate-200">metabolic water</strong> ($C_{18}H_{36}O_2 + 26\,O_2 \rightarrow 18\,CO_2 + 18\,\mathbf{H_2O}$)[cite: 1].
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: MASTER PROTOCOL (§ 2.0) -->
+    <!-- ========================================================================= -->
+    <section id="tab-protocol" class="tab-pane hidden space-y-10">
+      <div class="border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-extrabold text-white">Master Protocol</h2>
+          <p class="text-sm text-slate-400 mt-1 font-mono">Synchronized 3-tier delivery: Awakening Elixir &amp; Neuro-Vascular Triad, OMAD Ketogenic Meal, and Bedtime Somatic Reset[cite: 1].</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-mono text-slate-400">Body Mass Scale:</label>
+          <select id="weight-scaler" onchange="scaleDoses()" class="bg-deep-850 border border-slate-700 text-xs font-mono text-brand-400 rounded px-2.5 py-1.5 focus:outline-none focus:border-brand-500">
+            <option value="1">Standard (65–80 kg)</option>
+            <option value="0.8">Low Mass (50–64 kg)</option>
+            <option value="1.25">High Mass (81–100+ kg)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Master Protocol Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300 font-mono border border-slate-800 rounded-xl overflow-hidden">
+          <thead class="bg-deep-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+            <tr>
+              <th class="p-3">Window</th>
+              <th class="p-3">Compound</th>
+              <th class="p-3">Clinical Dose</th>
+              <th class="p-3">Target Enzymes &amp; Receptors</th>
+              <th class="p-3">Primary Biological Function</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 bg-deep-850/60 text-[11px]">
+            
+            <!-- Phase 1 Waking Elixir + Neuro-Vascular Triad -->
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-amber-400" rowspan="9">Phase 1<br><span class="text-[10px] font-normal text-slate-400">Awakening Elixir &amp;<br>Neuro-Vascular Triad<br>(07:00 Fasted)<br><br><strong>Vehicle:</strong><br>750 mL Coconut Water<br>+ Fresh Lime Juice</span></td>
+              <td class="p-3 font-bold text-white">Na-R-ALA</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="150" data-base-max="300">150–300 mg</td>
+              <td class="p-3">Keap1 / Nrf2, PDH, $\alpha$-KGDH, $\text{Pol }\beta$ Cys267</td>
+              <td class="p-3">Nrf2/GPx4 activation; heavy metal chelation; generates $\alpha$-KG for TET enzymes; shields $\text{Pol }\beta$ thiols[cite: 1].</td>
+            </tr>
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-white">ALCAR</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="500" data-base-max="1000">500–1000 mg</td>
+              <td class="p-3">OCTN2, CACT, CrAT, GAP-43</td>
+              <td class="p-3">Mitochondrial Acetyl-CoA donor; fuels TCA flux; drives nuclear ATP synthesis for DNA Ligase III[cite: 1].</td>
+            </tr>
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-white">Glycine</td>
+              <td class="p-3 text-amber-300 font-bold dose-val" data-base-min="3000" data-base-max="5000">3000–5000 mg</td>
+              <td class="p-3">GlyR, Glutathione Synthetase, Collagen Triplet</td>
+              <td class="p-3">Glutathione synthesis backbone; prevents protein glycation (AGEs); supplies collagen amino acid pool[cite: 1].</td>
+            </tr>
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-white">Creatine Monohydrate</td>
+              <td class="p-3 text-amber-300 font-bold dose-val" data-base-min="5000" data-base-max="5000">5000 mg</td>
+              <td class="p-3">Creatine Kinase (CK), Nuclear PCr Pool</td>
+              <td class="p-3">Non-glycolytic high-energy phosphagen buffer; fuels ATP-dependent DNA ligase sealing during BER[cite: 1].</td>
+            </tr>
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-white">L-Citrulline</td>
+              <td class="p-3 text-amber-300 font-bold dose-val" data-base-min="3000" data-base-max="6000">3000–6000 mg</td>
+              <td class="p-3">ASS, ASL, eNOS Axis</td>
+              <td class="p-3">Bypasses splanchnic hepatic uptake; fuels systemic endothelial L-arginine pool for continuous nitric oxide synthesis[cite: 1].</td>
+            </tr>
+            <tr class="bg-amber-950/20">
+              <td class="p-3 font-bold text-white">TMG (Betaine)</td>
+              <td class="p-3 text-amber-300 font-bold dose-val" data-base-min="1500" data-base-max="2500">1500–2500 mg</td>
+              <td class="p-3">BHMT, Renal &amp; Neural Osmolytes</td>
+              <td class="p-3">Drives remethylation of homocysteine to methionine; regulates intracellular volume under high osmotic flux[cite: 1].</td>
+            </tr>
+            <tr class="bg-violet-950/30">
+              <td class="p-3 font-bold text-accent-violet">Modafinil</td>
+              <td class="p-3 text-accent-violet font-bold dose-val" data-base-min="50" data-base-max="100">50–100 mg</td>
+              <td class="p-3">DAT, Orexin-1/2, Connexin-36 (Cx36)</td>
+              <td class="p-3">Central executive drive; upregulates Cx36 gap junctions for biophoton phase-locking[cite: 1].</td>
+            </tr>
+            <tr class="bg-violet-950/30">
+              <td class="p-3 font-bold text-accent-violet">Propranolol HCl</td>
+              <td class="p-3 text-accent-violet font-bold dose-val" data-base-min="40" data-base-max="40">40 mg</td>
+              <td class="p-3">$\beta_1/\beta_2$-adrenoceptors, Ciliary Adenylate Cyclase</td>
+              <td class="p-3">Peripheral tremor/tachycardia blockade; IOP reduction; basolateral amygdala trauma memory decoupling[cite: 1].</td>
+            </tr>
+            <tr class="bg-violet-950/30">
+              <td class="p-3 font-bold text-accent-violet">Tadalafil</td>
+              <td class="p-3 text-accent-violet font-bold dose-val" data-base-min="2.5" data-base-max="5">2.5–5 mg</td>
+              <td class="p-3">Phosphodiesterase-5 (PDE5)</td>
+              <td class="p-3">Halts cGMP breakdown; multiplies eNOS vasodilation across retinal choriocapillaris, cerebral cortex, and fascia[cite: 1].</td>
+            </tr>
+
+            <!-- Phase 2 (OMAD Meal) -->
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-brand-400" rowspan="10">Phase 2<br><span class="text-[10px] font-normal text-slate-400">The Longevity OMAD<br>Ketogenic Meal<br>(12:00 – 13:00)<br><br><strong>Meal Base:</strong><br>Pastured Pork Lard,<br>Bone Marrow, Squid,<br>Octopus, Lisa Fish</span></td>
+              <td class="p-3 font-bold text-white">ND Injuv® (Low-MW HA)</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="70" data-base-max="140">70–140 mg</td>
+              <td class="p-3">CD44, RHAMM, HAS2, HAS3</td>
+              <td class="p-3">1–5 kDa hyaluronan oligomers; stimulates endogenous HAS2; fascial and nuclear EZ hydration[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">ND White Jelly Mushroom</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="500" data-base-max="1000">500–1000 mg</td>
+              <td class="p-3">Dectin-1 (CLEC7A), TLR4/MD-2, TrkB</td>
+              <td class="p-3">Glucuronoxylomannan lattice; expands macro-scale $H_3O_2^-$ EZ water; drives microglial $M2$ switch[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Astaxanthin</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="6" data-base-max="12">6–12 mg</td>
+              <td class="p-3">Lipid Bilayer, IKK$\beta$, Nuclear Envelope</td>
+              <td class="p-3">Transmembrane polar anchor; halts $^1O_2$; shields exposed DNA bubbles and lipids from ferroptosis[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">ND Saffron Extract</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="30" data-base-max="30">30 mg</td>
+              <td class="p-3">TXNIP / TRX1, NF-$\kappa$B, Foveal Vessels</td>
+              <td class="p-3">$\ge 7.5\%$ Crocins; hydrophilic crocetin scavenges nucleoplasmic radicals during base excision[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Bilberry Extract (25%)</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="100" data-base-max="200">100–200 mg</td>
+              <td class="p-3">Rhodopsin ($11\text{-cis-retinal}$), Nucleoplasm</td>
+              <td class="p-3">Accelerates opsin regeneration; aqueous radical sink protecting uncoiled transcription bubbles[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Targeted Lutein</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="2" data-base-max="2">2 mg</td>
+              <td class="p-3">StARD3 (Henle Fiber Layer)</td>
+              <td class="p-3">Rebuilds Macular Pigment Optical Density (MPOD) without saturating carotenoid transporters[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Gotu Kola Extract</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="300" data-base-max="500">300–500 mg</td>
+              <td class="p-3">TGF-$\beta$/Smad2/3, TIMP-1/2, MAPK/ERK</td>
+              <td class="p-3">Asiaticoside drives Type I/III collagen remodeling; caps MMPs; arrests paracrine SASP damage[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Eyebright Extract</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="200" data-base-max="500">200–500 mg</td>
+              <td class="p-3">MMP-9, ZO-1, Occludin, AP-1</td>
+              <td class="p-3">Acteoside blocks NF-$\kappa$B/AP-1; extinguishes extracellular matrix degradation and SASP output[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Boron (Glycinate)</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="3" data-base-max="6">3–6 mg</td>
+              <td class="p-3">CD38 Glycoprotein, SHBG</td>
+              <td class="p-3">CD38 inhibition spares intracellular $\text{NAD}^+$ for SIRT6 heterochromatin lock. <em>(Cycle 2 wk ON / 1 wk OFF)</em>[cite: 1].</td>
+            </tr>
+            <tr class="bg-brand-950/20">
+              <td class="p-3 font-bold text-white">Phosphatidylserine (PS)</td>
+              <td class="p-3 text-brand-400 font-bold dose-val" data-base-min="100" data-base-max="300">100–300 mg</td>
+              <td class="p-3">MERTK, Nuclear Lamina Membrane</td>
+              <td class="p-3">Daily $sn\text{-}2$ substrate for nuclear envelope repairs and photoreceptor turnover. <em>(Omit on brain days)</em>[cite: 1].</td>
+            </tr>
+
+            <!-- Phase 3 Bedtime Somatic Reset -->
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-accent-cyan" rowspan="6">Phase 3<br><span class="text-[10px] font-normal text-slate-400">Bedtime Somatic<br>Reset Snack<br>(17:30 – 18:00)<br><br><strong>Closes Window:</strong><br>18-Hour Dry Fast Begins</span></td>
+              <td class="p-3 font-bold text-white">Glycine</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="3000" data-base-max="5000">3000–5000 mg</td>
+              <td class="p-3">NMDA Receptor (Glycine Site), Preoptic Area</td>
+              <td class="p-3">Induces hypothermia via peripheral vasodilation; deepens slow-wave sleep architecture and sustains collagen synthesis[cite: 1].</td>
+            </tr>
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-white">ND Ecklonia Cava Extract</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="100" data-base-max="200">100–200 mg</td>
+              <td class="p-3">$GABA_A$-Benzodiazepine Site, Dieckol</td>
+              <td class="p-3">Polyphenolic phlorotannins; positive allosteric $GABA_A$ modulation; expands non-REM delta power without tolerance[cite: 1].</td>
+            </tr>
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-white">ND Tauromag® (ATA-Mg)</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="350" data-base-max="700">350–700 mg</td>
+              <td class="p-3">Neuronal NMDA Channels, $GABA_A$ / GlyR</td>
+              <td class="p-3">Magnesium Acetyl Taurate crosses BBB; blocks glutamate excitotoxicity; delivers intracellular taurine to calm neural firing[cite: 1].</td>
+            </tr>
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-white">ND Lemon Balm Extract</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="300" data-base-max="500">300–500 mg</td>
+              <td class="p-3">GABA-Transaminase (GABA-T)</td>
+              <td class="p-3">Standardized rosmarinic acid; inhibits GABA-T degradation to sustain nocturnal inhibitory synaptic tone[cite: 1].</td>
+            </tr>
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-white">Micro-Dose Melatonin</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="0.3" data-base-max="0.3">0.3 mg</td>
+              <td class="p-3">$MT_1 / MT_2$ Receptors, Pineal Axis</td>
+              <td class="p-3">Directly rescues pineal AANAT suppression induced by daytime Propranolol; restores circadian RPE phagocytic rhythm[cite: 1].</td>
+            </tr>
+            <tr class="bg-cyan-950/20">
+              <td class="p-3 font-bold text-white">Gotu Kola (Night Split)</td>
+              <td class="p-3 text-accent-cyan font-bold dose-val" data-base-min="200" data-base-max="300">200–300 mg</td>
+              <td class="p-3">GABA-T, Nocturnal Collagen Remodeling</td>
+              <td class="p-3">Mild GABA-T inhibition; leverages nocturnal Growth Hormone (GH) pulse for TGF-$\beta$-mediated ECM cross-linking[cite: 1].</td>
+            </tr>
+
+            <!-- Entheogenic Strata -->
+            <tr class="bg-purple-950/30">
+              <td class="p-3 font-bold text-accent-violet" rowspan="2">Entheogenic<br><span class="text-[10px] font-normal text-slate-400">Pulsed Strata<br>(Cyclic Resets)</span></td>
+              <td class="p-3 font-bold text-white">Ayahuasca Protocol</td>
+              <td class="p-3 text-accent-rose font-bold">Weekly Bolus</td>
+              <td class="p-3">$5\text{-HT}_{2A}$, Sigma-1 Receptor ($\sigma_1\text{R}$), MAO-A</td>
+              <td class="p-3">Transient chromatin unmasking; deep TET enzyme access to hidden CpGs; massive TrkB/BDNF burst[cite: 1].</td>
+            </tr>
+            <tr class="bg-purple-950/30">
+              <td class="p-3 font-bold text-white">Iboga / Ibogaine</td>
+              <td class="p-3 text-accent-rose font-bold">Monthly Reset</td>
+              <td class="p-3">$\sigma_1\text{R}$, $\sigma_2\text{R}$, GDNF, NMDA, $\mu/\kappa$-Opioid</td>
+              <td class="p-3">Profound GDNF transcription; resets addiction/trauma chromatin loci; clears nuclear proteotoxic aggregates[cite: 1].</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Brain Rotation & Boron Cycling Framework Cards -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-deep-850 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h3 class="font-mono text-accent-cyan font-bold text-sm uppercase flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-accent-cyan"></span> The Whole-Brain Rotation (1–2x Weekly)
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Substitute supplemental PS with <strong class="text-white">100–150 g of pasture-raised, grass-fed bovine brain</strong> ($<30\text{ months}$ old, BSE-negligible)[cite: 1]. Delivers 1,000–1,500+ mg of native $sn\text{-}2$ <strong class="text-white">DHA-PS</strong>, sphingomyelin, sulfatides, and gangliosides to rebuild nuclear pore complexes and mitochondrial membranes[cite: 1].
+          </p>
+        </div>
+
+        <div class="bg-deep-850 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h3 class="font-mono text-accent-violet font-bold text-sm uppercase flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-accent-violet"></span> Boron Cycling &amp; Safety Washouts
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Maintain a <strong class="text-brand-400">2 Weeks ON (3–6 mg/day) $\rightarrow$ 1 Week OFF</strong> cycle for Boron[cite: 1]. <strong class="text-rose-400">Critical Pharmacological Washout:</strong> On Ayahuasca and Iboga days, withhold Modafinil, Propranolol, and Tadalafil for $\ge 48\text{ hours}$ to prevent hypertensive crisis, MAOI conflicts, or cardiac arrhythmias[cite: 1].
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: EPIGENETIC REPOLYMERIZATION (§ 3.0 COMPLETE) -->
+    <!-- ========================================================================= -->
+    <section id="tab-epigenetics" class="tab-pane hidden space-y-10">
+      <div class="border-b border-slate-800 pb-6">
+        <div class="text-xs font-mono text-brand-400 uppercase tracking-widest">Section 3.0</div>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight mt-1">
+          Epigenetic Demethylation, Base Excision Repolymerization &amp; Heterochromatin Architecture
+        </h2>
+        <p class="text-sm text-slate-400 mt-2 font-mono">
+          Active enzymatic oxidation of aberrant methyl drift, high-fidelity single-nucleotide gap resynthesis, catalytic thiol protection, and retrotransposon silencing[cite: 1, 2].
+        </p>
+      </div>
+
+      <!-- Stage 3.1 & 3.2 Grid (Dual-Register: Hard Science + ELI5) -->
+      <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        
+        <!-- 3.1 TET & TDG -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-mono text-brand-400 font-bold uppercase text-xs">3.1 Active TET1–3 Demethylation &amp; TDG Base Excision</h3>
+            <span class="px-2 py-0.5 rounded bg-brand-950 border border-brand-500/30 text-[10px] font-mono text-brand-400">Enzymatic Erasure</span>
+          </div>
+
+          <p class="text-slate-300 leading-relaxed">
+            Active reversal of age-associated hypermethylation drift is driven by <strong class="text-white">Ten-Eleven Translocation (TET1, TET2, TET3)</strong> dioxygenases[cite: 1]. Utilizing intracellular <strong class="text-slate-200">$\alpha$-ketoglutarate ($\alpha$-KG)</strong>, $O_2$, and $Fe^{2+}$ cofactors, TET enzymes iteratively oxidize 5-methylcytosine ($5\text{mC}$)[cite: 1]:
+          </p>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 overflow-x-auto text-brand-400">
+            $$5\text{mC} \xrightarrow{\text{TET}} 5\text{hmC} \xrightarrow{\text{TET}} 5\text{fC} \xrightarrow{\text{TET}} 5\text{caC}$$
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            <strong class="text-slate-200">Thymine DNA Glycosylase (TDG)</strong> cleaves the $N$-glycosidic bond of $5\text{fC}$ and $5\text{caC}$, generating an apurinic/apyrimidinic (AP) abasic site[cite: 1]. <strong class="text-slate-200">APE1 / Ref-1</strong> then hydrolyzes the phosphodiester backbone $5'$ to the lesion, creating a single-strand break with a $3'\text{-OH}$ primer terminus and a blocking $5'\text{-dRP}$ flap[cite: 1].
+          </p>
+
+          <!-- ELI5 Translation Box -->
+          <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+            <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-brand-400 uppercase">
+              <span>💡</span> Plain English (ELI5): "The Rust Eraser"
+            </div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              Think of DNA as a master cookbook[cite: 1]. As cells get older, sticky chemical rust spots (methyl marks) gum up the recipe pages so the cell can't read them[cite: 1]. <strong class="text-brand-300">TET enzymes</strong> act like a rust converter, turning the hard rust into brittle chalk[cite: 1]. Then, <strong class="text-brand-300">TDG</strong> acts like a hole punch, popping the rusted letter clean out of the page so it's ready for a brand-new letter[cite: 1].
+            </p>
+          </div>
+        </div>
+
+        <!-- 3.2 Polymerase Beta Gap Resynthesis -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-mono text-accent-cyan font-bold uppercase text-xs">3.2 Physical Gap Resynthesis via Polymerase-$\beta$</h3>
+            <span class="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/30 text-[10px] font-mono text-accent-cyan">BER Gap-Filling</span>
+          </div>
+
+          <p class="text-slate-300 leading-relaxed">
+            <strong class="text-white">DNA Polymerase $\beta$ ($\text{Pol }\beta$)</strong> executes Base Excision Repair (BER) gap filling via a bifunctional, dual-domain catalytic architecture[cite: 1]:
+          </p>
+          <ul class="text-xs text-slate-400 space-y-1.5 list-disc list-inside font-mono">
+            <li><strong class="text-slate-200">$8\text{ kDa}$ Amino Lyase:</strong> Excises the blocking $5'\text{-dRP}$ residue via $\beta$-elimination to expose a clean $5'\text{-phosphate}$[cite: 1].</li>
+            <li><strong class="text-slate-200">$31\text{ kDa}$ Polymerase Domain:</strong> Coordinates dual $\text{Mg}^{2+}$ ions to insert an unmodified <strong class="text-slate-200">deoxycytidine monophosphate (dCTP)</strong> opposite the template guanine[cite: 1]:</li>
+          </ul>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 overflow-x-auto text-accent-cyan">
+            $$\text{Gap}_{(3'\text{-OH} / 5'\text{-P})} + \text{dCTP} \xrightarrow{\text{Pol }\beta, \text{Mg}^{2+}} \text{DNA}_{\text{inserted}} + \text{PP}_i$$
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            The <strong class="text-slate-200">DNA Ligase III / XRCC1</strong> complex seals the phosphodiester backbone, permanently restoring an unmethylated, youthful cytosine base[cite: 1].
+          </p>
+
+          <!-- ELI5 Translation Box -->
+          <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+            <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-accent-cyan uppercase">
+              <span>💡</span> Plain English (ELI5): "The Precision Typewriter"
+            </div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              After the rusted letter is popped out, the cell needs to replace it[cite: 1]. <strong class="text-cyan-300">$\text{Pol }\beta$</strong> is a tiny two-handed typewriter: its left hand snips away the torn paper edge, and its right hand stamps in a fresh, unblemished letter 'C' (<strong class="text-cyan-300">dCTP</strong>)[cite: 1]. Molecular glue (<strong class="text-cyan-300">DNA Ligase</strong>) then seals the paper smooth[cite: 1].
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3.3 & 3.4 Grid (With Hard Science & ELI5 Explanations) -->
+      <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        
+        <!-- 3.3 Catalytic Thiol Protection -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-mono text-emerald-400 font-bold uppercase text-xs">3.3 Polymerase Thiol Redox Preservation (DHLA Axis)</h3>
+            <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/30 text-[10px] font-mono text-emerald-400">Thiol Redox</span>
+          </div>
+
+          <p class="text-slate-300 leading-relaxed">
+            The catalytic pockets of <strong class="text-white">$\text{Pol }\beta$</strong>, mitochondrial <strong class="text-white">$\text{Pol }\gamma$</strong>, and endonuclease <strong class="text-white">APE1 / Ref-1</strong> rely on nucleophilic cysteine thiols (Cys267 on $\text{Pol }\beta$; Cys65 on Ref-1)[cite: 1]. Oxidative stress converts these thiols into sulfenic acids ($-\text{SOH}$) or disulfides, stalling repair processivity and triggering double-strand breaks[cite: 1].
+          </p>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 text-emerald-400 overflow-x-auto">
+            $$\text{Enzyme}\text{-(S-S)} + \text{DHLA-(SH)}_2 \rightleftharpoons \text{Enzyme-(SH)}_2 + \text{R-ALA-(S-S)}$$
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            <strong class="text-slate-200">Dihydrolipoic Acid (DHLA)</strong>—the intracellular reduced form of <strong class="text-brand-400">Na-R-ALA</strong>—possesses vicinal dithiol groups ($C6$ and $C8$) with a low redox potential ($E_0' = -0.32\text{ V}$), driving continuous thiol-disulfide exchange to keep repair polymerases active[cite: 1].
+          </p>
+
+          <!-- ELI5 Translation Box -->
+          <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+            <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-400 uppercase">
+              <span>💡</span> Plain English (ELI5): "The Machine Gear Oil"
+            </div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              If cellular exhaust (free radicals) hits the typewriter's moving parts, they rust and jam midway through typing, tearing the page in half[cite: 1]. <strong class="text-emerald-300">DHLA</strong> is high-grade anti-rust oil for the gears: it donates electrons continuously so the typing machinery never jams or breaks the DNA strand[cite: 1].
+            </p>
+          </div>
+        </div>
+
+        <!-- 3.4 Heterochromatin Lock & LINE-1 Silencing -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-mono text-accent-violet font-bold uppercase text-xs">3.4 SIRT6, SUV39H1 &amp; Retrotransposon LINE-1 Silencing</h3>
+            <span class="px-2 py-0.5 rounded bg-violet-950 border border-violet-500/30 text-[10px] font-mono text-accent-violet">Topological Lock</span>
+          </div>
+
+          <p class="text-slate-300 leading-relaxed">
+            Age-induced heterochromatin unwinding exposes parasitic <strong class="text-white">LINE-1 retrotransposons</strong>[cite: 1]. These transcribe into cytoplasmic cDNA, triggering the <strong class="text-slate-200">cGAS $\rightarrow 2'3'\text{-cGAMP} \rightarrow$ STING $\rightarrow$ TBK1 $\rightarrow$ NF-$\kappa$B</strong> cascade and driving Senescence-Associated Secretory Phenotype (SASP) cytokines[cite: 1].
+          </p>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 text-accent-violet overflow-x-auto">
+            $$\text{Boron} \longrightarrow \text{CD38}\downarrow \implies \text{NAD}^+\uparrow \implies \text{SIRT6 Active} \xrightarrow{\text{SUV39H1}} \text{H3K9me3}\uparrow \implies \text{LINE-1}\downarrow \implies \text{cGAS-STING OFF}$$
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            <strong class="text-slate-200">Boron</strong> inhibits cell-surface <strong class="text-slate-200">CD38</strong>, sparing intracellular $\text{NAD}^+$ for <strong class="text-slate-200">SIRT6</strong>[cite: 1]. SIRT6 deacetylates $\text{H3K9ac}$, facilitating <strong class="text-slate-200">SUV39H1</strong> deposition of the repressive <strong class="text-accent-violet">$\text{H3K9me3}$</strong> mark to lock retrotransposons into silence and extinguish SASP secretion ($IL\text{-}6, IL\text{-}8, MMP\text{-}9$)[cite: 1].
+          </p>
+
+          <!-- ELI5 Translation Box -->
+          <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+            <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-accent-violet uppercase">
+              <span>💡</span> Plain English (ELI5): "The Forbidden Vault Padlock"
+            </div>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              In old cells, ancient viral codes (<strong class="text-violet-300">LINE-1</strong>) start opening up like haunted books, setting off chemical smoke alarms (<strong class="text-violet-300">cGAS-STING</strong>) that cause inflammation[cite: 1]. <strong class="text-violet-300">Boron and SIRT6</strong> take the fuel ($\text{NAD}^+$) and slam the library vault door shut, locking it with three padlocks (<strong class="text-violet-300">H3K9me3</strong>) so the alarms turn off permanently[cite: 1].
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3.5 Telomeric Extension Full-Width Card -->
+      <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4 text-xs sm:text-sm">
+        <div class="flex items-center justify-between">
+          <h3 class="font-mono text-amber-400 font-bold uppercase text-xs">3.5 Telomeric Repolymerization &amp; Shelterin DDR Checkpoint Disassembly</h3>
+          <span class="px-2 py-0.5 rounded bg-amber-950 border border-amber-500/30 text-[10px] font-mono text-amber-400">Telomere Protection</span>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 font-mono text-xs">
+          <div class="p-4 bg-deep-900 rounded-lg border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block font-sans">TERT / TERC Hexanucleotide Synthesis</span>
+            <p class="text-slate-300 font-sans text-xs leading-relaxed">
+              Telomerase Reverse Transcriptase (<strong class="text-slate-100">TERT</strong>), guided by its non-coding RNA template (<strong class="text-slate-100">TERC: $3'\text{-CAAUCCCAAUC-}5'$</strong>), synthesizes tandem $5'\text{-TTAGGG-}3'$ hexanucleotide repeats onto the single-stranded $3'$ overhang[cite: 1]:
+            </p>
+            <div class="py-2 text-center text-amber-300 text-xs">
+              $$\text{Tel}_{(TTAGGG)_n} + \text{dNTPs} \xrightarrow{\text{TERT/TERC}} \text{Tel}_{(TTAGGG)_{n+x}}$$
+            </div>
+          </div>
+          
+          <div class="p-4 bg-deep-900 rounded-lg border border-slate-800 space-y-2">
+            <span class="text-amber-400 font-bold block font-sans">Shelterin Assembly &amp; DDR Deactivation</span>
+            <p class="text-slate-300 font-sans text-xs leading-relaxed">
+              The repolymerized $3'$ overhang loops back to invade duplex telomeric DNA, forming the <strong class="text-slate-100">T-loop</strong> and <strong class="text-slate-100">D-loop</strong>[cite: 1]. This enables binding of the 6-subunit <strong class="text-slate-100">Shelterin Complex (TRF1, TRF2, POT1, TIN2, TPP1, RAP1)</strong>, displacing $\gamma\text{-H2AX}$ and 53BP1 foci[cite: 1].
+            </p>
+            <div class="py-2 text-center text-slate-400 text-xs">
+              $$\text{Shelterin Locked} \implies \text{ATM/ATR OFF} \implies \text{p53/p21 Arrest Extinguished}$$
+            </div>
+          </div>
+        </div>
+
+        <!-- ELI5 Translation Box Full Width -->
+        <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+          <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-400 uppercase">
+            <span>💡</span> Plain English (ELI5): "The Plastic Shoelace Cap (Aglet)"
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Every chromosome is like a shoelace[cite: 1]. Over time, the plastic tips (telomeres) fray away, making the cell panic and think its DNA is broken—so it freezes in fear (senescence)[cite: 1]. <strong class="text-amber-300">TERT</strong> weaves fresh plastic thread onto the tip, and the <strong class="text-amber-300">Shelterin cap</strong> snaps over it, telling the cell: "The shoelace is safe and whole, keep growing."[cite: 1]
+          </p>
+        </div>
+      </div>
+
+      <!-- ==================== § 3.6 STACK INTERVENTION MECHANISM MATRIX ==================== -->
+      <div id="sec-3-6" class="space-y-4 pt-6 border-t border-slate-800">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-white font-mono">3.6 Comprehensive Stack Mapping: How Every Molecule Intervenes</h3>
+          <span class="text-xs font-mono text-brand-400">Genomic &amp; Epigenetic Targeting</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Every compound in the protocol is specifically calibrated to supply metabolic cofactors, maintain nuclear thiol redox states, shield exposed single-stranded DNA during base excision, or lock down heterochromatin[cite: 1]:
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300 font-mono border border-slate-800 rounded-xl overflow-hidden">
+            <thead class="bg-deep-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Protocol Molecule</th>
+                <th class="p-3">Epigenetic / DNA Repair Target</th>
+                <th class="p-3">Direct Mechanism in Demethylation &amp; Repolymerization</th>
+                <th class="p-3">Intuitive / Functional Role</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-deep-850/60 text-[11px]">
+              <tr>
+                <td class="p-3 font-bold text-brand-400">Na-R-ALA / DHLA</td>
+                <td class="p-3 text-white">$\text{Pol }\beta$, $\text{Pol }\gamma$, $\alpha$-KGDH, Nrf2</td>
+                <td class="p-3 text-slate-300">Reduces catalytic Cys267 on $\text{Pol }\beta$ and Cys65 on Ref-1 via vicinal dithiols; drives $\alpha$-KG generation for TET1–3 demethylases[cite: 1].</td>
+                <td class="p-3 text-brand-300 font-sans">Thiol gear oil &amp; TET fuel generator.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">ALCAR</td>
+                <td class="p-3 text-white">CrAT, CACT, Nuclear ATP / Ligase III</td>
+                <td class="p-3 text-slate-300">Donates acetyl-CoA to saturate TCA flux; elevates mitochondrial membrane potential ($\Delta\Psi_m$) to fuel nuclear ATP pools required for DNA ligation[cite: 1].</td>
+                <td class="p-3 text-amber-300 font-sans">High-energy ATP power supply for DNA glue.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-300">Glycine</td>
+                <td class="p-3 text-white">Glutathione Synthetase, AGE Interception</td>
+                <td class="p-3 text-slate-300">Essential substrate for glutathione synthesis; binds reactive aldehydes to prevent DNA-protein crosslinks during active uncoiling[cite: 1].</td>
+                <td class="p-3 text-amber-200 font-sans">GSH fuel &amp; anti-glycation shield.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-300">Creatine Monohydrate</td>
+                <td class="p-3 text-white">Nuclear Creatine Kinase (CK), PCr Pool</td>
+                <td class="p-3 text-slate-300">Replenishes nuclear phosphocreatine pool, providing rapid non-glycolytic ATP regeneration for DNA Ligase III adenylation during gap closure[cite: 1].</td>
+                <td class="p-3 text-amber-200 font-sans">Instant nuclear ATP buffer for strand sealing.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-300">L-Citrulline</td>
+                <td class="p-3 text-white">eNOS, Microvascular Perfusion</td>
+                <td class="p-3 text-slate-300">Sustains systemic and nuclear-membrane endothelial nitric oxide synthesis, maximizing substrate delivery to deep tissues without hepatic first-pass loss[cite: 1].</td>
+                <td class="p-3 text-amber-200 font-sans">Capillary flow driver &amp; NO generator.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-300">TMG (Betaine)</td>
+                <td class="p-3 text-white">BHMT, SAMe Methylome Pools</td>
+                <td class="p-3 text-slate-300">Donates methyl group to homocysteine via BHMT; optimizes S-adenosylmethionine (SAMe) pools for precise de novo methylation by DNMT1[cite: 1].</td>
+                <td class="p-3 text-amber-200 font-sans">Precision methyl-donor balancer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Modafinil</td>
+                <td class="p-3 text-white">Cx36 Gap Junctions, Biophoton Field</td>
+                <td class="p-3 text-slate-300">Upregulates Connexin-36 electrotonic coupling, synchronizing cortical biophoton emissions to lower metabolic radical noise during repair[cite: 1].</td>
+                <td class="p-3 text-purple-300 font-sans">Quantum biophoton synchronizer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Propranolol</td>
+                <td class="p-3 text-white">Basolateral Amygdala, PKA/CREB</td>
+                <td class="p-3 text-slate-300">Lipophilic $\beta_1/\beta_2$ blockade halts adrenergic somatic memory loops, allowing clean entry into the uncharged "abasic void" state[cite: 1].</td>
+                <td class="p-3 text-purple-300 font-sans">Somatic noise silencer for base clearing.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Tadalafil</td>
+                <td class="p-3 text-white">PDE5, cGMP / PKG Vasodilation Axis</td>
+                <td class="p-3 text-slate-300">Inhibits PDE5 to maintain intracellular cGMP, inducing smooth muscle relaxation and delivering high-velocity microvascular blood flow to capillary beds[cite: 1].</td>
+                <td class="p-3 text-purple-300 font-sans">Continuous microvascular perfusion expander.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">Injuv® (Low-MW HA)</td>
+                <td class="p-3 text-white">CD44, Nuclear Matrix Hydration</td>
+                <td class="p-3 text-slate-300">Oligosaccharides bind CD44 to stimulate endogenous HAS2; maintains the structured $H_3O_2^-$ dielectric hydration jacket around chromatin[cite: 1].</td>
+                <td class="p-3 text-cyan-300 font-sans">Nuclear hydration dielectric spacer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-brand-400">Tremella GXM</td>
+                <td class="p-3 text-white">EZ Water Lattice, M2 Microglia</td>
+                <td class="p-3 text-slate-300">Polyanionic GXM lattice expands macro-scale Exclusion Zone water, dropping $\varepsilon_r$ to 4–10 to enhance Coulombic histone binding[cite: 1].</td>
+                <td class="p-3 text-brand-300 font-sans">Coulombic tuning &amp; proton-wire battery.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-rose-400">Astaxanthin</td>
+                <td class="p-3 text-white">Nuclear Envelope &amp; DNA Bubbles</td>
+                <td class="p-3 text-slate-300">Spans the nuclear membrane bilayer to neutralize singlet oxygen ($^1O_2$), shielding transiently uncoiled, single-stranded DNA from radical attack[cite: 1].</td>
+                <td class="p-3 text-rose-300 font-sans">Physical nuclear membrane shield.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">Saffron (Crocetin)</td>
+                <td class="p-3 text-white">Nucleoplasm, TXNIP / TRX1</td>
+                <td class="p-3 text-slate-300">Hydrophilic carotenoid diffuses into the nucleoplasm, trapping free radicals at active excision bubbles and preventing 8-oxo-dG re-oxidation[cite: 1].</td>
+                <td class="p-3 text-amber-300 font-sans">Aqueous DNA bubble radical scavenger.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">Bilberry Extract</td>
+                <td class="p-3 text-white">Nucleoplasmic Anthocyanins</td>
+                <td class="p-3 text-slate-300">Quenches aqueous reactive species in the nuclear fluid; protects uncoiled euchromatin during active TET-mediated demethylation sweeps[cite: 1].</td>
+                <td class="p-3 text-cyan-300 font-sans">Water-phase genomic radical sink.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-emerald">Gotu Kola (Asiaticoside)</td>
+                <td class="p-3 text-white">TIMP-1/2 Induction, TGF-$\beta$/Smad</td>
+                <td class="p-3 text-slate-300">Upregulates TIMP-1/2 to deactivate extracellular matrix collagenases (MMPs), extinguishing systemic integrin stress signals that force cell senescence[cite: 1].</td>
+                <td class="p-3 text-emerald-300 font-sans">Extracellular matrix lock &amp; MMP neutralizer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-rose">Eyebright Extract</td>
+                <td class="p-3 text-white">NF-$\kappa$B, AP-1, MMP-9</td>
+                <td class="p-3 text-slate-300">Acteoside blocks IKK$\beta$ and NF-$\kappa$B p65 nuclear translocation, shutting down paracrine SASP inflammatory signaling at the transcriptional root[cite: 1].</td>
+                <td class="p-3 text-rose-300 font-sans">Paracrine SASP cytokine silencer.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Boron (Glycinate)</td>
+                <td class="p-3 text-white">CD38 Glycoprotein, SIRT6, SUV39H1</td>
+                <td class="p-3 text-slate-300">Inhibits CD38 to preserve intracellular $\text{NAD}^+$, fueling SIRT6 deacetylation of H3K9ac and enabling SUV39H1 deposition of the H3K9me3 heterochromatin lock[cite: 1].</td>
+                <td class="p-3 text-purple-300 font-sans">Master key for the heterochromatin vault lock.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-brand-300">DHA-PS &amp; Brain Lipids</td>
+                <td class="p-3 text-white">Nuclear Envelope &amp; Nuclear Pore Complex</td>
+                <td class="p-3 text-slate-300">Supplies intact $sn\text{-}2$ DHA-PS and sphingolipids to maintain nuclear membrane fluidity and facilitate nuclear import of large TET/Pol $\beta$ repair complexes[cite: 1].</td>
+                <td class="p-3 text-brand-200 font-sans">Nuclear envelope repair brick &amp; port gate.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">ND Ecklonia Cava</td>
+                <td class="p-3 text-white">$GABA_A$ Benzodiazepine Site, Cerebral SWS</td>
+                <td class="p-3 text-slate-300">Phlorotannin Dieckol crosses BBB to allosterically modulate $GABA_A$, increasing Slow-Wave Sleep delta power for nocturnal DNA repair[cite: 1].</td>
+                <td class="p-3 text-cyan-200 font-sans">GABA-A sleep architecture deepener.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">ND Tauromag® (ATA-Mg)</td>
+                <td class="p-3 text-white">Neuronal NMDA Channels, Synaptic Mg2+</td>
+                <td class="p-3 text-slate-300">Lipophilic acetyl taurate drives magnesium intracellularly, blocking excitotoxic NMDA channels and supplying taurine to stimulate inhibitory GlyR[cite: 1].</td>
+                <td class="p-3 text-cyan-200 font-sans">Targeted neural magnesium &amp; taurine shuttle.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">ND Lemon Balm Extract</td>
+                <td class="p-3 text-white">GABA-Transaminase (GABA-T)</td>
+                <td class="p-3 text-slate-300">Rosmarinic acid irreversibly inhibits GABA-T enzymatic degradation, maintaining high synaptic GABA concentrations throughout the nocturnal fast[cite: 1].</td>
+                <td class="p-3 text-cyan-200 font-sans">GABA-T enzyme suicide inhibitor.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== § 3.7 ENTHEOGENIC CHRONO-PILLARS ==================== -->
+      <div id="sec-3-7" class="space-y-6 pt-6 border-t border-slate-800">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs font-mono text-accent-rose uppercase tracking-widest">Section 3.7</div>
+            <h3 class="text-xl font-bold text-white tracking-tight mt-0.5">Entheogenic Chrono-Pillars: Ayahuasca &amp; Ibogaine Epigenetic Awakening</h3>
+          </div>
+          <span class="px-2.5 py-1 rounded bg-purple-950 border border-purple-500/40 text-xs font-mono text-accent-violet">Seismic Reset</span>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          While daily nutritional and metabolic substrates maintain baseline repair processivity, deep entheogenic compounds act as <strong class="text-white">macroscopic chromatin-unmasking operators</strong>[cite: 1]. They open deeply buried, hyper-compacted loci and trigger neurotrophin-driven cellular recoding[cite: 1]:
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          
+          <!-- Weekly Ayahuasca Card -->
+          <div class="psychedelic-box p-6 rounded-xl space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-mono text-accent-rose font-bold uppercase text-xs">A. Weekly Ayahuasca: The 5-HT2A / Sigma-1R Chromatin Opener</h4>
+              <span class="px-2 py-0.5 rounded bg-rose-950 border border-rose-500/30 text-[10px] font-mono text-accent-rose">Weekly Cadence</span>
+            </div>
+
+            <div class="space-y-2">
+              <span class="font-mono text-white text-xs font-bold block">Biochemical &amp; Epigenetic Cascade:</span>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                <strong class="text-white">N,N-DMT</strong> binds cortical <strong class="text-slate-200">$5\text{-HT}_{2A}$</strong> and endoplasmic reticulum / nuclear membrane <strong class="text-slate-200">Sigma-1 Receptors ($\sigma_1\text{R}$)</strong>[cite: 1]. This activates the <strong class="text-slate-200">TrkB $\rightarrow$ mTOR $\rightarrow$ BDNF</strong> axis, inducing transient, highly controlled chromatin decompaction[cite: 1]. Deeply buried, hypermethylated promoter regions become accessible to <strong class="text-white">TET1–3</strong> dioxygenases[cite: 1].
+              </p>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                Concurrently, <strong class="text-slate-200">Harmine, Harmaline, and Tetrahydroharmine (THH)</strong> exert reversible MAO-A inhibition and direct <strong class="text-slate-200">DYRK1A</strong> kinase inhibition, stimulating adult neurogenesis and shifting mitochondrial fission/fusion toward protective mitophagy[cite: 1].
+              </p>
+            </div>
+
+            <!-- ELI5 Translation Box -->
+            <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+              <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-accent-rose uppercase">
+                <span>💡</span> Plain English (ELI5): "The Master Library Key"
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                Imagine certain rusted pages of your recipe book are glued shut inside dark, hidden rooms that daily cleaning tools can't reach[cite: 1]. <strong class="text-rose-300">Ayahuasca</strong> acts as the master key: it temporarily opens all the locked doors and unsticks the glued pages, allowing the cleaning enzymes (<strong class="text-rose-300">TET &amp; $\text{Pol }\beta$</strong>) to sweep in and scrub out years of hidden rust[cite: 1].
+              </p>
+            </div>
+          </div>
+
+          <!-- Monthly Iboga Card -->
+          <div class="psychedelic-box p-6 rounded-xl space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-mono text-accent-violet font-bold uppercase text-xs">B. Monthly Iboga / Ibogaine: The GDNF &amp; Autophagic Seismic Reset</h4>
+              <span class="px-2 py-0.5 rounded bg-violet-950 border border-violet-500/30 text-[10px] font-mono text-accent-violet">Monthly Cadence</span>
+            </div>
+
+            <div class="space-y-2">
+              <span class="font-mono text-white text-xs font-bold block">Biochemical &amp; Epigenetic Cascade:</span>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                <strong class="text-white">Ibogaine</strong> and its long-acting metabolite <strong class="text-white">Noribogaine</strong> bind <strong class="text-slate-200">$\sigma_1\text{R}$, $\sigma_2\text{R}$, NMDA</strong>, and opioid receptors, driving a massive upregulation of <strong class="text-white">Glial Cell-Derived Neurotrophic Factor (GDNF)</strong> in the substantia nigra and ventral tegmental area[cite: 1].
+              </p>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                GDNF initiates deep autophagic clearance of misfolded nuclear aggregates (clearing defective nuclear lamins) and prompts global histone deacetylase remodeling, permanently dissolving fixed epigenetic trauma/addiction circuits and re-anchoring chromatin to its youthful baseline[cite: 1].
+              </p>
+            </div>
+
+            <!-- ELI5 Translation Box -->
+            <div class="eli5-box p-3.5 rounded-lg space-y-1.5 font-sans">
+              <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold text-accent-violet uppercase">
+                <span>💡</span> Plain English (ELI5): "The Complete Factory Overhaul"
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                If Ayahuasca is opening the locked doors, <strong class="text-violet-300">Iboga</strong> is a complete factory reset[cite: 1]. It releases a massive flood of renewal fuel (<strong class="text-violet-300">GDNF</strong>), clears away piles of old cellular junk that have choked the machine for decades, and resets the entire blueprint back to its pristine original factory settings[cite: 1].
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Strict Safety & Pharmacological Isolation Card -->
+        <div class="bg-rose-950/30 border border-rose-500/40 p-5 rounded-xl space-y-2">
+          <h4 class="text-xs font-mono font-bold text-rose-400 uppercase flex items-center gap-2">
+            <span>⚠️</span> Mandatory Pharmacological Isolation Rules for Ayahuasca &amp; Ibogaine
+          </h4>
+          <div class="grid md:grid-cols-2 gap-4 text-xs font-mono text-slate-300 pt-1">
+            <div>
+              <strong class="text-white block mb-1">1. Propranolol &amp; Tadalafil Conflict:</strong>
+              Do NOT take Propranolol or Tadalafil within 48 hours of Ayahuasca or Ibogaine[cite: 1]. Combining non-selective $\beta$-blockers with Ibogaine can cause lethal bradycardia or precipitate Torsades de Pointes (due to Ibogaine's hERG potassium channel affinity)[cite: 1].
+            </div>
+            <div>
+              <strong class="text-white block mb-1">2. Modafinil &amp; Stimulant Washout:</strong>
+              Discontinue Modafinil $\ge 72\text{ hours}$ prior to Ayahuasca[cite: 1]. Harmala alkaloids are reversible Monoamine Oxidase-A (MAO-A) inhibitors; co-administration with central dopaminergic stimulants risks fatal hypertensive crises and serotonin syndrome[cite: 1].
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Systematic State Matrix Table -->
+      <div class="space-y-3 pt-6 border-t border-slate-800">
+        <div class="text-xs font-mono text-slate-400 uppercase tracking-widest">Genomic Transition Matrix</div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300 font-mono border border-slate-800 rounded-xl overflow-hidden">
+            <thead class="bg-deep-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Epigenetic / Genomic Domain</th>
+                <th class="p-3">Aged &amp; Senescent State</th>
+                <th class="p-3">Repolymerized &amp; Reset Baseline</th>
+                <th class="p-3">Key Molecular Drivers</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-deep-850/60 text-[11px]">
+              <tr>
+                <td class="p-3 font-bold text-brand-400">Cytosine Methylome</td>
+                <td class="p-3 text-slate-400">Hypermethylation of promoter CpGs; high informational entropy ($\Delta S > 0$)[cite: 1]</td>
+                <td class="p-3 text-white">Reset to youthful coordinates; active excision of aberrant $5\text{mC}$ marks[cite: 1]</td>
+                <td class="p-3 text-brand-400 font-bold">TET1–3, TDG, APE1, $\text{Pol }\beta$, $\alpha\text{-KG}$, Ayahuasca[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">BER Polymerase Fidelity</td>
+                <td class="p-3 text-slate-400">Oxidized catalytic thiols (Cys267); polymerase arrest; fork collapse[cite: 1]</td>
+                <td class="p-3 text-white">Reduced catalytic thiols; high-throughput single-nucleotide gap insertion[cite: 1]</td>
+                <td class="p-3 text-accent-cyan font-bold">DHLA (Na-R-ALA), Nrf2 / GPx4, dCTP pools[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Heterochromatin Architecture</td>
+                <td class="p-3 text-slate-400">De-condensed heterochromatin; active LINE-1; cGAS-STING-mediated SASP[cite: 1]</td>
+                <td class="p-3 text-white">Re-condensed $\text{H3K9me3}$ lock; $\text{HP1}\alpha$ scaffolding; silenced retrotransposons[cite: 1]</td>
+                <td class="p-3 text-accent-violet font-bold">Boron, CD38 Inh, $\text{NAD}^+$, SIRT6, SUV39H1, Iboga[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-400">Telomeric Terminus</td>
+                <td class="p-3 text-slate-400">Uncapped T-loops; persistent $\gamma\text{-H2AX}$ foci; ATM/p53/p21 growth arrest[cite: 1]</td>
+                <td class="p-3 text-white">Elongated $TTAGGG$ repeats; intact 6-protein Shelterin; DDR extinguished[cite: 1]</td>
+                <td class="p-3 text-amber-400 font-bold">TERT / TERC, Shelterin (TRF1/2, POT1, TIN2)[cite: 1]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: BIOPHYSICS, SHIELDING & ECM (§ 4.0, § 5.0, § 6.0) -->
+    <!-- ========================================================================= -->
+    <section id="tab-matrix" class="tab-pane hidden space-y-12">
+      <!-- Section Header -->
+      <div class="border-b border-slate-800 pb-6">
+        <div class="text-xs font-mono text-accent-cyan uppercase tracking-widest">Sections 4.0, 5.0 &amp; 6.0</div>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight mt-1">
+          Interfacial Water Electrodynamics, Cellular Shielding &amp; Fascial Matrix
+        </h2>
+        <p class="text-sm text-slate-400 mt-2 font-mono">
+          Exclusion Zone ($H_3O_2^-$) liquid crystals, Grotthuss proton conduction, Lands cycle remodeling, ferroptotic lipid defense, and fascial streaming potentials[cite: 1].
+        </p>
+      </div>
+
+      <!-- ==================== § 4.0 INTERFACIAL WATER ELECTRODYNAMICS ==================== -->
+      <div class="space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-xl font-bold text-white font-mono flex items-center gap-2">
+            <span class="text-brand-400 font-bold">§ 4.0</span> Interfacial Water Electrodynamics &amp; Quantum Biophysics
+          </h3>
+          <span class="text-xs font-mono text-brand-400 px-2 py-0.5 rounded bg-brand-950 border border-brand-800/40">QED &amp; $H_3O_2^-$</span>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 text-xs font-mono">
+          <div class="bg-deep-850 p-5 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="text-brand-400 font-bold uppercase">1. Exclusion Zone ($H_3O_2^-$) Lattice</h4>
+            <p class="text-slate-300 font-sans leading-relaxed text-xs">
+              Water in contact with hydrophilic macromolecular surfaces (collagen, actin, Tremella GXM) organizes into stacked hexagonal honeycomb sheets where oxygen and hydrogen arrange in a $3:2$ stoichiometry, building a net negative charge ($-100\text{ to } -200\text{ mV}$) while expelling solutes and hydronium ($H_3O^+$) protons[cite: 1].
+            </p>
+          </div>
+          <div class="bg-deep-850 p-5 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="text-accent-cyan font-bold uppercase">2. Grotthuss Proton Conduction</h4>
+            <p class="text-slate-300 font-sans leading-relaxed text-xs">
+              Ordered EZ water chains act as biological proton wires ($H_2O + H^+ \rightleftharpoons H_3O^+$)[cite: 1]. Protons hop along hydrogen bonds with minimal thermal dissipation ($\Delta Q \approx 0$), delivering bioelectric charge directly to mitochondrial and nuclear enzymatic active sites[cite: 1].
+            </p>
+          </div>
+          <div class="bg-deep-850 p-5 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="text-accent-rose font-bold uppercase">3. 660 nm / 850 nm Optical Tuning</h4>
+            <p class="text-slate-300 font-sans leading-relaxed text-xs">
+              <strong class="text-white">660 nm</strong> photolyzes inhibitory nitric oxide ($NO$) from Cytochrome c Oxidase (Complex IV), restoring electron flux[cite: 1]. <strong class="text-white">850 nm</strong> resonates with water's $O\text{--}H$ vibrational overtone, expanding the EZ lattice and reducing viscous drag around the $F_0F_1\text{-ATP}$ synthase rotor[cite: 1].
+            </p>
+          </div>
+        </div>
+
+        <!-- Fascial Streaming Potential Callout -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+          <h4 class="font-mono text-accent-emerald font-bold uppercase text-xs">4.4 Fascial Mechanics &amp; Electrokinetic Streaming Potentials ($V_{str}$)</h4>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Because collagen fibrils and proteoglycans possess a fixed negative charge density (FCD), mechanical shearing and stretching displace mobile hydronium counter-ions ($H_3O^+$) through the interstitial ground substance, generating an endogenous electric field governed by the <strong class="text-white">Helmholtz-Smoluchowski equation</strong>[cite: 1]:
+          </p>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 text-accent-emerald">
+            $$V_{str} = \frac{\varepsilon_0 \varepsilon_r \cdot \zeta \cdot \Delta P}{\mu \cdot \sigma}$$
+          </div>
+          <p class="text-xs text-slate-400 font-mono">
+            Where $\zeta$ is the zeta potential, $\Delta P$ is the hydrostatic pressure gradient, $\mu$ is ground-substance viscosity, and $\sigma$ is electrical conductivity[cite: 1]. This streaming voltage depolarizes fibroblast membranes, opening <strong class="text-slate-200">Piezo1, Piezo2, and TRPV4</strong> stretch-activated $Ca^{2+}$ channels to stimulate <em>de novo</em> collagen and hyaluronic acid synthesis[cite: 1].
+          </p>
+        </div>
+      </div>
+
+      <!-- ==================== § 5.0 CELLULAR SHIELDING & LIPID DYNAMICS ==================== -->
+      <div class="space-y-6 pt-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-xl font-bold text-white font-mono flex items-center gap-2">
+            <span class="text-accent-cyan font-bold">§ 5.0</span> Cellular Shielding, Lipid Dynamics &amp; Immunological Switching
+          </h3>
+          <span class="text-xs font-mono text-accent-cyan px-2 py-0.5 rounded bg-cyan-950 border border-cyan-800/40">Lipidomics &amp; Anti-Ferroptosis</span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <!-- MFSD2A & Lands -->
+          <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+            <h4 class="font-mono text-accent-cyan font-bold uppercase text-xs">5.1 MFSD2A Transport &amp; The Lands Cycle</h4>
+            <p class="text-slate-300 leading-relaxed text-xs">
+              <strong class="text-white">MFSD2A</strong> is an obligate $Na^+$-dependent lysophospholipid flippase at the blood-brain and blood-retinal barriers that selectively imports <strong class="text-slate-200">LPC-DHA</strong> and <strong class="text-slate-200">Lyso-PS</strong> while suppressing caveolae-mediated transcytosis[cite: 1].
+            </p>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Inside target cells, <strong class="text-slate-200">Lysophosphatidylcholine Acyltransferase 3 (LPCAT3)</strong> re-esterifies DHA-CoA onto the $sn\text{-}2$ position[cite: 1]. <strong class="text-slate-200">Phosphatidylserine Synthase-1/2 (PSS1/PSS2)</strong> then converts these intermediates into structural $sn\text{-}2$ <strong class="text-slate-200">DHA-PS</strong>, fueling continuous photoreceptor outer segment turnover and nuclear lamina repair[cite: 1].
+            </p>
+          </div>
+
+          <!-- Nrf2 & GPx4 -->
+          <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+            <h4 class="font-mono text-accent-emerald font-bold uppercase text-xs">5.2 Anti-Ferroptotic Lipid Shielding (Nrf2 / GPx4)</h4>
+            <p class="text-slate-300 leading-relaxed text-xs">
+              Polyunsaturated fatty acids (PUFAs) containing 5 bis-allylic carbons (DHA) are highly vulnerable to iron-catalyzed lipid peroxidation[cite: 1]. <strong class="text-white">Na-R-ALA</strong> triggers Nrf2 translocation, transcribing <strong class="text-slate-200">Glutathione Peroxidase-4 (GPx4)</strong> and <strong class="text-slate-200">SLC7A11 (System $x_c^-$)</strong>[cite: 1]:
+            </p>
+            <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 text-accent-emerald">
+              $$\text{PL-OOH} + 2\,\text{GSH} \xrightarrow{\text{GPx4}} \text{PL-OH} + \text{GSSG} + \text{H}_2\text{O}$$
+            </div>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              <strong class="text-white">Astaxanthin</strong> spans the membrane bilayer, quenching singlet oxygen ($^1O_2$) and trapping lipid peroxyl radicals before they can initiate radical chain propagation[cite: 1].
+            </p>
+          </div>
+        </div>
+
+        <!-- NLRP3 Blockade & Microglial Polarization -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-4 text-xs sm:text-sm">
+          <h4 class="font-mono text-accent-rose font-bold uppercase text-xs">5.3 Dual-Signal NLRP3 Inflammasome Blockade &amp; M2 Switch</h4>
+          <div class="grid md:grid-cols-2 gap-4 font-mono text-xs">
+            <div class="p-4 bg-deep-900 rounded-lg border border-slate-800 space-y-1.5">
+              <span class="text-accent-rose font-bold block">Signal 1 (Priming Checkpoint)</span>
+              <p class="text-slate-300 font-sans text-xs">
+                <strong class="text-white">Tremella GXM</strong> competitively blocks the TLR4/MD-2 pocket and upregulates <strong class="text-white">SOCS1 / A20</strong>[cite: 1]. <strong class="text-white">Astaxanthin</strong> directly inhibits IKK$\beta$ phosphorylation, sequestering NF-$\kappa$B in the cytoplasm and blocking transcription of <em>NLRP3</em> and <em>pro-IL-1$\beta$</em>[cite: 1].
+              </p>
+            </div>
+            <div class="p-4 bg-deep-900 rounded-lg border border-slate-800 space-y-1.5">
+              <span class="text-accent-rose font-bold block">Signal 2 (Assembly Checkpoint)</span>
+              <p class="text-slate-300 font-sans text-xs">
+                <strong class="text-white">Astaxanthin</strong> halts mitochondrial cardiolipin oxidation and mPTP opening[cite: 1]. <strong class="text-white">Saffron Crocetin</strong> scavenges cytosolic radicals, locking TXNIP to TRX1[cite: 1]. Pro-Caspase-1 is never cleaved, and <strong class="text-white">Gasdermin D (GSDMD)</strong> pyroptotic pores are completely prevented[cite: 1].
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Autonomic Decoupling & Vascular Cascade -->
+        <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+          <h4 class="font-mono text-accent-violet font-bold uppercase text-xs">5.4 The Neuro-Vascular Triad: Modafinil, Propranolol &amp; Tadalafil</h4>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            The co-administration of <strong class="text-white">Modafinil (50–100 mg)</strong>, <strong class="text-white">Propranolol (40 mg)</strong>, and <strong class="text-white">Tadalafil (2.5–5 mg)</strong> upon waking creates a decoupled state of central cognitive vigilance, peripheral autonomic tranquility, and continuous microvascular perfusion[cite: 1]:
+          </p>
+          <div class="p-3 bg-deep-900 rounded font-mono text-xs text-center border border-slate-800 text-accent-cyan overflow-x-auto">
+            $$\text{L-Citrulline} \xrightarrow{\text{eNOS}} \text{NO} \xrightarrow{\text{sGC}} \text{cGMP}\uparrow \xrightarrow[\text{Tadalafil}]{\text{PDE5 Block}} \text{PKG Activation} \implies \text{High-Velocity Capillary Perfusion}$$
+          </div>
+          <div class="grid sm:grid-cols-3 gap-4 text-xs font-mono pt-2">
+            <div class="p-3 bg-deep-900 rounded border border-slate-800">
+              <span class="text-amber-400 font-bold block mb-1">Modafinil (Central Drive):</span>
+              Inhibits DAT and upregulates Connexin-36 (Cx36) gap junctions, enhancing cortical electrotonic coupling[cite: 1].
+            </div>
+            <div class="p-3 bg-deep-900 rounded border border-slate-800">
+              <span class="text-accent-violet font-bold block mb-1">Propranolol (Autonomic Brake):</span>
+              Blocks $\beta_2$-receptors in the basolateral amygdala while saturating cardiac $\beta_1$-receptors to eliminate tremor and lower IOP[cite: 1].
+            </div>
+            <div class="p-3 bg-deep-900 rounded border border-slate-800">
+              <span class="text-accent-cyan font-bold block mb-1">Tadalafil (Microvascular Flux):</span>
+              Halts PDE5 degradation of cGMP, sustaining deep endothelial nitric oxide delivery to the retina, cortex, and fascial sheets[cite: 1].
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== § 6.0 EXTRACELLULAR MATRIX & GROUND SUBSTANCE ==================== -->
+      <div class="space-y-6 pt-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-xl font-bold text-white font-mono flex items-center gap-2">
+            <span class="text-accent-emerald font-bold">§ 6.0</span> Extracellular Matrix &amp; Ground Substance Hydration
+          </h3>
+          <span class="text-xs font-mono text-accent-emerald px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800/40">Fascial Hydration</span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+            <h4 class="font-mono text-brand-400 font-bold uppercase text-xs">6.1 The Collagen $(Gly\text{-}Pro\text{-}Hyp)_n$ Hydration Cylinder</h4>
+            <p class="text-slate-300 leading-relaxed text-xs">
+              Collagen's repeating amino acid triplets pack tightly due to glycine's single hydrogen atom, orienting outward-facing carbonyl ($C=O$) and hydroxyproline ($-OH$) groups at invariant spatial coordinates[cite: 1].
+            </p>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Water molecules form structured <strong class="text-white">water bridges</strong> across these polar coordinates, assembling an unbroken cylindrical hydration sheath[cite: 1]. This structured water jacket raises collagen's thermal denaturation temperature ($T_m$) by over <strong class="text-white">$20^\circ\text{C}$</strong> and forms a low-friction boundary lubricant[cite: 1].
+            </p>
+          </div>
+
+          <div class="bg-deep-850 p-6 rounded-xl border border-slate-800 space-y-3">
+            <h4 class="font-mono text-accent-cyan font-bold uppercase text-xs">6.2 Low-MW HA (Injuv®) vs. Tremella GXM Synergy</h4>
+            <p class="text-slate-300 leading-relaxed text-xs">
+              <strong class="text-white">Injuv®</strong> provides bioavailable 1–5 kDa hyaluronan oligosaccharides that bind <strong class="text-white">CD44</strong> on fibroblasts and fasciacytes, activating the FAK/ERK cascade to transcribe endogenous <strong class="text-white">HAS2/HAS3</strong> high-molecular-weight hyaluronan[cite: 1].
+            </p>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              <strong class="text-white">Tremella GXM</strong> supplies an exogenous, highly branched polyanionic polysaccharide lattice[cite: 1]. Decorated with carboxylate groups ($-COO^-$), it creates a high Fixed Charge Density (FCD) that drives Donnan osmotic swelling and locks structured EZ water in the dermis and corneal stroma[cite: 1].
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: META-MATHEMATICAL MIND RECODING ENGINE (§ 7.0) -->
+    <!-- ========================================================================= -->
+    <section id="tab-meditation" class="tab-pane hidden space-y-10">
+      <div class="border-b border-slate-800 pb-6">
+        <div class="text-xs font-mono text-accent-violet uppercase tracking-widest">Section 7.0</div>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight mt-1">Meta-Mathematical Mind Recoding Engine</h2>
+        <p class="text-sm text-slate-400 mt-2 font-mono">Directing the macroscopic low-entropy boundary operator to execute base-level chromatin repolymerization[cite: 1, 2].</p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Pacer & Web Audio Synthesizer -->
+        <div class="lg:col-span-1 bg-deep-850 p-6 sm:p-8 rounded-2xl border border-slate-800 flex flex-col items-center justify-between text-center glow-violet">
+          <div class="space-y-1 w-full">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-accent-violet font-bold block">RESONANT FIELD PACER</span>
+            <h3 id="current-phase-name" class="text-lg font-bold text-white font-mono">Phase 1: Ground-State Collapse</h3>
+          </div>
+
+          <!-- Orb -->
+          <div class="my-8 relative flex items-center justify-center">
+            <div id="breath-orb" class="w-44 h-44 rounded-full bg-gradient-to-tr from-brand-600/30 via-accent-cyan/30 to-accent-violet/40 border border-accent-violet/60 flex items-center justify-center transition-all duration-1000">
+              <div class="text-center font-mono space-y-1">
+                <span id="breath-prompt" class="text-xs uppercase font-bold text-brand-300 block tracking-wider">Inhale</span>
+                <span id="timer-display" class="text-3xl font-black text-white">05:00</span>
+              </div>
+            </div>
+            <div class="absolute -inset-4 rounded-full border border-brand-500/20 animate-pulse-slow pointer-events-none"></div>
+          </div>
+
+          <!-- Controls -->
+          <div class="w-full space-y-3">
+            <div class="flex gap-2">
+              <button id="med-toggle-btn" onclick="toggleMeditation()" class="flex-1 py-2.5 rounded-lg bg-accent-violet hover:bg-violet-600 text-white font-mono font-bold text-xs uppercase tracking-wider transition">Start Session</button>
+              <button onclick="resetMeditation()" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs transition">Reset</button>
+            </div>
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-800">
+              <span>Entropy Rate: <b class="text-brand-400">$\Delta S \rightarrow 0$</b></span>
+              <span>Audio: <b id="audio-stat" class="text-slate-400">40 Hz Isochronic</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Phase Instruction Matrix -->
+        <div class="lg:col-span-2 bg-deep-850 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-base font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-400"></span> The 4-Phase Chrono-Execution Matrix[cite: 1, 2]
+          </h3>
+
+          <div id="card-phase-1" class="p-4 rounded-xl border border-brand-500/40 bg-deep-900/90 transition">
+            <div class="flex justify-between items-start mb-1">
+              <h4 class="text-xs font-mono font-bold text-brand-400 uppercase">1. Ground-State Collapse ($\Delta S \rightarrow 0$)</h4>
+              <span class="text-[10px] font-mono text-slate-500">00:00 – 05:00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">Verticalize spine; panoramic gaze; double-inhalation with long exhalation. Settle cortical rhythms into theta-gamma coupling to quench baseline radical bursts[cite: 1, 2].</p>
+          </div>
+
+          <div id="card-phase-2" class="p-4 rounded-xl border border-slate-800 bg-deep-900/40 opacity-70 transition">
+            <div class="flex justify-between items-start mb-1">
+              <h4 class="text-xs font-mono font-bold text-accent-cyan uppercase">2. The Excision Sweep (Abasic Site Isolation)</h4>
+              <span class="text-[10px] font-mono text-slate-500">05:00 – 10:00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">Scan tissue layers down to cell nuclei. Identify structural tension and somatic memory as informational noise ($8\text{-oxo-dG}, 5\text{mC}$), decoupling identity to create a neutral abasic void[cite: 1, 2].</p>
+          </div>
+
+          <div id="card-phase-3" class="p-4 rounded-xl border border-slate-800 bg-deep-900/40 opacity-70 transition">
+            <div class="flex justify-between items-start mb-1">
+              <h4 class="text-xs font-mono font-bold text-accent-violet uppercase">3. Meta-Mathematical Repolymerization</h4>
+              <span class="text-[10px] font-mono text-slate-500">10:00 – 15:00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">Hold the invariant mathematical blueprint in awareness: maximal $\Delta\Psi_m \approx -180\text{ mV}$ and unbroken EZ hydration[cite: 1, 2]. Guide $\text{Pol }\beta$ and TET enzymes in high-fidelity gap-filling resynthesis[cite: 1, 2].</p>
+          </div>
+
+          <div id="card-phase-4" class="p-4 rounded-xl border border-slate-800 bg-deep-900/40 opacity-70 transition">
+            <div class="flex justify-between items-start mb-1">
+              <h4 class="text-xs font-mono font-bold text-accent-emerald uppercase">4. The Heterochromatin Seal ($H3K9me3$)</h4>
+              <span class="text-[10px] font-mono text-slate-500">15:00 – 20:00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">Consolidate into absolute stillness. Envision SIRT6 and SUV39H1 locking repressive $H3K9me3$ marks over retrotransposons and SASP promoters, permanently sealing the reset baseline[cite: 1, 2].</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 6: MASTER LEXICON & 90-DAY CLINICAL DIAGNOSTICS (§ 8.0) -->
+    <!-- ========================================================================= -->
+    <section id="tab-lexicon" class="tab-pane hidden space-y-12">
+      <!-- 90-Day Clinical Biomarker Suite -->
+      <div class="space-y-6">
+        <div class="border-b border-slate-800 pb-4">
+          <div class="text-xs font-mono text-brand-400 uppercase tracking-widest">Section 8.0</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
+            90-Day Clinical Biomarker &amp; Diagnostic Suite
+          </h2>
+          <p class="text-sm text-slate-400 mt-2 font-mono">
+            Objective laboratory testing schedule to quantify biological age reversal, epigenetic reset, and tissue remodeling[cite: 1].
+          </p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300 font-mono border border-slate-800 rounded-xl overflow-hidden">
+            <thead class="bg-deep-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Diagnostic Domain</th>
+                <th class="p-3">Specific Clinical Test</th>
+                <th class="p-3">Target Biological Mechanism</th>
+                <th class="p-3">Optimal Target Metric</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-deep-850/60 text-[11px]">
+              <tr>
+                <td class="p-3 font-bold text-brand-400">Epigenetic Clocks</td>
+                <td class="p-3 text-white">GrimAge v2 / DunedinPACE</td>
+                <td class="p-3">TET-mediated demethylation of aging CpGs[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">DunedinPACE &lt; 0.70 / Age Acceleration &lt; 0[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">Ocular Electrophysiology</td>
+                <td class="p-3 text-white">fERG (Focal Electroretinogram)</td>
+                <td class="p-3">Foveal $O_2$ diffusion &amp; POS disc replenishment[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">&gt;25% increase in b-wave amplitude[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-cyan">Macular Pigment Density</td>
+                <td class="p-3 text-white">HFP MPOD Measurement</td>
+                <td class="p-3">Lutein / Zeaxanthin accumulation in Henle layer[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">MPOD &gt; 0.65 Optical Density Units[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-violet">Systemic Inflammation</td>
+                <td class="p-3 text-white">hs-CRP + Plasma IL-1$\beta$ / IL-18</td>
+                <td class="p-3">NLRP3 inflammasome and STING shutdown[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">hs-CRP &lt; 0.3 mg/L; Undetectable IL-1$\beta$[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-emerald">Lipid Peroxidation</td>
+                <td class="p-3 text-white">Serum MDA + Urinary 8-isoprostane</td>
+                <td class="p-3">Nrf2/GPx4 and Astaxanthin lipid shield[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">Lowest clinical decile (zero ferroptosis)[cite: 1]</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-accent-rose">Cellular NAD+ Status</td>
+                <td class="p-3 text-white">Intracellular Whole-Blood NAD+</td>
+                <td class="p-3">Boron-mediated CD38 inhibition[cite: 1]</td>
+                <td class="p-3 text-emerald-400 font-bold">&gt;40 $\mu$M intracellular concentration[cite: 1]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Master Lexicon Section -->
+      <div class="space-y-6 pt-6 border-t border-slate-800">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Biophysical &amp; Cosmological Master Lexicon</h2>
+            <p class="text-sm text-slate-400 mt-1 font-mono">Formal mathematical formulas, biochemical pathways, and cosmological definitions[cite: 1, 2].</p>
+          </div>
+          <div class="w-full md:w-72">
+            <input type="text" id="lexicon-search" oninput="filterLexicon()" placeholder="Filter terms or mechanisms..." class="w-full bg-deep-850 border border-slate-700 text-xs font-mono text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <div id="lexicon-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Javascript populated -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== JAVASCRIPT CONTROLLER ==================== -->
+  <script>
+    /* ==================== HERO PARTICLE CANVAS ==================== */
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let particles = [], animId;
+      function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+      resize(); window.addEventListener('resize', resize);
+      for (let i = 0; i < 60; i++) {
+        particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5+0.3, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3, a: Math.random()*0.5+0.1 });
+      }
+      function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(20,184,166,${p.a})`; ctx.fill();
+        });
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i+1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+            const d = Math.sqrt(dx*dx+dy*dy);
+            if (d < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(20,184,166,${0.06*(1-d/120)})`; ctx.lineWidth = 0.5; ctx.stroke(); }
+          }
+        }
+        animId = requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ==================== SCROLL PROGRESS ==================== */
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      document.getElementById('scroll-progress').style.width = pct + '%';
+    });
+
+    /* ==================== MOBILE NAV ==================== */
+    function toggleMobileNav() {
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+
+    /* ==================== TAB SWITCHING ==================== */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => { el.classList.add('hidden'); el.classList.remove('tab-active'); });
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-950', 'text-brand-400', 'active');
+        btn.classList.add('text-slate-400');
+      });
+
+      const selectedPane = document.getElementById('tab-' + tabId);
+      if (selectedPane) { selectedPane.classList.remove('hidden'); requestAnimationFrame(() => selectedPane.classList.add('tab-active')); }
+
+      const activeBtn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-brand-950', 'text-brand-400', 'active');
+        activeBtn.classList.remove('text-slate-400');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (window.renderMathInElement) {
+        setTimeout(() => renderMathInElement(document.body, {
+          delimiters: [ {left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}, {left: '$', right: '$', display: false} ],
+          throwOnError: false
+        }), 50);
+      }
+    }
+
+    function scaleDoses() {
+      const mult = parseFloat(document.getElementById('weight-scaler').value);
+      document.querySelectorAll('.dose-val').forEach(el => {
+        const min = Math.round(parseFloat(el.getAttribute('data-base-min')) * mult);
+        const max = Math.round(parseFloat(el.getAttribute('data-base-max')) * mult);
+        el.textContent = (min === max) ? `${min} mg` : `${min}–${max} mg`;
+      });
+    }
+
+    // Audio & Meditation Controller
+    let medRunning = false;
+    let medInterval = null;
+    let medSeconds = 300;
+    let currentPhase = 1;
+    let audioCtx = null;
+    let osc1 = null, osc2 = null, gainNode = null;
+
+    const phaseNames = [
+      "Phase 1: Ground-State Collapse",
+      "Phase 2: The Excision Sweep",
+      "Phase 3: Meta-Mathematical Repolymerization",
+      "Phase 4: The Heterochromatin Seal"
+    ];
+
+    function initAudio() {
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        osc1 = audioCtx.createOscillator();
+        osc2 = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+
+        // 216 Hz somatic carrier with 40 Hz gamma binaural beat
+        osc1.frequency.setValueAtTime(216, audioCtx.currentTime);
+        osc2.frequency.setValueAtTime(256, audioCtx.currentTime);
+
+        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        osc1.connect(gainNode);
+        osc2.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        osc1.start();
+        osc2.start();
+      } catch (e) {
+        console.log("Audio not supported or blocked");
+      }
+    }
+
+    function toggleMeditation() {
+      const btn = document.getElementById('med-toggle-btn');
+      if (medRunning) {
+        clearInterval(medInterval);
+        medRunning = false;
+        btn.textContent = "Resume Session";
+        btn.classList.remove('bg-amber-600');
+        btn.classList.add('bg-accent-violet');
+        if (audioCtx) audioCtx.suspend();
+      } else {
+        if (!audioCtx) initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        medRunning = true;
+        btn.textContent = "Pause Session";
+        btn.classList.remove('bg-accent-violet');
+        btn.classList.add('bg-amber-600');
+        medInterval = setInterval(medTick, 1000);
+      }
+    }
+
+    function resetMeditation() {
+      clearInterval(medInterval);
+      medRunning = false;
+      medSeconds = 300;
+      currentPhase = 1;
+      document.getElementById('med-toggle-btn').textContent = "Start Session";
+      document.getElementById('med-toggle-btn').classList.remove('bg-amber-600');
+      document.getElementById('med-toggle-btn').classList.add('bg-accent-violet');
+      if (audioCtx) audioCtx.suspend();
+      updateMedDisplay();
+    }
+
+    function medTick() {
+      medSeconds--;
+      if (medSeconds < 0) {
+        currentPhase++;
+        if (currentPhase > 4) {
+          resetMeditation();
+          alert("Master Recoding Protocol Complete. Chromatin state condensed and locked.");
+          return;
+        }
+        medSeconds = 300;
+      }
+      updateMedDisplay();
+    }
+
+    function updateMedDisplay() {
+      const m = Math.floor(medSeconds / 60).toString().padStart(2, '0');
+      const s = (medSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').textContent = `${m}:${s}`;
+      document.getElementById('current-phase-name').textContent = phaseNames[currentPhase - 1];
+
+      const cycle = medSeconds % 14;
+      const orb = document.getElementById('breath-orb');
+      const prompt = document.getElementById('breath-prompt');
+
+      if (cycle >= 10) {
+        prompt.textContent = "Inhale";
+        orb.style.transform = "scale(1.15)";
+      } else if (cycle >= 6) {
+        prompt.textContent = "Hold";
+        orb.style.transform = "scale(1.15)";
+      } else {
+        prompt.textContent = "Exhale";
+        orb.style.transform = "scale(0.95)";
+      }
+
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById('card-phase-' + i);
+        if (i === currentPhase) {
+          card.classList.remove('border-slate-800', 'bg-deep-900/40', 'opacity-70');
+          card.classList.add('border-brand-500/40', 'bg-deep-900/90', 'opacity-100');
+        } else {
+          card.classList.add('border-slate-800', 'bg-deep-900/40', 'opacity-70');
+          card.classList.remove('border-brand-500/40', 'bg-deep-900/90', 'opacity-100');
+        }
+      }
+    }
+
+    const masterGlossary = [
+      {
+        term: "Holographic Principle",
+        category: "Cosmology & Theoretical Physics",
+        formula: "S_{max} = \\frac{A}{4\\ell_P^2}",
+        desc: "The principle that all bulk informational degrees of freedom inside a 3D volume are mathematically encoded on its 2D boundary surface. Biological boundaries mirror this cosmic relation."
+      },
+      {
+        term: "Exclusion Zone (EZ) Water",
+        category: "Interfacial Biophysics",
+        formula: "H_3O_2^-",
+        desc: "Liquid-crystalline 4th phase of water that organizes along hydrophilic boundaries, separating protons into an adjacent bulk hydronium cloud with a -100 to -200 mV potential difference[cite: 1]."
+      },
+      {
+        term: "DNA Repolymerization",
+        category: "Genomics & BER",
+        formula: "\\text{Pol }\\beta + \\text{dCTP} \\rightarrow \\text{DNA}_{\\text{repaired}} + \\text{PP}_i",
+        desc: "High-fidelity single-nucleotide resynthesis by Polymerase beta during Base Excision Repair, removing 5'-dRP flaps and inserting pristine unmethylated cytosines[cite: 1, 2]."
+      },
+      {
+        term: "TET Dioxygenases (1–3)",
+        category: "Epigenetics",
+        formula: "5\\text{mC} \\xrightarrow[\\alpha\\text{-KG}, O_2, Fe^{2+}]{\\text{TET}} 5\\text{hmC} \\xrightarrow{\\text{TET}} 5\\text{fC} \\xrightarrow{\\text{TET}} 5\\text{caC} \\xrightarrow{\\text{TDG}} \\text{AP site}",
+        desc: "Ten-Eleven Translocation dioxygenases — the active demethylation cascade that reverses age-associated methylome drift. TET1, TET2 and TET3 are Fe(II)- and α-ketoglutarate-dependent enzymes that iteratively oxidize 5-methylcytosine (5mC) through three successive intermediates: 5-hydroxymethylcytosine (5hmC), 5-formylcytosine (5fC), and 5-carboxylcytosine (5caC). Thymine DNA Glycosylase (TDG) then excises the terminal 5caC, creating an abasic (AP) site that APE1 incises and Pol β fills with a pristine unmethylated dCTP — completing the full demethylation-repolymerization cycle. The α-KG cofactor is generated from TCA cycle flux, linking TET processivity directly to mitochondrial metabolic health; Na-R-ALA/DHLA drives α-KG production while maintaining the Fe(II) oxidation state TET requires. Entheogenic compounds (ayahuasca, psilocybin) transiently decompact heterochromatin, granting TET enzymes access to deeply buried hypermethylated CpG islands that are otherwise sterically inaccessible under normal chromatin topology."
+      },
+      {
+        term: "Heterochromatin Lock (H3K9me3)",
+        category: "Epigenetics",
+        formula: "\\text{SUV39H1} + \\text{SIRT6} \\rightarrow \\text{H3K9me3}",
+        desc: "Boron-spared NAD+ activates SIRT6 deacetylation, recruiting SUV39H1 to compact chromatin, silencing LINE-1 retrotransposons and arresting cGAS-STING[cite: 1, 2]."
+      },
+      {
+        term: "Telomeric Shelterin Architecture",
+        category: "Molecular Genetics",
+        formula: "\\text{TERT/TERC} \\rightarrow \\text{TTAGGG} \\implies \\text{Shelterin Locked}",
+        desc: "A six-protein complex (TRF1, TRF2, POT1, TIN2, TPP1, RAP1) that caps telomeric T-loops, displacing gamma-H2AX foci and silencing ATM/ATR/p53/p21 senescence arrest[cite: 1, 2]."
+      },
+      {
+        term: "Entheogenic Epigenetic Reset",
+        category: "Neuro-Epigenetics",
+        formula: "5\\text{-HT}_{2A} + \\text{S1R} \\rightarrow \\text{BDNF} \\uparrow",
+        desc: "Ayahuasca and Iboga activate 5-HT2A and Sigma-1 chaperones to open tightly sequestered chromatin loci, allowing rapid systemic epigenetic recalibration[cite: 1, 2]."
+      },
+      {
+        term: "Electrokinetic Streaming Potential",
+        category: "Fascial Biophysics",
+        formula: "V_{str} = \\frac{\\varepsilon_0 \\varepsilon_r \\cdot \\zeta \\cdot \\Delta P}{\\mu \\cdot \\sigma}",
+        desc: "Endogenous microvoltage generated when interstitial fluids move across fixed negative collagen charges, opening Piezo1/2 channels for matrix renewal[cite: 1]."
+      },
+      {
+        term: "5-Methylcytosine (5mC)",
+        category: "Epigenetics",
+        formula: "\\text{DNMT1/3} + \\text{SAMe} \\rightarrow 5\\text{mC} + \\text{SAH}",
+        desc: "The primary epigenetic mark on DNA. DNA methyltransferases (DNMT1 for maintenance, DNMT3A/3B for de novo) transfer a methyl group from S-adenosylmethionine to the C5 position of cytosine at CpG dinucleotides. Aberrant accumulation of 5mC at tumor-suppressor promoter CpG islands alongside global genomic hypomethylation constitutes the methylome drift signature of aging — the informational entropy ($\\Delta S > 0$) that the TET1–3 demethylation cascade is designed to reverse."
+      },
+      {
+        term: "Trimethylated Histone H3 Lysine 9 (H3K9me3)",
+        category: "Epigenetics",
+        formula: "\\text{SUV39H1} + \\text{H3K9} \\xrightarrow{3 \\times \\text{SAMe}} \\text{H3K9me3} \\rightarrow \\text{HP1}\\alpha \\text{ recruitment}",
+        desc: "The constitutive heterochromatin lock. SUV39H1 methyltransferase deposits three methyl groups on lysine 9 of histone H3, creating a binding platform for Heterochromatin Protein 1 alpha (HP1α). This compacts chromatin into transcriptionally silent heterochromatin, burying parasitic LINE-1 retrotransposons that would otherwise transcribe into cytosolic cDNA and trigger the cGAS → STING → TBK1 → NF-κB inflammatory cascade. Age-related loss of H3K9me3 is a primary driver of SASP cytokine secretion (IL-6, IL-8, MMP-9). The protocol restores it via SIRT6-mediated deacetylation of H3K9ac, enabled by boron-spared NAD+ from CD38 inhibition."
+      },
+      {
+        term: "8-Oxo-2'-Deoxyguanosine (8-oxo-dG)",
+        category: "Genomics & BER",
+        formula: "\\text{G} + {}^{\\bullet}\\text{OH} \\rightarrow 8\\text{-oxo-dG} \\xrightarrow{\\text{OGG1}} \\text{AP site} \\xrightarrow{\\text{Pol }\\beta} \\text{G}_{\\text{restored}}",
+        desc: "The most abundant and mutagenic oxidative DNA lesion. Hydroxyl radicals attack the C8 position of guanine, producing 8-oxo-dG — a miscoding lesion that pairs with adenine instead of cytosine, causing G:C → T:A transversion mutations if left unrepaired. The base excision repair (BER) glycosylase OGG1 recognizes and excises the damaged base, creating an abasic (AP) site. APE1 incises the backbone, and Polymerase β fills the single-nucleotide gap with a pristine dGTP. Accumulation of 8-oxo-dG is a direct biomarker of oxidative genomic damage and a primary substrate target of the protocol's thiol-redox preservation axis (DHLA/Na-R-ALA) and astaxanthin membrane shield."
+      }
+    ];
+
+    function populateLexicon() {
+      const grid = document.getElementById('lexicon-grid');
+      grid.innerHTML = '';
+      masterGlossary.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-deep-850 p-5 rounded-xl border border-slate-800 space-y-3 hover:border-brand-500/40 transition lexicon-card";
+        card.setAttribute('data-search', (item.term + ' ' + item.category + ' ' + item.desc).toLowerCase());
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <span class="text-[10px] font-mono text-brand-400 uppercase font-bold px-2 py-0.5 bg-brand-950/60 rounded border border-brand-800/40">${item.category}</span>
+          </div>
+          <h4 class="text-sm font-bold text-white font-mono">${item.term}</h4>
+          <div class="p-2 bg-deep-900 rounded font-mono text-xs text-accent-cyan border border-slate-800/60">
+            $$${item.formula}$$
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${item.desc}</p>
+        `;
+        grid.appendChild(card);
+      });
+      if (window.renderMathInElement) {
+        renderMathInElement(grid, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function filterLexicon() {
+      const query = document.getElementById('lexicon-search').value.toLowerCase();
+      document.querySelectorAll('.lexicon-card').forEach(card => {
+        const text = card.getAttribute('data-search');
+        if (text.includes(query)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      switchTab('hero');
+      populateLexicon();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+[
+  {
+    "term": "Holographic Principle",
+    "category": "Cosmology & theoretical physics",
+    "formula": "S_{max} = \\frac{A}{4\\ell_P^2}",
+    "desc": "The principle that all bulk informational degrees of freedom inside a 3D volume are mathematically encoded on its 2D boundary surface. Biological boundaries mirror this cosmic relation."
+  },
+  {
+    "term": "Exclusion Zone (EZ) Water",
+    "category": "Interfacial biophysics",
+    "formula": "H_3O_2^-",
+    "desc": "Liquid-crystalline fourth phase of water that organizes along hydrophilic boundaries, separating protons into an adjacent bulk hydronium cloud with a −100 to −200 mV potential difference."
+  },
+  {
+    "term": "DNA Repolymerization",
+    "category": "Genomics & BER",
+    "formula": "\\text{Pol }\\beta + \\text{dCTP} \\rightarrow \\text{DNA}_{\\text{repaired}} + \\text{PP}_i",
+    "desc": "High-fidelity single-nucleotide resynthesis by Polymerase β during Base Excision Repair, removing 5′-dRP flaps and inserting pristine unmethylated cytosines."
+  },
+  {
+    "term": "TET Dioxygenases (1–3)",
+    "category": "Epigenetics",
+    "formula": "5\\text{mC} \\xrightarrow[\\alpha\\text{-KG}, O_2, Fe^{2+}]{\\text{TET}} 5\\text{hmC} \\xrightarrow{\\text{TET}} 5\\text{fC} \\xrightarrow{\\text{TET}} 5\\text{caC} \\xrightarrow{\\text{TDG}} \\text{AP site}",
+    "desc": "Ten-Eleven Translocation dioxygenases — the active demethylation cascade that reverses age-associated methylome drift. TET1, TET2 and TET3 are Fe(II)- and α-ketoglutarate-dependent enzymes that iteratively oxidize 5-methylcytosine (5mC) through three successive intermediates: 5-hydroxymethylcytosine (5hmC), 5-formylcytosine (5fC), and 5-carboxylcytosine (5caC). Thymine DNA Glycosylase (TDG) then excises the terminal 5caC, creating an abasic (AP) site that APE1 incises and Pol β fills with a pristine unmethylated dCTP — completing the full demethylation–repolymerization cycle. The α-KG cofactor is generated from TCA cycle flux, linking TET processivity directly to mitochondrial metabolic health; Na-R-ALA/DHLA drives α-KG production while maintaining the Fe(II) oxidation state TET requires. Entheogenic compounds (ayahuasca, psilocybin) transiently decompact heterochromatin, granting TET enzymes access to deeply buried hypermethylated CpG islands that are otherwise sterically inaccessible under normal chromatin topology."
+  },
+  {
+    "term": "Heterochromatin Lock (H3K9me3)",
+    "category": "Epigenetics",
+    "formula": "\\text{SUV39H1} + \\text{SIRT6} \\rightarrow \\text{H3K9me3}",
+    "desc": "Boron-spared NAD+ activates SIRT6 deacetylation, recruiting SUV39H1 to compact chromatin, silencing LINE-1 retrotransposons and arresting cGAS–STING."
+  },
+  {
+    "term": "Telomeric Shelterin Architecture",
+    "category": "Molecular genetics",
+    "formula": "\\text{TERT/TERC} \\rightarrow \\text{TTAGGG} \\implies \\text{Shelterin Locked}",
+    "desc": "A six-protein complex (TRF1, TRF2, POT1, TIN2, TPP1, RAP1) that caps telomeric T-loops, displacing γ-H2AX foci and silencing ATM/ATR/p53/p21 senescence arrest."
+  },
+  {
+    "term": "Entheogenic Epigenetic Reset",
+    "category": "Neuro-epigenetics",
+    "formula": "5\\text{-HT}_{2A} + \\text{S1R} \\rightarrow \\text{BDNF} \\uparrow",
+    "desc": "Ayahuasca and iboga activate 5-HT2A and Sigma-1 chaperones to open tightly sequestered chromatin loci, allowing rapid systemic epigenetic recalibration."
+  },
+  {
+    "term": "Electrokinetic Streaming Potential",
+    "category": "Fascial biophysics",
+    "formula": "V_{str} = \\frac{\\varepsilon_0 \\varepsilon_r \\cdot \\zeta \\cdot \\Delta P}{\\mu \\cdot \\sigma}",
+    "desc": "Endogenous microvoltage generated when interstitial fluids move across fixed negative collagen charges, opening Piezo1/2 channels for matrix renewal."
+  },
+  {
+    "term": "5-Methylcytosine (5mC)",
+    "category": "Epigenetics",
+    "formula": "\\text{DNMT1/3} + \\text{SAMe} \\rightarrow 5\\text{mC} + \\text{SAH}",
+    "desc": "The primary epigenetic mark on DNA. DNA methyltransferases (DNMT1 for maintenance, DNMT3A/3B for de novo) transfer a methyl group from S-adenosylmethionine to the C5 position of cytosine at CpG dinucleotides. Aberrant accumulation of 5mC at tumor-suppressor promoter CpG islands alongside global genomic hypomethylation constitutes the methylome drift signature of aging — the informational entropy ($\\Delta S > 0$) that the TET1–3 demethylation cascade is designed to reverse."
+  },
+  {
+    "term": "Trimethylated Histone H3 Lysine 9 (H3K9me3)",
+    "category": "Epigenetics",
+    "formula": "\\text{SUV39H1} + \\text{H3K9} \\xrightarrow{3 \\times \\text{SAMe}} \\text{H3K9me3} \\rightarrow \\text{HP1}\\alpha \\text{ recruitment}",
+    "desc": "The constitutive heterochromatin lock. SUV39H1 methyltransferase deposits three methyl groups on lysine 9 of histone H3, creating a binding platform for Heterochromatin Protein 1 alpha (HP1α). This compacts chromatin into transcriptionally silent heterochromatin, burying parasitic LINE-1 retrotransposons that would otherwise transcribe into cytosolic cDNA and trigger the cGAS → STING → TBK1 → NF-κB inflammatory cascade. Age-related loss of H3K9me3 is a primary driver of SASP cytokine secretion (IL-6, IL-8, MMP-9). The protocol restores it via SIRT6-mediated deacetylation of H3K9ac, enabled by boron-spared NAD+ from CD38 inhibition."
+  },
+  {
+    "term": "8-Oxo-2′-Deoxyguanosine (8-oxo-dG)",
+    "category": "Genomics & BER",
+    "formula": "\\text{G} + {}^{\\bullet}\\text{OH} \\rightarrow 8\\text{-oxo-dG} \\xrightarrow{\\text{OGG1}} \\text{AP site} \\xrightarrow{\\text{Pol }\\beta} \\text{G}_{\\text{restored}}",
+    "desc": "The most abundant and mutagenic oxidative DNA lesion. Hydroxyl radicals attack the C8 position of guanine, producing 8-oxo-dG — a miscoding lesion that pairs with adenine instead of cytosine, causing G:C → T:A transversion mutations if left unrepaired. The base excision repair (BER) glycosylase OGG1 recognizes and excises the damaged base, creating an abasic (AP) site. APE1 incises the backbone, and Polymerase β fills the single-nucleotide gap with a pristine dGTP. Accumulation of 8-oxo-dG is a direct biomarker of oxidative genomic damage and a primary substrate target of the protocol’s thiol-redox preservation axis (DHLA/Na-R-ALA) and astaxanthin membrane shield."
+  }
+]

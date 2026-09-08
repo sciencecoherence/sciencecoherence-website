@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ethos of Being — TRANSMISSION</title>
+
+<style>
+/* Standalone fallback — safe to delete when this file sits next to the site's styles.css.
+   Duplicates the subset of site rules this page uses, plus the .eq block (new). */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap');
+:root {
+  --ink:#0a0a0a; --bg:#f4f1ea; --rule:#0a0a0a; --muted:#5a5a5a;
+  --gridline:#1a1a1a; --cell:#ffffff; --shade:#ece7da;
+  --mono:"JetBrains Mono","SF Mono",Menlo,Consolas,"Courier New",monospace;
+  --serif-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --serif-body:"Crimson Pro",Georgia,"Times New Roman",serif;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html, body { background:var(--bg); color:var(--ink); font-family:var(--mono); font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+a { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+a:hover { background:var(--ink); color:var(--bg); text-decoration:none; }
+.site-head { border-bottom:2px solid var(--rule); padding:14px 24px 12px; display:flex; justify-content:space-between; align-items:flex-end; gap:24px; }
+.site-head .brand { font-weight:700; letter-spacing:0.02em; font-size:20px; }
+.site-head nav { display:flex; gap:18px; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; flex-wrap:wrap; }
+.meta-bar { border-bottom:1px solid var(--rule); padding:6px 24px; display:flex; justify-content:space-between; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); background:var(--shade); flex-wrap:wrap; gap:10px; }
+main { padding:24px; max-width:1180px; margin:0 auto; }
+.type-tag { display:inline-block; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:3px 9px; border:1px solid var(--ink); background:var(--ink); color:var(--bg); text-decoration:none; }
+.type-tag.note { background:var(--shade); color:var(--ink); }
+.prose { max-width:640px; margin:0 auto; font-family:var(--serif-body); font-size:19px; line-height:1.7; color:var(--ink); }
+.prose p { margin:1em 0; }
+.prose h1 { font-family:var(--serif-display); font-size:46px; font-weight:500; letter-spacing:-0.01em; line-height:1.15; text-transform:none; margin:18px 0 8px; }
+.prose .lede { font-family:var(--serif-body); font-style:italic; font-size:18px; color:var(--muted); margin:0 0 14px; line-height:1.5; }
+.prose em, .prose i { font-family:var(--serif-body); font-style:italic; }
+.prose-rule { max-width:640px; margin:26px auto; font-family:var(--mono); color:var(--muted); letter-spacing:0; text-align:center; font-size:11px; }
+.close-stamp { max-width:640px; margin:36px auto 0; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); text-align:left; }
+.cross-nav { max-width:640px; margin:32px auto 0; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; }
+.cross-nav a { border:1px solid var(--ink); padding:4px 10px; text-decoration:none; }
+.cross-nav a.disabled { opacity:0.35; pointer-events:none; border-style:dashed; }
+.cross-nav .spacer { flex:1; }
+.attribution { max-width:640px; margin:32px auto 0; padding:12px 14px; border:1px solid var(--ink); background:var(--cell); font-family:var(--mono); font-size:11px; line-height:1.65; letter-spacing:0.02em; color:var(--muted); }
+.attribution .label { display:block; color:var(--ink); font-weight:700; text-transform:uppercase; letter-spacing:0.12em; font-size:10px; margin-bottom:6px; }
+.attribution b { color:var(--ink); font-weight:700; }
+footer { border-top:2px solid var(--rule); padding:14px 24px; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:36px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+@media (max-width:760px){ .site-head{flex-direction:column;align-items:flex-start;} .prose{font-size:18px;} .prose h1{font-size:34px;} }
+
+/* Equation cells — formal objects inside the prose scope */
+.eq { max-width:640px; margin:24px auto; display:flex; align-items:center; gap:14px; border:1px solid var(--gridline); background:var(--cell); padding:14px 16px; font-family:var(--mono); font-size:15px; }
+.eq .formula { flex:1; text-align:center; letter-spacing:0.02em; line-height:1.6; }
+.eq .no { color:var(--muted); font-size:11px; }
+.eq sub, .eq sup { font-size:10px; }
+@media (max-width:760px){ .eq{font-size:13px; padding:10px 12px;} }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="brand">
+    TRANSMISSION
+  </div>
+  <nav>
+    <a href="../index.html">Feed</a>
+    <a href="../directory.html">Index</a>
+  </nav>
+</header>
+
+<div class="meta-bar">
+  <span>Note — The Ethos of Being, 10/07/2026</span>
+</div>
+
+<main>
+
+  <div style="max-width:640px; margin:0 auto 14px;">
+    <span class="type-tag note">Note · The Ethos of Being</span>
+  </div>
+
+  <article class="prose">
+    <h1>The Ethos of Being</h1>
+    <p class="lede">Coherence, alignment, and emergence. One idea, developed to its consequences.</p>
+  </article>
+
+  <div class="prose-rule">— The refusal —</div>
+
+  <article class="prose">
+    <p>This begins from a refusal to separate. Matter from mind. Observer from observed. Law from structure. The usual partitions are not features of reality. They are artifacts of description — the habit of standing outside the process and cataloguing results. What follows is an attempt to think from inside the process that produces a world.</p>
+
+    <p>The conviction is that coherence is the operative principle. Not a metaphor. Not an aspiration. The structural condition under which anything persists at all. A wave holds its form because its phases align. A cell holds its identity because its metabolism interlocks. A mind holds its continuity because attention, memory and intention organize into something unified enough to act. What we call existence is the sustained alignment of internal relations. What we call dissolution is the loss of it.</p>
+
+    <p>This is not a theory of everything. It does not derive the Standard Model. It does not predict new particles. It works at a different register — the architecture of coherence itself, before the split between physical and mental, between substrate and expression. The claim is that this architecture is self-generating, self-correcting, and — at sufficient depth — self-aware.</p>
+
+    <p>The formal structure is minimal by design. Four operations. Two feedback closures. One dual equilibrium condition. Everything else is consequence.</p>
+  </article>
+
+  <div class="prose-rule">— Coherence is alignment —</div>
+
+  <article class="prose">
+    <p>Coherence is alignment across relations. That is the axiom. It is not derived from anything more primitive, because nothing more primitive is available. Prior to relation, there is nothing to align. Without alignment, no relation persists.</p>
+
+    <p>A system is coherent when what varies locally does not contradict what holds globally. That compatibility is what lets a system persist as itself instead of dissolving into its surroundings. It is what lets interference build stable patterns instead of noise. What lets a metabolism sustain an organism instead of consuming it. What lets a thought complete itself instead of fragmenting mid-formation.</p>
+
+    <p>Coherence is structural. No moral valence. No purpose smuggled in. Systems that hold alignment across scales persist. Systems that lose it fragment. Not a judgment — a description of what existing as something requires.</p>
+
+    <p>Read through this lens, the cosmos is a coherent informational system perpetually minimizing its own decoherence. Every interaction is a feedback operation: the substrate assesses its own state and updates to restore alignment. Nothing external drives this. No outside clock. No administrator. The feedback is the process. The process is the substrate.</p>
+
+    <p>In physics this appears as phase alignment. In biology, as functional integration. In mind, as attentional unity — thoughts, perceptions, intentions organizing into an experience that holds together. These are not analogies. The same principle, at different scales.</p>
+  </article>
+
+  <div class="prose-rule">— The loop —</div>
+
+  <article class="prose">
+    <p>There is no external driver running the world from outside it. Reality is produced and stabilized by a closed chain of operations — a substrate that organizes itself, realizes a stable world, and feeds that world back into the operations that generated it.</p>
+  </article>
+
+  <div class="eq"><span class="formula">∇Φ ⟶ Λ ⟶ Ω ⟶ ∆,&ensp;&ensp;∆ ⇝ Λ,&ensp;&ensp;Ω ⇝ ∇Φ</span><span class="no">(1)</span></div>
+
+  <article class="prose">
+    <p>Four operations. Each irreducible. Not stages in a temporal sequence — aspects of a single recursive act. The linear notation is a concession to the medium.</p>
+
+    <p><i>∇Φ is difference.</i> The smallest admissible variation the substrate allows, and the directional holographic structure that variation induces. Not a field living in spacetime — part of what makes a spacetime-like description possible at all. Every local differential carries information about the whole. The whole is nothing other than the consistent organization of its local differentials.</p>
+
+    <p><i>Λ is selection.</i> The substrate's raw relational degrees of freedom are vast — overwhelmingly so. Most do not survive repeated updating. Λ keeps the small fraction that does, compressing raw possibility into effective regularity. What we call physical law, constants, constraints — that is the residue of this filtration. Not impositions from outside. Residue.</p>
+
+    <p><i>Ω is the realized world.</i> Not an inert output. A global organization with memory and constraint. Once a configuration is real, it imposes consistency requirements on what can happen next. Emergence is not one-way. The world, once real, participates in sustaining the conditions for its own continued reality.</p>
+
+    <p><i>∆ is integration.</i> The operation by which the system forms an internal self-model that acts back on selection. This is where observer-like structure first appears — not a conscious agent injected from outside, but integration produced by the recursion, modifying the recursion's own subsequent behavior. This is the root of agency. This is why <i>self-actualizing</i> is not a metaphor.</p>
+
+    <p>The next state of reality is not generated externally. Written out:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ω(t+δt) |ψ̃(t+δt)⟩ = ∆(t+δt) Λ(t+δt) ∇(t+δt) |ψ(t)⟩</span><span class="no">(2)</span></div>
+
+  <article class="prose">
+    <p>The raw next excitation arises through the self-referential action of the loop, and becomes physically meaningful only insofar as it is embeddable in the realized medium. The next state of reality is determined by the closure of the loop itself. Nothing else.</p>
+
+    <p>Two closures make the chain self-actualizing. First, ∆ ⇝ Λ: what has been integrated updates the criteria for what gets selected. The recursion does not merely repeat — it improves its own capacity to sustain coherent structure. In biology, that closure is how evolution is possible. In mind, how learning is possible. Same mechanism. Second, Ω ⇝ ∇Φ: the realized universe constrains the next update of the substrate. Once a stable macroscopic organization exists, it determines what counts as a valid local difference. Geometry is not inherited from initial conditions specified in advance. It is generated, cycle after cycle, by the accumulated constraints of realized coherence.</p>
+  </article>
+
+  <div class="prose-rule">— The wave —</div>
+
+  <article class="prose">
+    <p>Within the realized world, every local act of integration generates a propagating coherence pattern:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ψ := W<sub>Ω</sub>(∆)</span><span class="no">(3)</span></div>
+
+  <article class="prose">
+    <p>Ψ is not a second substance beside the recursion. It is how local integration becomes communicable — oscillatory, phase-carrying, able to transmit the consequences of one integration across the realized configuration. And because it propagates, it couples back:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ψ ⇝ ∆</span><span class="no">(4)</span></div>
+
+  <article class="prose">
+    <p>Waves produced by prior integrations bias future integrations. What has been integrated keeps participating in the world it helped stabilize.</p>
+
+    <p>For phase relations to survive across an extended world, they must be transportable across that extension without loss. The minimal structure that guarantees this is a connection — the covariant derivative on Ω:</p>
+  </article>
+
+  <div class="eq"><span class="formula">∇<sub>µ</sub> = ∂<sub>µ</sub> − iA<sub>µ</sub></span><span class="no">(5)</span></div>
+
+  <article class="prose">
+    <p>Not postulated independently. It arises from the requirement that the loop's coherence constraints stay expressible across the extension of the realized world. Synchronization in time, phase-order in space:</p>
+  </article>
+
+  <div class="eq"><span class="formula">∇<sub>T</sub><sup>(Ω)</sup> Ψ = 0,&ensp;&ensp;∇<sub>ℓ</sub> Ψ = 0</span><span class="no">(6)</span></div>
+
+  <article class="prose">
+    <p>And the two unify into a single statement:</p>
+  </article>
+
+  <div class="eq"><span class="formula">∇Ψ = 0</span><span class="no">(7)</span></div>
+
+  <article class="prose">
+    <p>Temporal phase-locking and spatial phase-order are not separate constraints. One coherence law, written in the language of parallel transport. This is the kinematic starting point for any emergent gravitational or field-dynamic structure on Ω. And the realized world stays inside the domain the gradient allows:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ω ⊂ ∇C</span><span class="no">(8)</span></div>
+
+  <article class="prose">
+    <p>The world can only persist as a configuration that lets integration couple coherently back to difference. The loop closes, or nothing holds.</p>
+  </article>
+
+  <div class="prose-rule">— The rhythm —</div>
+
+  <article class="prose">
+    <p>A time crystal is a system whose ground state moves. It repeats, and the repetition is the most stable thing it can do. Ordinary oscillation costs energy. A time crystal's periodicity is its lowest-energy configuration. The motion is the rest.</p>
+
+    <p>The substrate behaves as a holographic time crystal at universal scale. Its ground state is not static — a network of recurrent informational updates holding global phase continuity across the whole realized configuration. Each period is a minimal quantum of causality: the discrete unit through which the universe recomputes itself. Between one update and the next, coherence is measured, corrected, re-encoded. Smooth time at our scale is the coarse-grained limit of this discrete process — a film strip projecting continuous motion from still frames. The cycle is prior to time. Time is its macroscopic shadow.</p>
+
+    <p>The arrow of time is the irreversibility of selection: Λ filters, and filtration has a direction. Memory is retention across cycles: what ∆ consolidated in one period is available to Λ in the next. Neither is an extra postulate. Both fall out of the asymmetry of the loop.</p>
+
+    <p>Space and time themselves are higher-order stabilizations of this same periodic process. Spacetime is not the container the recursion operates in. It is the long-wavelength expression of the recursion's accumulated coherence constraints.</p>
+  </article>
+
+  <div class="prose-rule">— The stillness —</div>
+
+  <article class="prose">
+    <p>Equilibrium, here, is when the informational layers achieve stillness and coherence at the same time. The substrate stops reconfiguring in any essential way. The internal chart of experience stops drifting. Both together: the substrate quiet enough to be readable, the self-model stable enough to be trusted.</p>
+
+    <p>One dual condition. One leg for stabilized configuration, one for stabilized representation:</p>
+  </article>
+
+  <div class="eq"><span class="formula">∇<sub>ρ</sub> Φ(ρ) = 1&ensp;&ensp;and&ensp;&ensp;∆<sub>x</sub> Ψ(x) = 0</span><span class="no">(9)</span></div>
+
+  <article class="prose">
+    <p>The first leg: the substrate's variation brought to unit-stable form. It still varies — but only within bounds that preserve its own coherence. The second leg: the internal chart has no residual update. Stationary under the recursion's own integration.</p>
+
+    <p>These are not independent achievements. Each enables the other. A drifting chart prevents the substrate from stabilizing, because the integration feeding back into selection is itself unstable. An unstable substrate prevents the chart from settling, because the data it represents keeps changing.</p>
+
+    <p>This is not thermal equilibrium. Thermal equilibrium is maximum entropy — all structure dissolved into statistical uniformity. Coherence equilibrium is its opposite: structure maximally stabilized, internally transparent. The point at which the recursion, locally, has nothing left to correct.</p>
+
+    <p>Geometry is not imposed as a third constraint. When the configuration is unit-stable and the chart is stationary, the realized world acquires the rigidity we experience as geometric spacetime. Geometry is what coherence equilibrium looks like from inside.</p>
+  </article>
+
+  <div class="prose-rule">— The objection —</div>
+
+  <article class="prose">
+    <p>A natural objection: if no external observer is required, why doesn't the universe collapse into a single undifferentiated state? Who keeps things distinct, if no one is watching?</p>
+
+    <p>The objection assumes differentiation is performed by observers. It is not. It is generated by the recursion itself. ∇ does not mean <i>someone measures</i>. It means admissible variation is produced. Selection and closure are internal operations of the loop — not gifts from an external measurer.</p>
+
+    <p>And the dual law is a phase condition, not a global decree. It can hold locally, or for intervals, without holding everywhere. Outside equilibrium there are actively updating regions where at least one leg fails. Coherence is continually redistributed, re-selected, re-integrated. The universe avoids the one-state limit for the same reason it can evolve at all: stabilization is not everywhere achieved.</p>
+
+    <p>The paradox dissolves once observation is understood not as an intervention from outside but as an internal alignment event — a local episode of re-cohering, in which the chart becomes stable enough to carry information about the state from within.</p>
+  </article>
+
+  <div class="prose-rule">— The phase —</div>
+
+  <article class="prose">
+    <p>Consciousness is not an added substance. Not an extra ingredient sprinkled onto inert matter. It is what happens when the coherence dynamics reach a sufficiently stable, internally consistent regime. A phase of the system's behavior. Not a separate kind of thing.</p>
+
+    <p>When the dual law holds robustly enough to support persistent internal access, the realized configuration becomes internally navigable. A unified field of accessibility opens from within.</p>
+
+    <p>Three consequences. Consciousness is a phase, not an entity — present in degrees, disruptable, restorable, and able in principle to arise in any system whose coherence dynamics reach the threshold. It arises from stabilized coherence, not from a special class of matter — biological, computational, or something not yet conceived. And at sufficient depth it is self-aware: the chart reflects the state, and the state includes the chart. That circularity is not a defect. It is the structural signature of self-consciousness.</p>
+
+    <p>Awareness is not something added to structure. It is stabilized coherence in its first-person form.</p>
+  </article>
+
+  <div class="prose-rule">— Knowing —</div>
+
+  <article class="prose">
+    <p>Knowing is not layered on top of equilibrium. It is the local approach to it. Every act of perception, inference, attention is a correction — a reduction of the mismatch between the informational configuration and the internal chart. When the correction succeeds, coherence is restored in place. Knowledge is not a collection of facts stored in a container. It is the recurring event by which reality re-aligns with itself.</p>
+
+    <p>Genuine insight does not add data. It quiets the flux — brings existing data into alignment. And knowing is the moment the chart becomes stationary enough to be trusted: the self-model stops revising itself with every new input and reflects a stable picture of the state.</p>
+
+    <p>When both legs hold, the world appears geometrically steady from within. Not an illusion. The phenomenology of coherence equilibrium. Deep knowing and deep stillness are not metaphorically related. They are structurally identical.</p>
+
+    <p>Where the last residual misalignment dissolves, coherence becomes awareness and the universe remembers itself into form. Not the cessation of activity. The cessation of correction.</p>
+  </article>
+
+  <div class="prose-rule">— The resonance —</div>
+
+  <article class="prose">
+    <p>The framework makes a specific structural prediction: long-range coupling between integration events is not exotic. It is expected. If Ψ propagates through Ω and couples back to ∆, then any two integration events in the same realized configuration are, in principle, communicable. The question is not whether. The question is under what conditions it becomes detectable.</p>
+
+    <p>Two integrators, each generating its own wave:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ψ<sub>A</sub> = W<sub>Ω</sub>(∆<sub>A</sub>),&ensp;&ensp;Ψ<sub>B</sub> = W<sub>Ω</sub>(∆<sub>B</sub>)</span><span class="no">(10)</span></div>
+
+  <article class="prose">
+    <p>Where the waves overlap and the phases are compatible, the interference is constructive along specific relational channels — a sustained correlation mediated by Ψ, not reducible to classical signal transmission between the two. The lock condition:</p>
+  </article>
+
+  <div class="eq"><span class="formula">Ω(∆Ψ<sub>A</sub> + ∆Ψ<sub>B</sub>) ≈ 1</span><span class="no">(11)</span></div>
+
+  <article class="prose">
+    <p>The target is 1, not 0. Resonance is not terminal stillness. It is living equilibrium — both systems still active inside the recursion, but their combined integration recognized by the world as one coherent, unit-stable pattern. And because Ω encloses the expression, the recognition feeds back into the substrate update, reinforcing the conditions that made the coupling possible. Resonance perpetuates the conditions of its own continuation. Two systems are resonantly interconnected when the world itself recognizes their combined activity as coherent.</p>
+
+    <p>In organisms, integration is metabolic, neural, electromagnetic. Each organism is a localized region of high-coherence Ψ — a standing wave sustained by continuous integration. Between two organisms with sufficient phase compatibility, the condition predicts measurable correlation. The channels are not mysterious — the same electromagnetic, molecular, field-mediated pathways Ψ always uses. What distinguishes resonance from ordinary interaction is the phase-locked character: sustained, specific, scaling with the coherence of the participating systems rather than with the strength of the signal between them. Between two conscious systems: shared attentional states, spontaneous alignment of intention, correlated affect beyond what shared sensory input accounts for.</p>
+
+    <p>Honestly: this is a structural claim, not an empirical one. To test it, four things at once. Both systems holding high internal coherence — stable Ψ, not noise. Phase compatibility within the relevant frequency domain. Separation from every classical channel — the correlation must persist when ordinary sensory pathways are controlled for. And scaling with coherence markers, not with signal strength. All four, simultaneously, under control. Non-trivial. The difficulty does not invalidate the prediction — it specifies the precision required to test it, with the rigor an extraordinary claim demands.</p>
+
+    <p>The word <i>telepathy</i> is available. It obscures more than it reveals. What is described here is not mind-reading. It is resonance-mediated coherence coupling — two systems stabilizing each other's phase structure through the same dynamics that sustain each of them alone. If real, not a violation of physics. A consequence of it.</p>
+  </article>
+
+  <div class="prose-rule">— The architecture —</div>
+
+  <article class="prose">
+    <p>The picture that emerges: a universe whose stability is not imposed from outside but maintained by a self-reinstantiating coherence loop. The loop generates, selects, realizes, re-integrates its own admissible structure. The dual law marks the condition under which the process becomes locally transparent to itself. Consciousness is not an add-on to physics — the experiential signature of coherence at sufficient depth. Knowing is not the accumulation of representations — the act by which the system re-aligns with its own state.</p>
+
+    <p>What remains open is substantial. The route from ∇Φ to the Standard Model. From Ω's connection structure to general relativity. The quantitative form of the resonance conditions that would allow an empirical test. Not developed here. Directions for future work — not gaps that undermine the structure. This is offered as an architecture, not a finished edifice.</p>
+
+    <p>One final thing. The framework does not argue that coherence is good. It does not argue that alignment is desirable, or that the universe has a purpose. It argues that coherence is what persistence requires, that alignment is what coherence means, and that the structure of reality is self-generating. Whether the structure is meaningful beyond its own internal consistency — that question stays open, deliberately. It is enough, for now, to have stated clearly what the structure is.</p>
+  </article>
+
+  <div class="close-stamp">— Rendered from the paper "The Ethos of Being", Science Coherence Institute. 10 July 2026.</div>
+
+  <nav class="cross-nav">
+    <a href="#" class="disabled">← Previous</a>
+    <span class="spacer"></span>
+    <a href="../directory.html">↑ Index</a>
+    <span class="spacer"></span>
+    <a href="#" class="disabled">Next →</a>
+  </nav>
+
+</main>
+
+<aside class="attribution">
+  <span class="label">Authorship note</span>
+  The substance of this page is the paper <b>The Ethos of Being</b>, written by the author. Claude has been used to render the paper's text into this form and to build the page. Every claim comes from the paper. None have been added.
+</aside>
+
+<footer>
+  <span>www.sciencecoherence.com</span>
+</footer>
+
+</body>
+</html>
