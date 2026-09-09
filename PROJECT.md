@@ -107,6 +107,52 @@ nothing was deleted.
   protocol's header was rebuilt as `.page-hero.green.doc-hero` so it stops being
   the odd page out. The facts strip, tools row and note stay on paper below it.
 
+## Decision — retained absorption (2026-09-09)
+
+The temporal matrix moved to V8. The arithmetic did not change; the reading of it
+did, and the behaviour follows the reading.
+
+**Before:** `8737/600000` was a constant free-running slip, and the
+continued-fraction ladder marked moments when the phase happened to come close to
+midnight. Passing one changed nothing — the full 20m 58s slip resumed.
+
+**Now:** J₀ = 8,737 is the unresolved historical load; Q = 600,000 is not an
+amount of history but the resolution at which that load reaches exact zero. The
+Euclidean remainders 8737 → 5884 → 2853 → 178 → 5 → 3 → 2 → 1 → 0 are the load
+still active after each rung, and **each reduction is retained**: the load never
+rises, an integrated residual is never reintroduced, and there is no supercycle
+after 600,000. The modeled turnover closes on solar midnight as J falls and stays
+at 00:00 once J = 0.
+
+Consequences to preserve:
+
+- The ladder is derived, not tabulated. `coherenceLadder()` asserts
+  `r_k = |q_k·J0 − p_k·Q|` at every rung; if that assertion ever fires, the table
+  and the arithmetic have diverged and the table is wrong.
+- Absorption is **stepwise**. Do not add interpolation between rungs without a
+  decision to introduce a continuous absorption law — that is a new assumption,
+  not a refinement.
+- **Two layers stay separated in the UI.** Baseline: defined year 365.2422, raw
+  slip, passive convergents, and `600,000 dates = 608,737 defined solar days`.
+  Matrix: J(n), A(n), retained rung, modeled turnover. The article and the
+  instrument both label the second as interpretation. Do not let modeled values
+  present as observations, and do not silently change the year definition.
+- The earlier qualification stands and must remain: **exact closure is exact
+  relative to the defined year 365.2422, not to an immutable astronomical
+  measurement.**
+- No physical claim. A falling simulated J says something about the instrument,
+  not about the Earth, biology or cosmology.
+- The solar clock was not touched. `solarFraction`, `livingPhase`, `velocity`,
+  `consumed` and `VB`/`VA`/`VC` are unchanged, and the noon and midnight
+  integral identities were re-verified after the change.
+- `MATRIX_MODE = 'simulation'` is the current default and the instrument says so
+  on its face. Going live is one line plus `CAL360.epochLive`.
+
+Also in this pass: display maths wider than the reading column now scrolls inside
+its own box (`.prose .katex-display`) instead of pushing the page sideways. That
+was a live layout bug on the new *Reality as imagination that survives recursion*
+article, not a temporal-matrix issue.
+
 ## Next milestones
 
 1. **Consistency and accessibility fixes.** Resolve the homepage collection count, reconcile the calendar descriptions and weekday text, and correct the mobile menu label after navigation. See the review for reproduction details.

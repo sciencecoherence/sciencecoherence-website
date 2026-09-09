@@ -137,23 +137,67 @@ Two identities are load-bearing and must survive any edit to the constants:
 zero. Changing any of the three without re-deriving the others breaks an anchor
 silently — the clock will still run, it will just no longer be noon at noon.
 
-### The coherence ladder
+### The absorption ladder
 
-`coherenceLadder()` runs the continued-fraction recursion on the slip, which is
-exactly `8737/600000` of a day per date, and returns one entry per cycle: the
-period in dates, in years, and the residual left at that level. The convergents
-are computed at load time rather than tabulated, so the ladder is derived from
-the definition every time the page runs.
+The calendar carries a rational slip of exactly `8737/600000` of a day per date,
+so the Euclidean algorithm on it terminates. `coherenceLadder()` runs that one
+recursion and returns **two** sequences per rung, because they are two views of
+the same quantity:
 
-Because the slip is rational the recursion terminates. It closes at cycle 8:
+| field | meaning | layer |
+| --- | --- | --- |
+| `dates` | convergent denominator q — the date the rung is attained | baseline |
+| `load` | Euclidean remainder r — the load still active | matrix |
+| `residualMs` | ε(J) = J/600000 × 86400 s | matrix |
+| `absorbed` | A = 1 − J/J₀, from integers | matrix |
+
+The two are tied by `r_k = |q_k·J0 − p_k·Q|`, which the function **asserts at
+every rung** rather than assuming, so the table can never drift from the
+arithmetic. Products stay far inside the exact-integer range.
+
+**Retained absorption.** `activeCoherenceLevel(N)` returns the rung of the
+highest milestone matrix date `N` has already passed; `unresolvedLoad`,
+`absorptionFraction` and `residualSeconds` read off it. The reduction is kept —
+the load never rises, and there is no supercycle after 600,000. It is stepwise
+on purpose: the mathematics gives discrete milestones, and a continuous
+absorption law would be an assumption this version does not make.
+
+**Two layers, kept visibly apart.** The baseline is the defined year 365.2422,
+the raw slip, the passive convergents, and
 
 ```
-600,000 matrix dates = 608,737 civil days   residual exactly 0
+600,000 matrix dates = 608,737 defined solar days   residual exactly 0
 ```
 
-`drawLadder()` renders it and adds a "next in" column counting dates from today
-to the next closure of each cycle. It is cached on `dayCount`, so it redraws once
-per date rather than on every tick.
+asserted in integers (comparing the float `MS_CAL` would fail on binary
+rounding, not on arithmetic). The matrix layer is J(n), A(n), the retained rung
+and the modeled turnover displacement. `cal360()` returns both — `turnH/M/S` is
+the baseline free-running boundary, `mTurnH/M/S` is the modeled one, displaced
+from apparent solar midnight by ε and closing on 00:00 as the load falls. The
+instrument labels which is which; do not let a modeled value read as an
+observation.
+
+### Simulation mode and the effective epoch
+
+`MATRIX_MODE` is `'simulation'` until the March 2027 run begins. Everything
+downstream reads the matrix clock through `getMatrixEpoch()`, `getMatrixNow()`
+and `getMatrixDayCount()`, so going live is a one-line change: set
+`MATRIX_MODE = 'live'` and fill in `CAL360.epochLive`.
+
+In simulation the epoch is `Date.now() - MS_CAL`, written once to `localStorage`
+under `sc-matrix-epoch` and then left to advance naturally — so first load opens
+at about matrix date 2 and time runs forward from there rather than resetting on
+every reload. The reset control rewinds it to one matrix date ago. The banner
+saying this is simulated state is load-bearing, not decoration.
+
+### Checking it
+
+There is no test runner and no build step, so `app.js` runs its own assertions
+at load: the ten date→load→residual cases (including 600001, which proves
+closure stays closed), monotone descent of the load, and the baseline identity.
+They log to `console.error` and are silent when they pass. The pure functions
+are also exposed read-only on `window.__matrix` for checking from the console or
+a headless browser.
 
 ## Adding an article
 
