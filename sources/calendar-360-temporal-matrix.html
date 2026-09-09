@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temporal Matrix — 360° Calendar &amp; Dilation Clock</title>
+<style>
+  :root{
+    --bg:#05070e; --bg-2:#080c16; --panel:#0c1120; --panel-2:#0f1524;
+    --line:#1a2338; --line-2:#243050;
+    --ink:#e8edf7; --ink-2:#a8b4cc; --ink-3:#66748f;
+    --cyan:#22d3ee; --teal:#2dd4bf; --violet:#a78bfa; --amber:#fbbf24;
+    --rose:#fb7185; --lime:#a3e635; --blue:#60a5fa;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Inter,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 700px at 12% -10%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(1000px 600px at 92% 8%, rgba(167,139,250,.10), transparent 60%),
+      radial-gradient(900px 900px at 50% 120%, rgba(45,212,191,.07), transparent 60%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.6;
+    -webkit-font-smoothing:antialiased; padding:clamp(16px,3vw,40px);
+  }
+  .shell{max-width:1440px;margin:0 auto}
+
+  /* ---------- masthead ---------- */
+  header.top{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+    flex-wrap:wrap;padding-bottom:20px;margin-bottom:26px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:16px}
+  .sigil{
+    width:52px;height:52px;flex:none;border-radius:14px;position:relative;
+    background:linear-gradient(140deg,rgba(34,211,238,.22),rgba(167,139,250,.22));
+    border:1px solid var(--line-2);display:grid;place-items:center;
+    box-shadow:0 0 32px -8px rgba(34,211,238,.5), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .sigil svg{width:30px;height:30px;animation:spin 24s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  h1{margin:0;font-size:clamp(19px,2.2vw,25px);font-weight:600;letter-spacing:-.02em}
+  .sub{margin:3px 0 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;
+       text-transform:uppercase;color:var(--cyan)}
+  .status{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;
+    border:1px solid var(--line-2);background:rgba(12,17,32,.75);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-2);white-space:nowrap;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);
+       box-shadow:0 0 10px var(--teal);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+
+  /* ---------- layout ---------- */
+  .grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}
+  @media(max-width:1080px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+  .panel{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:18px;padding:24px;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  .panel + .panel{margin-top:22px}
+  .phead{display:flex;align-items:center;justify-content:space-between;gap:14px;
+         margin-bottom:20px;flex-wrap:wrap}
+  .ptitle{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+          color:var(--cyan);margin:0}
+  .ptitle.violet{color:var(--violet)} .ptitle.amber{color:var(--amber)}
+
+  /* ---------- calendar ---------- */
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}
+  .nav-btn{
+    appearance:none;border:1px solid var(--line-2);background:rgba(255,255,255,.03);
+    color:var(--ink-2);font-family:var(--mono);font-size:12px;padding:9px 15px;border-radius:9px;
+    cursor:pointer;transition:.18s;
+  }
+  .nav-btn:hover{background:rgba(34,211,238,.12);color:var(--cyan);border-color:var(--cyan)}
+  .nav-btn:active{transform:translateY(1px)}
+  .cal-name{text-align:center;flex:1}
+  .cal-name h2{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}
+  .cal-name span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+                 text-transform:uppercase;color:var(--ink-3)}
+
+  .matrix{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+  .wd{
+    text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+    text-transform:uppercase;padding:0 0 10px;border-bottom:1px solid var(--line);
+  }
+  .cell{
+    position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:11px;
+    background:rgba(255,255,255,.016);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:3px;transition:.18s;overflow:hidden;
+  }
+  .cell:hover{background:rgba(255,255,255,.05);border-color:var(--line-2);transform:translateY(-2px)}
+  .cell .n{font-size:19px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+  .cell .d{font-family:var(--mono);font-size:8px;letter-spacing:.09em;
+           text-transform:uppercase;color:var(--ink-3)}
+  .cell.today{
+    border-color:var(--cyan);background:rgba(34,211,238,.13);
+    box-shadow:0 0 26px -6px rgba(34,211,238,.55), inset 0 0 22px -12px var(--cyan);
+  }
+  .cell.today .n{color:var(--cyan);font-weight:650}
+  .cell.today .d{color:var(--teal)}
+  .cell.today::after{
+    content:'';position:absolute;inset:0;border-radius:11px;
+    border:1px solid rgba(34,211,238,.4);animation:halo 2.6s ease-in-out infinite;
+  }
+  @keyframes halo{0%,100%{opacity:.25}50%{opacity:.9}}
+  .cal-foot{
+    margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--ink-2);
+  }
+  .cal-foot b{color:var(--ink);font-weight:600}
+
+  /* ---------- clock ---------- */
+  .clock-wrap{text-align:center;padding:6px 0 4px}
+  .clock{
+    font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
+    font-size:clamp(42px,7vw,64px);letter-spacing:.02em;line-height:1;margin:12px 0 6px;
+    background:linear-gradient(120deg,var(--cyan),var(--teal) 45%,var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 26px rgba(34,211,238,.35));
+  }
+  .clock-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+             text-transform:uppercase;color:var(--ink-3)}
+  .phase{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:7px 15px;
+    border-radius:999px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;border:1px solid currentColor;
+  }
+  .phase.wake{color:var(--amber);background:rgba(251,191,36,.09)}
+  .phase.sleep{color:var(--violet);background:rgba(167,139,250,.11)}
+
+  /* ---------- vector gauge ---------- */
+  .vector{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+  .vnum{
+    display:flex;align-items:baseline;justify-content:center;gap:10px;
+    font-family:var(--mono);margin-bottom:4px;
+  }
+  .vnum .big{font-size:34px;font-weight:700;color:var(--teal);font-variant-numeric:tabular-nums;
+             text-shadow:0 0 22px rgba(45,212,191,.45)}
+  .vnum .unit{font-size:13px;color:var(--ink-3)}
+  .vcap{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+        text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+  .curve{width:100%;height:104px;display:block;overflow:visible}
+
+  /* ---------- readouts ---------- */
+  .rows{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+        border-radius:12px;overflow:hidden;margin-top:20px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:14px;
+       padding:11px 15px;background:var(--panel);font-size:13px}
+  .row dt,.row .k{color:var(--ink-3);font-size:12.5px}
+  .row dd,.row .v{margin:0;font-family:var(--mono);font-size:12.5px;
+                  color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+  .v.cyan{color:var(--cyan)} .v.teal{color:var(--teal)} .v.violet{color:var(--violet)}
+  .v.amber{color:var(--amber)} .v.rose{color:var(--rose)} .v.lime{color:var(--lime)}
+
+  .compare{
+    margin-top:20px;padding:18px;border-radius:13px;
+    border:1px dashed var(--line-2);background:rgba(255,255,255,.018);
+  }
+  .compare h3{margin:0 0 14px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+              text-transform:uppercase;color:var(--rose)}
+  .twin{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;text-align:center}
+  .twin .t{font-family:var(--mono);font-size:clamp(17px,2.6vw,22px);font-weight:600;
+           font-variant-numeric:tabular-nums}
+  .twin .t.dil{color:var(--cyan)} .twin .t.civ{color:var(--ink-2)}
+  .twin .lab{font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+             text-transform:uppercase;color:var(--ink-3);margin-top:5px}
+  .twin .vs{font-family:var(--mono);font-size:10px;color:var(--ink-3);
+            border-left:1px solid var(--line);border-right:1px solid var(--line);padding:0 12px}
+  .delta{margin:14px 0 0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--amber)}
+  .delta b{color:var(--rose);font-weight:600}
+
+  footer.note{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  @media(max-width:520px){
+    .cell .d{display:none} .cell{aspect-ratio:auto;padding:13px 0}
+    .twin{grid-template-columns:1fr;gap:14px}
+    .twin .vs{border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="top">
+    <div class="brand">
+      <div class="sigil">
+        <svg viewBox="0 0 100 100" fill="none" stroke="url(#g)" stroke-width="3">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/>
+          </linearGradient></defs>
+          <circle cx="50" cy="50" r="34"/>
+          <ellipse cx="50" cy="50" rx="34" ry="13"/>
+          <ellipse cx="50" cy="50" rx="13" ry="34"/>
+          <circle cx="50" cy="50" r="5" fill="#22d3ee" stroke="none"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Temporal Matrix</h1>
+        <p class="sub">360° Calendar · Non-Linear Dilation Engine</p>
+      </div>
+    </div>
+    <div class="status">
+      <span class="pill"><span class="dot"></span> Engine Active</span>
+      <span class="pill" id="pill-epoch">Epoch —</span>
+      <span class="pill" id="pill-tz">TZ —</span>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ══════════ LEFT: CALENDAR MATRIX ══════════ -->
+    <section>
+      <div class="panel">
+        <div class="phead">
+          <p class="ptitle">Calendar Matrix · 12 × 30 · Equinox Locked</p>
+          <span class="pill" id="pill-arc">0.000°</span>
+        </div>
+
+        <div class="cal-nav">
+          <button class="nav-btn" id="prev">◀ PREV</button>
+          <div class="cal-name">
+            <h2 id="m-name">March</h2>
+            <span id="m-meta">Month 1 of 12 · 30 days · 5 weeks</span>
+          </div>
+          <button class="nav-btn" id="next">NEXT ▶</button>
+        </div>
+
+        <div class="matrix" id="matrix"></div>
+
+        <p class="cal-foot" id="cal-foot">—</p>
+      </div>
+
+      <div class="panel">
+        <div class="phead"><p class="ptitle amber">Matrix Integrity</p></div>
+        <div class="rows" id="integrity"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ RIGHT: DILATED CLOCK ══════════ -->
+    <section>
+      <div class="panel">
+        <div class="phead"><p class="ptitle violet">Dilated Chronometer · Living Time</p></div>
+
+        <div class="clock-wrap">
+          <div class="clock-lbl">Living Time</div>
+          <div class="clock" id="clock">00:00:00</div>
+          <div id="phase" class="phase wake">◐ Waking Dilation</div>
+        </div>
+
+        <div class="vector">
+          <div class="vnum">
+            <span class="big" id="vec">1.000000</span>
+            <span class="unit">× phys / living sec</span>
+          </div>
+          <p class="vcap">Active Dilation Vector Rate</p>
+          <svg class="curve" id="curve" viewBox="0 0 600 104" preserveAspectRatio="none"></svg>
+        </div>
+
+        <div class="rows" id="vitals"></div>
+
+        <div class="compare">
+          <h3>◈ Cadence Comparison</h3>
+          <div class="twin">
+            <div>
+              <div class="t dil" id="tw-dil">00:00:00</div>
+              <div class="lab">Dilated Matrix</div>
+            </div>
+            <div class="vs">VS</div>
+            <div>
+              <div class="t civ" id="tw-civ">00:00:00</div>
+              <div class="lab">Gregorian Civil</div>
+            </div>
+          </div>
+          <p class="delta" id="delta">—</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="note">
+    <span id="f-left">—</span>
+    <span id="f-right">—</span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMPORAL MATRIX ENGINE
+   ---------------------------------------------------------------------------
+   A 360-day calendar locked to the vernal equinox, driven by a non-linear
+   temporal accumulator. No civil-clock shortcuts: every displayed value is
+   derived from absolute elapsed milliseconds since the cosmic epoch, pushed
+   through a velocity field and inverted.
+
+   TWO INDEPENDENT CADENCES
+   ---------------------------------------------------------------------------
+   The 5.2422-day surplus has to surface somewhere. In this build it surfaces
+   in the DATE BOUNDARY, not in the clock.
+
+     CLOCK    anchored to the observer's civil day. Exactly 24 living hours per
+              24 physical hours, so 00:00 and 12:00 land on civil midnight and
+              civil noon every single day, permanently. No accumulating offset.
+
+     CALENDAR advances one date every 365.2422/360 physical days = 24h 20m
+              58.13s. The date therefore turns over 20m 58s later each day and
+              walks all the way round the clock face every 68.673 days — five
+              and a quarter times a year, which IS the surplus, expressed as a
+              drifting turnover instead of a drifting clock.
+
+   Nothing is intercalated, nothing leaps, no date is ever skipped, and the
+   equinox stays locked at 0° on 1 March forever.
+
+   VELOCITY FIELD  v(φ) — physical seconds consumed per living second, where
+   φ ∈ [0,1) is position through the living day.
+
+       φ <  1/6   (00:00–04:00, sleep)   : v = 1 − b·sin⁴(6πφ)
+       1/6 ≤ φ < ½ (04:00–12:00, morning): v = 1 + a·sin²(3π(φ − 1/6))
+       φ >= ½     (12:00–24:00, evening) : v = 1 + c·sin(4π(φ − ½))
+
+   b  sleep burn      — v falls to 0.767: physical time is consumed at only 77%
+                        of the living rate, so the clock RACES at 1.3038× real
+                        through the small hours and, by 04:00, leads civil time
+                        by exactly 20m 58.13s — precisely one day's surplus.
+
+   a  morning repay   — solved as a = 3b/8 so the lead is handed back smoothly
+                        between 04:00 and 12:00. The clock runs up to 8.7% slow
+                        while it repays; the ledger closes exactly at noon.
+
+   c  evening ripple  — two full periods across the afternoon and evening. It
+                        integrates to exactly zero, so the clock breathes ±2%
+                        and still hits civil midnight dead on.
+
+   CLOSURE, TWICE.  ∫₀^½ v dφ = ½ exactly  →  12:00 is permanently locked.
+                    ∫₀¹  v dφ = 1 exactly  →  00:00 is permanently locked.
+   The clock is genuinely non-linear all day yet never drifts: maximum
+   excursion from civil time is 20m 58s, always at 04:00, always returning.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Cosmic anchor ─────────────────────────────────────────────────────── */
+const EPOCH = new Date(Date.UTC(2026, 2, 20, 0, 0, 0)).getTime();
+
+/* ── Constants ─────────────────────────────────────────────────────────── */
+const TROPICAL_DAYS   = 365.2422;
+const CAL_DAYS        = 360;
+const MS_STD_DAY      = 86400000;
+const MS_PER_CAL_DAY  = TROPICAL_DAYS * MS_STD_DAY / CAL_DAYS;   // 87,658,128 ms
+const MEAN_V          = MS_PER_CAL_DAY / MS_STD_DAY;             // 1.014561666…
+
+const SLEEP_END = 1 / 6;                       // 04:00 living
+const NOON      = 1 / 2;                       // 12:00 living — solar anchor
+const B  = 16 * (MEAN_V - 1);                  // sleep burn depth  = 0.232986667
+const A1 = 3 * B / 8;                          // morning repay     = 0.087370000 (solved)
+const C  = 0.02;                               // evening ripple, integrates to exactly 0
+const RK = 2;                                  // ripple periods across the evening half
+
+/* The clock's own surplus lead, in ms: the amount the sleeping clock gains by
+   04:00 and gives back by 12:00. Identical to the calendar's daily slip.     */
+const LEAD_MS = MS_PER_CAL_DAY - MS_STD_DAY;   // 1,258,128 ms = 20m 58.128s
+
+const MONTHS = ["March","April","May","June","July","August",
+                "September","October","November","December","January","February"];
+const DAYS = [
+  { name:"Differa", short:"DIF" }, { name:"Selecta", short:"SEL" },
+  { name:"Realis",  short:"REA" }, { name:"Integra", short:"INT" },
+  { name:"Resona",  short:"RES" }, { name:"Stilla",  short:"STI" }
+];
+
+/* ── Velocity field ────────────────────────────────────────────────────── */
+function velocity(phi){
+  if (phi < SLEEP_END){                         // 00:00–04:00  burn
+    const s = Math.sin(6 * Math.PI * phi);
+    return 1 - B * s * s * s * s;               // sin⁴ — sharp trough on 02:00
+  }
+  if (phi < NOON){                              // 04:00–12:00  repay
+    const s = Math.sin(3 * Math.PI * (phi - SLEEP_END));
+    return 1 + A1 * s * s;
+  }
+  return 1 + C * Math.sin(2 * Math.PI * RK * (phi - NOON));   // 12:00–24:00  ripple
+}
+
+/* Antiderivative of v: fraction of the civil day consumed by the time the
+   living clock reaches φ. Exact closed form; C⁰ at both seams (v = 1 at
+   φ = 1/6 and φ = 1/2, so the joins are invisible).
+
+     ∫ sin⁴(6πx) dx = 3x/8 − sin(12πx)/(24π) + sin(24πx)/(192π)   = 1/16 over [0,1/6]
+     ∫ sin²(3πu) du = u/2 − sin(6πu)/(12π)                        = 1/6  over [0,1/3]
+     ∫ sin(4πu)  du = (1 − cos(4πu))/(4π)                         = 0    over [0,1/2]   */
+function consumed(phi){
+  if (phi <= SLEEP_END){
+    return phi - B * ( 3 * phi / 8
+                     - Math.sin(12 * Math.PI * phi) / (24 * Math.PI)
+                     + Math.sin(24 * Math.PI * phi) / (192 * Math.PI) );
+  }
+  if (phi <= NOON){
+    const u = phi - SLEEP_END;
+    return phi - B / 16
+         + A1 * (u / 2 - Math.sin(6 * Math.PI * u) / (12 * Math.PI));
+  }
+  const u = phi - NOON;
+  return phi + (C / (2 * Math.PI * RK)) * (1 - Math.cos(2 * Math.PI * RK * u));
+}
+
+/* Invert consumed() by bisection. v > 0 everywhere, so it is strictly
+   increasing and the inverse is unique. 52 halvings ≈ sub-microsecond. */
+function livingPhase(fraction){
+  let lo = 0, hi = 1;
+  for (let i = 0; i < 52; i++){
+    const mid = (lo + hi) / 2;
+    if (consumed(mid) < fraction) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+/* ── Local frame ───────────────────────────────────────────────────────── */
+/* Explicit timezone offset so the matrix sits on the observer's own day and
+   is not displaced by several hours from their real-world location.        */
+function localOffsetMs(){ return -new Date().getTimezoneOffset() * 60000; }
+
+/* ── Full temporal state ───────────────────────────────────────────────── */
+function matrixState(){
+  const stdNow   = Date.now();
+  const elapsed  = stdNow - EPOCH + localOffsetMs();     // absolute physical ms, local frame
+
+  /* ── CALENDAR CADENCE ── one date per 365.2422/360 physical days.
+     The date boundary is free-running, so it walks 20m 58s later each day. */
+  const dayCount = Math.floor(elapsed / MS_PER_CAL_DAY);
+  const within   = elapsed - dayCount * MS_PER_CAL_DAY;  // physical ms into this date
+  const idx      = ((dayCount % CAL_DAYS) + CAL_DAYS) % CAL_DAYS;
+  const year     = Math.floor(dayCount / CAL_DAYS);
+
+  /* civil clock, derived from the timestamp — no getHours/getMinutes/getSeconds */
+  const civilMs  = ((stdNow + localOffsetMs()) % MS_STD_DAY + MS_STD_DAY) % MS_STD_DAY;
+  const civilSec = Math.floor(civilMs / 1000);
+
+  /* ── CLOCK CADENCE ── anchored to the civil day, dilated non-linearly
+     inside it. ∫v = ½ at noon and 1 at midnight, so both anchors hold. */
+  const phi      = livingPhase(civilMs / MS_STD_DAY);
+  const livingMs = phi * MS_STD_DAY;
+  const totalSec = Math.floor(livingMs / 1000);
+
+  /* When does today's date turn over, in civil time? */
+  const turnCivil = ((civilMs + (MS_PER_CAL_DAY - within)) % MS_STD_DAY + MS_STD_DAY) % MS_STD_DAY;
+  const turnSec   = Math.floor(turnCivil / 1000);
+
+  return {
+    elapsed, dayCount, phi, year, within,
+    toTurn : MS_PER_CAL_DAY - within,
+    th: Math.floor(turnSec / 3600) % 24,
+    tm: Math.floor(turnSec / 60) % 60,
+    ts: turnSec % 60,
+    dayIndex : idx,
+    month    : Math.floor(idx / 30),
+    day      : idx % 30 + 1,
+    weekday  : idx % 6,
+    week     : Math.floor((idx % 30) / 6) + 1,
+    arc      : idx * (360 / CAL_DAYS) + within / MS_PER_CAL_DAY,  // orbital degrees since equinox
+    v        : velocity(phi),
+    sleeping : phi < SLEEP_END,
+    h : Math.floor(totalSec / 3600) % 24,
+    m : Math.floor(totalSec / 60) % 60,
+    s : totalSec % 60,
+    ch: Math.floor(civilSec / 3600) % 24,
+    cm: Math.floor(civilSec / 60) % 60,
+    cs: civilSec % 60,
+    livingMs, civilMs
+  };
+}
+
+/* ── Formatting ────────────────────────────────────────────────────────── */
+const pad  = n => String(n).padStart(2, "0");
+const hms  = (h, m, s) => `${pad(h)}:${pad(m)}:${pad(s)}`;
+const span = ms => {
+  const t = Math.abs(Math.round(ms / 1000));
+  return `${Math.floor(t/3600)}h ${pad(Math.floor(t/60)%60)}m ${pad(t%60)}s`;
+};
+const row = (k, v, cls = "") =>
+  `<div class="row"><span class="k">${k}</span><span class="v ${cls}">${v}</span></div>`;
+
+/* ── Calendar matrix ───────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+let shownMonth = matrixState().month;
+let following  = true;
+
+function drawMatrix(){
+  const st = matrixState();
+  $("m-name").textContent = MONTHS[shownMonth];
+  $("m-meta").textContent = `Month ${shownMonth + 1} of 12 · 30 days · 5 weeks`;
+
+  const hue = ["--cyan","--amber","--blue","--violet","--rose","--lime"];
+  let html = DAYS.map((d, i) =>
+    `<div class="wd" style="color:var(${hue[i]})">${d.short}</div>`).join("");
+
+  for (let i = 0; i < 30; i++){
+    const wd = i % 6;
+    const isToday = st.month === shownMonth && st.day === i + 1;
+    html += `<div class="cell${isToday ? " today" : ""}">
+               <span class="n">${i + 1}</span>
+               <span class="d">${DAYS[wd].short}</span>
+             </div>`;
+  }
+  $("matrix").innerHTML = html;
+}
+
+/* ── Velocity curve ────────────────────────────────────────────────────── */
+function drawCurve(phi){
+  const W = 600, H = 104, PAD = 8;
+  const vs = [];
+  for (let i = 0; i <= 300; i++) vs.push(velocity(i / 300));
+  const lo = Math.min(...vs), hi = Math.max(...vs);
+  const y = v => PAD + (H - 2 * PAD) * (1 - (v - lo) / (hi - lo));
+  const x = p => p * W;
+
+  let d = "";
+  for (let i = 0; i <= 300; i++){
+    d += (i ? "L" : "M") + x(i / 300).toFixed(1) + " " + y(vs[i]).toFixed(1);
+  }
+  const area = d + `L${W} ${H} L0 ${H} Z`;
+  const cx = x(phi), cy = y(velocity(phi));
+  const unity = (lo <= 1 && hi >= 1) ? y(1) : null;
+
+  $("curve").innerHTML = `
+    <defs>
+      <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#22d3ee" stop-opacity=".38"/>
+        <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="cl" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#a78bfa"/><stop offset=".17" stop-color="#22d3ee"/>
+        <stop offset="1" stop-color="#2dd4bf"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="${x(SLEEP_END)}" height="${H}" fill="rgba(167,139,250,.11)"/>
+    <line x1="${x(NOON)}" y1="0" x2="${x(NOON)}" y2="${H}"
+          stroke="#2dd4bf" stroke-width="1" stroke-dasharray="2 4" opacity=".55"/>
+    ${unity !== null ? `<line x1="0" y1="${unity}" x2="${W}" y2="${unity}"
+        stroke="#243050" stroke-width="1" stroke-dasharray="3 5"/>` : ``}
+    <path d="${area}" fill="url(#cg)"/>
+    <path d="${d}" fill="none" stroke="url(#cl)" stroke-width="2.2"
+          stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="${cx}" y1="0" x2="${cx}" y2="${H}" stroke="#fbbf24" stroke-width="1" opacity=".6"/>
+    <circle cx="${cx}" cy="${cy}" r="5" fill="#fbbf24"/>
+    <circle cx="${cx}" cy="${cy}" r="9" fill="none" stroke="#fbbf24" stroke-width="1" opacity=".45"/>
+  `;
+}
+
+/* ── Frame ─────────────────────────────────────────────────────────────── */
+function frame(){
+  const st = matrixState();
+
+  /* clock */
+  $("clock").textContent = hms(st.h, st.m, st.s);
+  const ph = $("phase");
+  ph.className = "phase " + (st.sleeping ? "sleep" : "wake");
+  ph.textContent = st.sleeping ? "◉ Sleep Burn · clock racing"
+                 : st.phi < NOON ? "◐ Morning Repay · clock easing"
+                 : "◑ Evening Ripple · noon-locked";
+
+  /* dilation vector */
+  $("vec").textContent = st.v.toFixed(6);
+  drawCurve(st.phi);
+
+  /* vitals */
+  $("vitals").innerHTML =
+      row("Living day phase", (st.phi * 100).toFixed(4) + " %", "cyan")
+    + row("Real-time factor", (1 / st.v).toFixed(4) + " × physical",
+          st.sleeping ? "violet" : "amber")
+    + row("Calendar day length", (MS_PER_CAL_DAY / 3600000).toFixed(4) + " h", "teal")
+    + row("Date turns over at", hms(st.th, st.tm, st.ts) + " civil", "violet")
+    + row("Time to turnover", span(st.toTurn), "violet")
+    + row("Absolute matrix days", st.dayCount.toLocaleString("en-GB"), "")
+    + row("Matrix year", "Y" + st.year, "")
+    + row("Orbital arc", st.arc.toFixed(4) + "°", "lime");
+
+  /* comparison */
+  $("tw-dil").textContent = hms(st.h, st.m, st.s);
+  $("tw-civ").textContent = hms(st.ch, st.cm, st.cs);
+  let diff = st.livingMs - st.civilMs;
+  if (diff >  MS_STD_DAY / 2) diff -= MS_STD_DAY;
+  if (diff < -MS_STD_DAY / 2) diff += MS_STD_DAY;
+  const sgn = diff >= 0 ? "+" : "−";
+  $("delta").innerHTML = st.sleeping
+    ? `Clock leads by <b>${sgn}${span(diff)}</b> · racing at <b>${(1 / st.v).toFixed(4)}×</b> · ` +
+      `peaks at +${(LEAD_MS / 60000).toFixed(3)} min at 04:00`
+    : st.phi < NOON
+    ? `Repaying <b>${sgn}${span(diff)}</b> · easing at <b>${(1 / st.v).toFixed(4)}×</b> · ` +
+      `reaches zero exactly at 12:00`
+    : `Divergence <b>${sgn}${span(diff)}</b> · ripple at <b>${(1 / st.v).toFixed(4)}×</b> · ` +
+      `zero at 12:00 and 00:00, never accumulates`;
+
+  /* today line + arc pill */
+  $("pill-arc").textContent = st.arc.toFixed(3) + "°";
+  $("cal-foot").innerHTML =
+    `Today is <b>${DAYS[st.weekday].name} ${st.day} ${MONTHS[st.month]}</b> — ` +
+    `week ${st.week} of 5, day ${st.dayIndex + 1} of 360, matrix year Y${st.year}.`;
+
+  /* integrity */
+  $("integrity").innerHTML =
+      row("Calendar year", "360 days · 12 × 30", "cyan")
+    + row("Week", "6 days · 5 per month", "cyan")
+    + row("Intercalary days", "none", "teal")
+    + row("Leap days", "none", "teal")
+    + row("Skipped dates", "none", "teal")
+    + row("Equinox lock", "0° at 1 March · permanent", "lime")
+    + row("Midnight anchor ∫₀¹v", "1.000000000 · civil-locked", "lime")
+    + row("Noon anchor ∫₀^½v", "0.500000000 · solar-locked", "lime")
+    + row("Max clock divergence", "20m 58s at 04:00 · returns to 0", "lime")
+    + row("Accumulated clock drift", "none · resets every civil day", "lime")
+    + row("Date turnover slip", "+" + (LEAD_MS / 60000).toFixed(4) + " min / day", "amber")
+    + row("Turnover cycle", (MS_STD_DAY / LEAD_MS).toFixed(3) + " days · 5.2422 / yr", "amber")
+    + row("Residual drift", "0.000000000 d / yr", "lime");
+
+  /* footer */
+  $("f-left").textContent =
+    `v(φ) = 1 − ${B.toFixed(6)}·sin⁴(6πφ) | 1 + ${A1.toFixed(6)}·sin²(3π(φ−1/6)) | ` +
+    `1 + ${C}·sin(4π(φ−½))`;
+  $("f-right").textContent =
+    `clock: 24h civil-locked · date: ${(MS_PER_CAL_DAY / 1000).toFixed(2)} s = 1/360 tropical year`;
+
+  if (following && st.month !== shownMonth){ shownMonth = st.month; drawMatrix(); }
+
+  requestAnimationFrame(frame);
+}
+
+/* ── Boot ──────────────────────────────────────────────────────────────── */
+$("prev").addEventListener("click", () => {
+  shownMonth = (shownMonth + 11) % 12; following = false; drawMatrix();
+});
+$("next").addEventListener("click", () => {
+  shownMonth = (shownMonth + 1) % 12;  following = false; drawMatrix();
+});
+
+const offMin = localOffsetMs() / 60000;
+$("pill-tz").textContent =
+  "UTC" + (offMin >= 0 ? "+" : "−") + pad(Math.floor(Math.abs(offMin) / 60)) +
+  ":" + pad(Math.abs(offMin) % 60);
+$("pill-epoch").textContent = "Epoch 2026-03-20";
+
+drawMatrix();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

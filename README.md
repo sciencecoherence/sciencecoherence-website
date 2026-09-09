@@ -101,20 +101,59 @@ An article body may carry a widget: any element with `data-widget="<name>"` is
 wired up by `enhanceArticle()` in `app.js` after the reader renders, and its
 teardown is registered so it stops cleanly when the reader navigates away.
 
-Two are implemented, both on the calendar page in The Lab.
-
-`calendar360` draws the grid and runs the clock. Its constants live in
-`CAL360`: the `epoch` (the March equinox that is degree zero), `tropical`, the
+`calendar360` — the temporal matrix on the calendar page in The Lab — draws the
+grid, runs the clock and plots the velocity field. Its constants live in
+`CAL360`: the `epoch` (the March equinox, as a UTC timestamp), `tropical`, the
 twelve month names, the six day names, and `longitude` (the clock needs a place;
 the page exposes it as a field, defaulting to the timezone meridian).
 
-The date is the orbital degree, not a tally: `degreeOf(rotations)` returns the
-degree a given sun-day begins in, and `cal360()` reports the date, whether today
-is the second sunrise inside its degree, and how far off the next such date is.
-`equationOfTime()` returns the obliquity and eccentricity terms separately;
-`solarTime()` combines them with the meridian offset so 12:00:00 is peak sun;
-`solarDay()` returns the true length of today's solar day, which is what makes
-the clock's rate genuinely variable.
+The engine runs **two independent cadences**, and keeping them separate is the
+whole design:
+
+- **The clock** is anchored to apparent solar time and re-anchored to it every
+  day. `solarFraction()` returns the position through the solar day, applying
+  the meridian offset and `equationOfTime()`. `livingPhase()` inverts
+  `consumed()` by bisection to turn that into the dilated reading.
+- **The calendar** is free-running: one date every `MS_CAL` (365.2422/360 days
+  = 24h 20m 58.13s), counted from the epoch. The date therefore turns over
+  20m 58s later each day and completes a circuit of the clock face every 68.673
+  days — 5.2422 times a year, which is exactly the surplus.
+
+`velocity(phi)` is the non-linear field: `1 − VB·sin⁴(6πφ)` through the burn
+window (00:00–04:00), `1 + VA·sin²(3π(φ−1/6))` through the repay window
+(04:00–12:00), and `1 + VC·sin(4π(φ−½))` across the evening. `consumed(phi)` is
+its exact closed-form antiderivative, so nothing integrates numerically and no
+error accumulates.
+
+Two identities are load-bearing and must survive any edit to the constants:
+
+```
+∫₀^½ v dφ = ½   →  12:00 sits at peak sun
+∫₀¹  v dφ = 1   →  00:00 sits at solar midnight
+```
+
+`VB` is set to the daily surplus (`16 · LEAD_MS / MS_DAY`) and `VA` is solved as
+`3·VB/8` to satisfy them; `VC` has a whole number of periods so it integrates to
+zero. Changing any of the three without re-deriving the others breaks an anchor
+silently — the clock will still run, it will just no longer be noon at noon.
+
+### The coherence ladder
+
+`coherenceLadder()` runs the continued-fraction recursion on the slip, which is
+exactly `8737/600000` of a day per date, and returns one entry per cycle: the
+period in dates, in years, and the residual left at that level. The convergents
+are computed at load time rather than tabulated, so the ladder is derived from
+the definition every time the page runs.
+
+Because the slip is rational the recursion terminates. It closes at cycle 8:
+
+```
+600,000 matrix dates = 608,737 civil days   residual exactly 0
+```
+
+`drawLadder()` renders it and adds a "next in" column counting dates from today
+to the next closure of each cycle. It is cached on `dayCount`, so it redraws once
+per date rather than on every tick.
 
 ## Adding an article
 
@@ -128,10 +167,30 @@ Append an object to the array in `content.js`:
 `category` is one of `research`, `regenesis`, `ethos`, `transmissions`, `lab`,
 `learning`, `protocol` (defined at the top of `app.js`).
 
-A collection marked `hidden: true` stays reachable at its own URL and keeps all
-its pieces, but appears in no navigation, no card grid, no library filter and no
-search result. `transmissions` is currently hidden this way — remove the flag to
-bring it back. `tone` picks the card artwork
+Two flags shape where a collection appears.
+
+`hidden: true` keeps a collection reachable at its own URL with all its pieces,
+but it appears in no navigation, no card grid, no library filter and no search
+result. `regenesis` and `learning` are hidden this way — remove the flag to bring
+one back.
+
+`standalone: true` keeps a collection out of the home page's three-card grid
+while leaving it fully listed everywhere else: its own route, its own nav entry,
+its own library filter, and its pieces in search and in the library.
+`transmissions` and `protocol` are both standalone, and each has its own feature
+block on the home page rather than a path card.
+
+The home page offers three paths: `research`, `ethos`, `lab`. Regenesis was
+folded into Research & frameworks, so restoring it means removing its `hidden`
+flag *and* moving its pieces back — they now carry `"category": "research"`.
+
+The architecture feature that opened the Ethos page is parked behind
+`SHOW_ETHOS_OPENER` in `app.js`. The markup is intact in `ethosOpener()`; set the
+flag to `true` to bring it back, on that page or another.
+
+Every page hero carries the green band: `pageHero()` defaults its `green`
+argument to `true`, and the protocol's own header uses `.page-hero.green
+.doc-hero` so the document page matches the collection pages. `tone` picks the card artwork
 colour: `forest`, `ochre`, or `sage`. `search` is the lower-cased text used by
 the search index.
 

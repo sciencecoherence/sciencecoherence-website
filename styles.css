@@ -378,6 +378,8 @@ mark { background: var(--lime); color: #173d32; padding: 0 2px; border-radius: 2
 
 /* ---------- 10. Document register --------------------------------------- */
 .doc-head { padding: 32px 0 0; }
+.doc-hero h1 { font-size: clamp(40px, 5.2vw, 76px); max-width: 980px; }
+.doc-hero .lede { font-family: var(--serif); font-style: italic; max-width: 780px; }
 .doc-head .eyebrow { margin-bottom: 16px; }
 .doc-head h1 { font-size: clamp(40px, 5.2vw, 76px); margin-bottom: 14px; max-width: 980px; }
 .doc-head .reader-subtitle { max-width: 780px; }
@@ -470,6 +472,12 @@ mark { background: var(--lime); color: #173d32; padding: 0 2px; border-radius: 2
 .formula { font-size: 16px; padding: 14px 18px; margin: 16px 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; color: var(--accent, var(--ink)); text-align: center; }
 .formula.small { font-size: 14px; padding: 10px 12px; }
 .formula .katex-display { margin: 0; }
+/* A display formula wider than the reading column scrolls inside its own box
+   rather than pushing the page sideways — the same contract as .table-scroll.
+   Bare $$…$$ in an article body is not wrapped in .formula, so it needs the
+   rule too. */
+.prose .katex-display { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
+.prose .katex-display > .katex { text-align: initial; }
 .katex { font-size: 1.05em; }
 .doc-panel .katex-display > .katex { white-space: normal; }
 
@@ -556,9 +564,6 @@ table.data td.drivers { color: var(--ink-2); font-family: var(--mono); font-size
 .cal-dayname { font-family: var(--mono); font-size: 8.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .cal-day.today { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
 .cal-day.today .cal-num { font-weight: 600; color: var(--accent); }
-.cal-day.twin { border-style: dashed; border-color: var(--accent); background: var(--accent-soft); }
-.cal-day.twin .cal-dayname { color: var(--accent); letter-spacing: .1em; }
-.cal-day.today.twin { border-style: solid; }
 .cal-note { font-size: 13px; color: var(--muted); margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
 .cal-side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .cal-side .card { padding: 20px 22px; }
@@ -579,6 +584,37 @@ table.data td.drivers { color: var(--ink-2); font-family: var(--mono); font-size
 .cal-readout dt { color: var(--muted); }
 .cal-readout dd { margin: 0; font-family: var(--mono); font-size: 12.5px; color: var(--accent); text-align: right; font-variant-numeric: tabular-nums; }
 .cal-readout dt:last-of-type, .cal-readout dd:last-of-type { padding-top: 7px; border-top: 1px solid var(--line); font-weight: 600; }
+
+/* the regime badge and the velocity curve of the dilation clock */
+.cal-regime { --accent: var(--muted); display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 999px; padding: 4px 10px; margin: 0 0 14px; }
+.cal-curve { display: block; width: 100%; height: auto; margin: 0 0 16px; overflow: visible; }
+.cal-curve-sleep { fill: var(--accent-soft); }
+.cal-curve-noon { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 4; opacity: .5; }
+.cal-curve-unity { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 3 5; }
+.cal-curve-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.cal-curve-dot { fill: var(--accent); }
+
+/* the coherence ladder */
+.cal-side .cal-span { grid-column: 1 / -1; }
+.cal-ladder { font-size: 12.5px; }
+.cal-ladder th, .cal-ladder td { font-family: var(--mono); font-size: 12px; padding: 6px 10px; text-align: right; white-space: nowrap; }
+.cal-ladder thead th { font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); text-align: right; }
+.cal-ladder th:first-child, .cal-ladder td:first-child { text-align: left; }
+.cal-ladder tbody tr.reached td { color: var(--accent); }
+.cal-ladder tbody tr:last-child td { font-weight: 600; color: var(--accent); border-top: 1px solid var(--line-strong); }
+
+/* the absorption ladder: matrix-layer state */
+.cal-mode { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 16px; padding: 8px 12px; border: 1px dashed var(--amber); border-radius: var(--radius); background: rgba(150, 89, 15, .07); font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--amber); }
+.cal-mode-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); flex: none; }
+.cal-mode .button { margin-left: auto; }
+.cal-abs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 4px 0 16px; }
+.cal-abs div { background: var(--paper); padding: 12px 14px; }
+.cal-abs span { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.cal-abs b { font-family: var(--mono); font-size: 17px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cal-meter { height: 8px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; margin: 0 0 16px; }
+.cal-meter span { display: block; height: 100%; background: var(--accent); transition: width .4s ease; }
+.cal-ladder tbody tr.here td { color: var(--accent); font-weight: 600; background: var(--accent-soft); }
+@media (max-width: 700px) { .cal-abs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .dil { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 22px 0 30px; font-family: var(--sans); }
 .dil .card { padding: 20px 22px; }
 .dil .cal-clock { margin: 8px 0 14px; }
@@ -620,7 +656,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); backdrop-filter: blur(3px)
 
 /* ---------- 13. Footer ---------------------------------------------------- */
 .footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 56px var(--gutter) 30px; }
-.footer-top { max-width: var(--max); margin: 0 auto 48px; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; }
+.footer-top { max-width: var(--max); margin: 0 auto 48px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; }
 .footer-brand { font-size: 20px; font-weight: 650; letter-spacing: -.5px; }
 .footer-brand span { display: block; font: italic 400 15px/1.5 var(--serif); color: var(--muted); margin-top: 8px; letter-spacing: 0; }
 .footer-top div { display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; }
@@ -696,4 +732,9 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); backdrop-filter: blur(3px)
   table.data { min-width: 0; font-size: 10pt; }
   .card, .phase, .callout, .plain, .warning { break-inside: avoid; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 90%; color: #555; }
+}
+
+/* 17. the coherence ladder on narrow screens — tighten so more columns fit */
+@media (max-width: 640px) {
+  .cal-ladder th, .cal-ladder td { padding: 5px 7px; font-size: 10.5px; }
 }
