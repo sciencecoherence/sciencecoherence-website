@@ -12,6 +12,12 @@
     "desc": "Liquid-crystalline fourth phase of water that organizes along hydrophilic boundaries, separating protons into an adjacent bulk hydronium cloud with a −100 to −200 mV potential difference."
   },
   {
+    "term": "Grotthuss Proton Conduction",
+    "category": "Interfacial biophysics",
+    "formula": "H_2O + H^+ \\rightleftharpoons H_3O^+ \\xrightarrow{\\text{EZ Water}} [H_5O_2^+ \\leftrightarrow H_9O_4^+] \\implies \\Delta Q \\approx 0",
+    "desc": "The ultrafast structural diffusion of protons through ordered aqueous lattices via the cooperative cleavage and reformation of covalent and hydrogen bonds across transient hydronium, Zundel ($H_5O_2^+$), and Eigen ($H_9O_4^+$) complexes. Rather than relying on the slow hydrodynamic diffusion of solitary hydronium ions, protons hop along continuous hydrogen-bonded networks known as biological proton wires. Within the protocol’s biophysical architecture, structured Exclusion Zone (EZ) water ($H_3O_2^-$) organizes along hydrophilic cytoskeletal filaments, mitochondrial cristae, and fascial collagen sheaths, providing low-resistance macromolecular conduits. This enables near-instantaneous, quantum-assisted bioelectric charge transport with minimal thermal dissipation ($\\Delta Q \\approx 0$), directly fueling mitochondrial ATP synthase rotary flux, maintaining mitochondrial membrane potential ($\\Delta\\Psi_m \\approx -180\\text{ mV}$), and synchronizing enzymatic cascades across the cell. Age-associated interfacial water breakdown elevates intracellular dielectric permittivity to bulk levels ($\\varepsilon_r \\approx 80$), collapsing proton conductivity; the protocol restores this low-entropy energetic highway through 18-6 dry fasting, infrared stimulation, and polyanionic polysaccharide matrix hydration."
+  },
+  {
     "term": "DNA Repolymerization",
     "category": "Genomics & BER",
     "formula": "\\text{Pol }\\beta + \\text{dCTP} \\rightarrow \\text{DNA}_{\\text{repaired}} + \\text{PP}_i",
@@ -26,14 +32,14 @@
   {
     "term": "Heterochromatin Lock (H3K9me3)",
     "category": "Epigenetics",
-    "formula": "\\text{SUV39H1} + \\text{SIRT6} \\rightarrow \\text{H3K9me3}",
-    "desc": "Boron-spared NAD+ activates SIRT6 deacetylation, recruiting SUV39H1 to compact chromatin, silencing LINE-1 retrotransposons and arresting cGAS–STING."
+    "formula": "\\text{Boron} \\rightarrow \\text{CD38}\\downarrow \\implies \\text{NAD}^+\\uparrow \\implies \\text{SIRT6} \\xrightarrow{\\text{SUV39H1}} \\text{H3K9me3} \\implies \\text{LINE-1}\\downarrow \\implies \\text{cGAS-STING OFF}",
+    "desc": "The constitutive heterochromatin barrier that enforces transcriptional silencing of repetitive genomic elements and stabilizes somatic cell identity. Boron-mediated inhibition of cell-surface CD38 preserves intracellular NAD+ pools, fueling the NAD+-dependent deacetylase SIRT6 to remove acetyl marks from histone H3 lysine 9 (H3K9ac). This deacetylation licenses the methyltransferase SUV39H1 to deposit trimethyl marks on the same residue, generating repressive H3K9me3. This modification serves as a high-affinity docking platform for Heterochromatin Protein 1 alpha (HP1α), inducing phase-separated heterochromatin condensation across pericentromeric domains and parasitic LINE-1 retrotransposons. In decaying cells, heterochromatin decondensation permits LINE-1 transcription into immunogenic cytosolic cDNA, triggering the cGAS–STING–TBK1–NF-κB inflammatory cascade and driving senescence-associated secretory phenotype (SASP) cytokines (IL-6, IL-8, MMP-9). Within the protocol, following transient entheogenic chromatin opening and TET-mediated base repolymerization, establishing the H3K9me3 lock constitutes the terminal phase (Phase 4 of the Mind Recoding Engine), permanently sealing the rejuvenated epigenetic baseline and safeguarding genomic stability."
   },
   {
     "term": "Telomeric Shelterin Architecture",
     "category": "Molecular genetics",
-    "formula": "\\text{TERT/TERC} \\rightarrow \\text{TTAGGG} \\implies \\text{Shelterin Locked}",
-    "desc": "A six-protein complex (TRF1, TRF2, POT1, TIN2, TPP1, RAP1) that caps telomeric T-loops, displacing γ-H2AX foci and silencing ATM/ATR/p53/p21 senescence arrest."
+    "formula": "\\text{TERT/TERC} \\rightarrow \\text{TTAGGG} \\implies \\text{Shelterin Locked} \\implies \\text{ATM/ATR OFF} \\implies \\text{p53/p21 Arrest Extinguished}",
+    "desc": "A specialized six-subunit nucleoprotein capping complex—comprising TRF1, TRF2, POT1, TIN2, TPP1, and RAP1—that safeguards mammalian chromosome termini following telomere synthesis. Telomerase reverse transcriptase (TERT) and its RNA template (TERC) elongate hexanucleotide TTAGGG repeats at chromosome tips, generating a single-stranded 3′ G-overhang. This overhang invades duplex telomeric DNA, folding into a higher-order protective T-loop and displacement D-loop. Shelterin binds this architecture with exquisite specificity: TRF1 and TRF2 bind double-stranded repeats, POT1 coats the single-stranded G-overhang, and TIN2, TPP1, and RAP1 interconnect the components into a dense physical shield. This steric capping conceals chromosome ends from the DNA damage response (DDR) machinery, displacing persistent γ-H2AX and 53BP1 damage foci. By preventing ATM and ATR kinases from erroneously recognizing telomeric ends as double-strand breaks, the locked shelterin cap extinguishes p53/p21-dependent replicative senescence arrest and represses non-homologous end joining (NHEJ) concatemers, ensuring long-term genomic integrity and cellular replicative capacity."
   },
   {
     "term": "Entheogenic Epigenetic Reset",

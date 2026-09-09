@@ -78,7 +78,10 @@ Consequences to preserve:
   date changes while the reader is awake for the other 83.3%. It is the normal
   case, not an occasional one.
 
-## Decision — three paths (2026-09-09)
+## Superseded decision — three paths (2026-09-09)
+
+This arrangement was superseded later the same day by the two-feature-path
+decision recorded below.
 
 Navigation and the home page were consolidated. This is deliberately reversible;
 nothing was deleted.
@@ -129,9 +132,23 @@ Consequences to preserve:
 - The ladder is derived, not tabulated. `coherenceLadder()` asserts
   `r_k = |q_k·J0 − p_k·Q|` at every rung; if that assertion ever fires, the table
   and the arithmetic have diverged and the table is wrong.
-- Absorption is **stepwise**. Do not add interpolation between rungs without a
-  decision to introduce a continuous absorption law — that is a new assumption,
-  not a refinement.
+- The **state** is stepwise: `unresolvedLoad`, `residualSeconds` and the ladder
+  table step at a rung and hold flat between. `J` must never be driven from a
+  continuous value.
+- The **reading** is continuous, and this was a deliberate reversal (2026-09-09,
+  at the author's request). The first cut showed Integrated frozen at 0.0000%
+  for the 66 days to rung 1, which read as a broken panel rather than as a
+  faithful model. `absorbedLive` now carries the rung value toward the next in
+  proportion to position within the interval, and Integrated / Remaining read
+  from it so they move together and sum to 100. One meter, sweeping once per
+  rung. The exact discrete value stays visible as *Integrated at this rung*.
+  This is the continuous absorption law the first version deferred, adopted for
+  presentation only — the underlying state did not change.
+- The panel shows **one** integrated percentage, the continuous one. An
+  *Integrated at this rung* row was tried alongside it and removed: two
+  percentages labelled "integrated" reading different values is a contradiction
+  on the face of the instrument, not a helpful disclosure. The exact per-rung
+  value lives in the ladder table, which is where a reader looks for it.
 - **Two layers stay separated in the UI.** Baseline: defined year 365.2422, raw
   slip, passive convergents, and `600,000 dates = 608,737 defined solar days`.
   Matrix: J(n), A(n), retained rung, modeled turnover. The article and the
@@ -152,6 +169,95 @@ Also in this pass: display maths wider than the reading column now scrolls insid
 its own box (`.prose .katex-display`) instead of pushing the page sideways. That
 was a live layout bug on the new *Reality as imagination that survives recursion*
 article, not a temporal-matrix issue.
+
+## Decision — the clock is coupled to absorption (2026-09-09)
+
+An audit found the clock wave and the retained ladder running independently:
+velocity was identical at date 1 and at date 600,000. They are now one system.
+
+**The law.** The dilation is applied from day one — a matrix day is
+24h 20m 58.128s of reference time, one calendar date, at every stage, so the
+mean is always `R = 608737/600000`. Absorption changes only the *structure*
+inside the day: `v_A(φ) = R·[1 + (1−A)(v(φ)−1)]`, amplitude scaling by (1−A) to
+zero at completion. `C_A(φ) = (1−A)·consumed(φ) + A·φ` keeps the noon and
+midnight anchors at every A.
+
+Two wrong turns, recorded so they are not repeated. First: a mean *rising* from
+1 to R — that treats the dilation as arriving late rather than being present
+from the start. Second: anchoring the clock phase to the calendar date instead
+of to apparent solar time — that decoupled it from the sun and the readings drew
+apart by hours. **The clock stays anchored to the sun** (`livingPhaseAt(sol.frac,
+A)`), so 12:00 is peak sun at every A and the departure from the sun is bounded
+by ε. `A` is recomputed every tick, so the wave relaxes continuously rather than
+stepping at a rung.
+
+**ε is the residual non-uniformity,** not a turnover displacement: the clock's
+peak departure from steady flow at 04:00, `(1−A)·1258.128 s`, which equals the
+ladder residual at every rung exactly. It is measured from the wave, not
+imposed. A matrix day *is* a calendar date, so there is no day/date drift and
+the date begins at matrix 00:00 by construction.
+
+**Contract change, made deliberately:** `absorbedLive` was presentation-only. It
+now drives the modelled clock. Retained J stays discrete and every milestone
+assertion still passes; the clock uses continuous A so it never steps backwards
+at a rung.
+
+**Attribution:** the coupling between retained integration, Earth's rotation and
+the flow of time is the Science Coherence framework's proposal. NIST and NASA
+are cited only for the standard astronomical/atomic distinction. Present-day
+apparent solar time is labelled as a reference and never presented as the
+model's own value.
+
+## Decision — About page and El Ignorante (2026-09-09)
+
+The About page now uses the supplied El Ignorante image, preserved in full at
+`assets/el-ignorante.png`, beside a short introduction about curiosity, situated
+inquiry and remaining open to revision. The image is a thematic introduction;
+the page does not add biographical claims based on its scene. The existing author
+introduction, account of the work across scales, three principles and reading
+links remain. The layout stacks on small screens, uses the existing theme tokens,
+and includes descriptive alternative text. About-specific styles are scoped under
+`about-` classes. The temporal matrix and its article are outside this change.
+
+## Decision — About page spirit sequence (2026-09-09)
+
+The El Ignorante prose was replaced by the three existing inquiry principles:
+imagination opens the question, coherence decides, and the work remains
+revisable. The supplied image remains beside them. The principles now appear
+once, at the opening of the About page, in a single-column sequence with
+generous spacing and fine dividers. The existing “The spirit of the work” marker
+and the link to the editorial principles remain. The following account of the
+work across scales and the closing invitation are unchanged.
+
+## Decision — Research consolidation and home feature paths (2026-09-09)
+
+Research and Ethos are now one collection under **Research** navigation. The two former
+Ethos articles carry the `research` category, the Ethos links were removed from
+desktop and mobile navigation, and the retired `#/ethos` route redirects to
+`#/research` so saved links continue to work. The Ethos of Being remains the
+title of its article; it is presented as a foundational research text rather
+than as a separate collection.
+
+The home page's three-card “A whole, in many parts” section was replaced by two
+large split-panel features: a light Research block and a dark The Lab block.
+They reuse the visual language of the existing protocol and transmissions
+features, which remain below them. The hero now begins with Research, and the
+home-page figure captions run in sequence from 01 through 05.
+
+The collection's visible page title was subsequently restored to **Research &
+frameworks** while its navigation and library label remain the shorter
+**Research**. Its hero introduction now reads: “Imagination is a beginning.
+Research gives it definitions, measurements, and the possibility of becoming
+reality.” Its descriptive scope names consciousness, time, and the patterns
+that hold living systems together.
+
+The Research sidebar's connected paths are intentionally editorial rather than
+generated from the remaining collection list. Their order is: Start here, The
+Ethos of Being, The Protocol, The Lab.
+
+On the About page, the right-hand spirit sequence stretches to the same desktop
+height as the El Ignorante figure beside it. Its three rows divide the available
+height evenly; below tablet width, image and copy stack so neither is compressed.
 
 ## Next milestones
 
@@ -180,4 +286,3 @@ Each article has a preserved Markdown source/download under `sources/`:
 - `sources/universe-biological-computer.md`
 
 The rendered reader copies live in `content.js`, remain in the `research` collection, and use the existing article reader, search, saved-reading, math-rendering, and source-download paths without changing routing or design.
-

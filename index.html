@@ -20,7 +20,7 @@
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/DMSans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/Newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260909b">
 
   <script>
     /* Apply the stored theme before first paint to avoid a flash. */
@@ -37,9 +37,9 @@
   }
   </script>
 
-  <script src="content.js" defer></script>
+  <script src="content.js?v=20260909e" defer></script>
   <script src="documents.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=20260909d" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -52,7 +52,6 @@
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#/research">Research</a>
-        <a href="#/ethos">Ethos</a>
         <a href="#/protocol">The Protocol</a>
         <a href="#/lab">The Lab</a>
         <a href="#/transmissions">Transmissions</a>
@@ -75,7 +74,6 @@
     </div>
     <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
       <a href="#/research">Research</a>
-      <a href="#/ethos">Ethos</a>
       <a href="#/protocol">The Protocol</a>
       <a href="#/lab">The Lab</a>
       <a href="#/transmissions">Transmissions</a>
@@ -119,6 +117,17 @@
     </div>
     <input id="share-url" readonly aria-label="Page link">
     <p class="search-hint" id="share-hint">Select and copy this link to share it.</p>
+  </dialog>
+
+  <dialog id="lexicon-dialog" class="lex-dialog" aria-label="Lexicon details">
+    <div class="lex-dialog-top">
+      <span class="tag" id="lex-dialog-category"></span>
+      <button class="icon-button" id="lex-dialog-close" aria-label="Close details">✕</button>
+    </div>
+    <h3 id="lex-dialog-term" class="lex-dialog-title"></h3>
+    <div class="formula lex-dialog-formula" id="lex-dialog-formula"></div>
+    <div class="lex-dialog-body" id="lex-dialog-desc"></div>
+    <p class="search-hint">Esc or click outside to close</p>
   </dialog>
 
   <div id="toast" role="status" aria-live="polite"></div>

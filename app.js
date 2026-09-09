@@ -29,9 +29,8 @@
   const newest = (a, b) => b.date.localeCompare(a.date);
 
   const collections = [
-    { id: 'research', name: 'Research & frameworks', short: 'Research', num: '01', symbol: 'orbit', description: 'The architecture itself: the loop, its operations, and what survives them — including where the loop meets tissue.', intro: 'Imagination is the first operation, not a preliminary to the real one. What follows gives it definitions, and the conditions under which it would not hold.', label: 'Models · questions · failure conditions', green: true },
-    { id: 'ethos', name: 'The Ethos of Being', short: 'Ethos', num: '02', symbol: 'sun', description: 'The philosophical foundation. Being, perception, and our relationship with reality.', intro: 'Questions about being, consciousness, and the world we participate in creating.', label: 'Philosophy · consciousness · meaning', green: true },
-    { id: 'lab', name: 'The Lab', short: 'The Lab', num: '03', symbol: 'nodes', description: 'Experimental articles: propositions taken out of argument and run.', intro: 'Where a proposition stops being argued and starts being run — with what is varied, what is watched, and what would count as failure stated up front.', label: 'Experiments · observations · failure conditions', green: true },
+    { id: 'research', name: 'Research & frameworks', short: 'Research', num: '01', symbol: 'orbit', description: 'The philosophical foundation and the frameworks built from it: being, perception, the recursive loop, consciousness, time, and the patterns that hold living systems together.', intro: 'Imagination is a beginning. Research gives it definitions, measurements, and the possibility of becoming reality.', label: 'Philosophy · models · questions · failure conditions', green: true },
+    { id: 'lab', name: 'The Lab', short: 'The Lab', num: '02', symbol: 'nodes', description: 'Experimental articles: propositions taken out of argument and run.', intro: 'Where a proposition stops being argued and starts being run — with what is varied, what is watched, and what would count as failure stated up front.', label: 'Experiments · observations · failure conditions', green: true },
     /* Hidden for now. The collection, its route and its pieces all stay; nothing
        lists them. Remove `hidden` to bring one back — that is the whole revert.
        Regenesis is additionally emptied: its pieces were recategorised to
@@ -107,12 +106,6 @@
   function card(a) {
     return `<a class="article-card" href="${link(a.id)}"><div class="article-art ${a.tone}">${art(a.kind === 'document' ? 'lattice' : category(a.category).symbol)}</div><div class="article-meta"><span>${a.type}</span><span>${a.minutes} min read</span></div><h3>${a.title}</h3><p>${a.description}</p><div class="article-bottom"><span>${fmtDate(a.date)}</span><span aria-hidden="true">Read the piece ↗</span></div></a>`;
   }
-  function collectionCards() {
-    return `<div class="collection-grid">${collections.filter(c => !c.standalone && !c.hidden).map(c => {
-      const n = inCollection(c.id).length;
-      return `<a href="#/${c.id}" class="collection-card"><div class="collection-top"><span>${c.num} / COLLECTION</span>${symbol(c.symbol)}</div><h3>${c.name}</h3><p>${c.description}</p><div class="collection-foot"><span>${c.label.split(' · ')[0]} / ${pluralize(n, 'piece', 'pieces')}</span><span class="arrow" aria-hidden="true">↗</span></div></a>`;
-    }).join('')}</div>`;
-  }
   const pathBanner = (title, text, href, cta) => `<div class="path-banner"><div><h3>${title}</h3><p>${text}</p></div><a class="button" href="${href}">${cta} <span>↗</span></a></div>`;
   /* Every page hero carries the same green band. Pass false to opt one out. */
   const pageHero = (eyebrow, title, desc, green = true) => `<section class="page-hero ${green ? 'green' : ''}"><div class="wrap"><div class="breadcrumb"><a href="#/">Home</a> / ${eyebrow}</div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p class="lede">${desc}</p></div></section>`;
@@ -121,36 +114,35 @@
   function home() {
     const doc = DOCUMENTS[0];
     const latest = listed().filter(a => a.category !== 'protocol' && a.category !== 'transmissions').sort(newest).slice(0, 3);
+    const research = inCollection('research');
+    const experiments = inCollection('lab');
     const voices = inCollection('transmissions');
-    return `<section class="hero"><div class="wrap"><div class="hero-top"><span class="eyebrow">Coherence. Recursion. What holds.</span><span class="edition">FIELD NOTES / VOL. 01 — 2026</span></div><div class="hero-layout"><div class="hero-copy"><h1>Nothing is<br><em>observed</em> from<br>outside.</h1><p>There is no vantage point beyond the process. What is real is what survives the loop — selected, integrated, and fed back into the conditions that produced it. This is that inquiry, and the work it has become.</p><div class="hero-links"><a class="button primary" href="${link('ethos-of-being')}">Begin with the Ethos <span>↗</span></a><a class="text-link" href="${link('start-here')}">A place to begin <span>→</span></a></div></div><div class="hero-art">${livingArt()}<span class="art-label one">Fig. 01 / Patterns of becoming</span><span class="art-label two">From one, a living whole.</span></div></div><div class="hero-bottom"><span>A living body of work by Dr. William Conroy</span><span>∇Φ ⟶ Λ ⟶ Ω ⟶ ∆</span><a href="#/library">Open the library ↓</a></div></div></section>
+    return `<section class="hero"><div class="wrap"><div class="hero-top"><span class="eyebrow">Coherence. Recursion. What holds.</span><span class="edition">FIELD NOTES / VOL. 01 — 2026</span></div><div class="hero-layout"><div class="hero-copy"><h1>Nothing is<br><em>observed</em> from<br>outside.</h1><p>There is no vantage point beyond the process. What is real is what survives the loop — selected, integrated, and fed back into the conditions that produced it. This is that inquiry, and the work it has become.</p><div class="hero-links"><a class="button primary" href="#/research">Begin with Research <span>↗</span></a><a class="text-link" href="${link('start-here')}">A place to begin <span>→</span></a></div></div><div class="hero-art">${livingArt()}<span class="art-label one">Fig. 01 / Patterns of becoming</span><span class="art-label two">From one, a living whole.</span></div></div><div class="hero-bottom"><span>A living body of work by Dr. William Conroy</span><span>∇Φ ⟶ Λ ⟶ Ω ⟶ ∆</span><a href="#/library">Open the library ↓</a></div></div></section>
     <div class="wrap">
       <div class="intro-line"><span class="eyebrow">The thread that connects it</span><p>What if understanding ourselves and understanding the world are not two inquiries, but one loop closing?</p></div>
-      <section class="section"><div class="section-head"><div><span class="eyebrow">Three ways into the work</span><h2>A whole, in many parts.</h2></div><a class="text-link" href="#/library">View the library <span>↗</span></a></div>${collectionCards()}</section>
-      ${doc ? `<section class="section" style="padding-bottom:0"><div class="feature document"><div class="feature-art">${latticeArt()}<span class="diagram-caption">FIG. 02 — THE GENOME · WATER · CONSCIOUSNESS AXIS</span></div><div class="feature-copy"><span class="eyebrow">The operating document</span><h2>${doc.title}.</h2><p>The loop carried down to the body: entropy reversal across the chromatin–water matrix, a three-tier daily protocol, and a mind-recoding engine that treats the observer as the boundary operator it is.</p><div class="fact-strip">${doc.facts.map(f => `<div><b>${f.value}</b><span>${f.label}</span></div>`).join('')}</div><div class="feature-meta">Version ${doc.version} · ${doc.sections.length} sections · ${doc.minutes} min · interactive</div><a class="button dark" href="#/protocol">Open the protocol <span>↗</span></a></div></div></section>` : ''}
-      ${voices.length ? `<section class="section" style="padding-bottom:0"><div class="feature"><div class="feature-art">${art('wave')}<span class="diagram-caption">FIG. 03 — SPOKEN FIRST, THEN WRITTEN</span></div><div class="feature-copy"><span class="eyebrow">Transmissions</span><h2>Said out loud<br>before it was written.</h2><p>Voice-originated writing. What gets said when there is no argument to win — on being here, becoming honest, and listening closely enough to hear it back.</p><div class="feature-meta">${pluralize(voices.length, 'transmission', 'transmissions')} · latest ${fmtDate(voices[0].date)}</div><a class="button dark" href="#/transmissions">Open the transmissions <span>↗</span></a></div></div></section>` : ''}
+      <section class="section" style="padding-bottom:0"><div class="feature light"><div class="feature-art">${art('orbit')}<span class="diagram-caption">FIG. 02 — PHILOSOPHY · MODELS · QUESTIONS</span></div><div class="feature-copy"><span class="eyebrow">Research</span><h2>One inquiry,<br>made explicit.</h2><p>The philosophical foundation and the frameworks built from it: being, perception, the recursive loop, consciousness, time, and the patterns that hold living systems together.</p><div class="feature-meta">${pluralize(research.length, 'piece', 'pieces')} · philosophy · frameworks · failure conditions</div><a class="button dark" href="#/research">Open Research <span>↗</span></a></div></div></section>
+      <section class="section" style="padding-bottom:0"><div class="feature"><div class="feature-art">${art('nodes')}<span class="diagram-caption">FIG. 03 — PROPOSITIONS, RUN</span></div><div class="feature-copy"><span class="eyebrow">The Lab</span><h2>Where an idea<br>meets what happens.</h2><p>Experimental articles: propositions taken out of argument and run, with what is varied, what is watched, and what would count as failure stated up front.</p><div class="feature-meta">${pluralize(experiments.length, 'experiment', 'experiments')} · observations · failure conditions</div><a class="button dark" href="#/lab">Open The Lab <span>↗</span></a></div></div></section>
+      ${doc ? `<section class="section" style="padding-bottom:0"><div class="feature document"><div class="feature-art">${latticeArt()}<span class="diagram-caption">FIG. 04 — THE GENOME · WATER · CONSCIOUSNESS AXIS</span></div><div class="feature-copy"><span class="eyebrow">The operating document</span><h2>${doc.title}.</h2><p>The loop carried down to the body: entropy reversal across the chromatin–water matrix, a three-tier daily protocol, and a mind-recoding engine that treats the observer as the boundary operator it is.</p><div class="fact-strip">${doc.facts.map(f => `<div><b>${f.value}</b><span>${f.label}</span></div>`).join('')}</div><div class="feature-meta">Version ${doc.version} · ${doc.sections.length} sections · ${doc.minutes} min · interactive</div><a class="button dark" href="#/protocol">Open the protocol <span>↗</span></a></div></div></section>` : ''}
+      ${voices.length ? `<section class="section" style="padding-bottom:0"><div class="feature"><div class="feature-art">${art('wave')}<span class="diagram-caption">FIG. 05 — SPOKEN FIRST, THEN WRITTEN</span></div><div class="feature-copy"><span class="eyebrow">Transmissions</span><h2>Said out loud<br>before it was written.</h2><p>Voice-originated writing. What gets said when there is no argument to win — on being here, becoming honest, and listening closely enough to hear it back.</p><div class="feature-meta">${pluralize(voices.length, 'transmission', 'transmissions')} · latest ${fmtDate(voices[0].date)}</div><a class="button dark" href="#/transmissions">Open the transmissions <span>↗</span></a></div></div></section>` : ''}
       <section class="section"><div class="section-head"><div><span class="eyebrow">Recent work</span><h2>Where the loop is running.</h2></div><a class="text-link" href="#/library">The complete library <span>↗</span></a></div><div class="article-grid">${latest.map(card).join('')}</div></section>
-      <section class="manifesto"><span class="eyebrow">The philosophical foundation</span><div><blockquote>Being. Perceiving.<br>Participating in what becomes.</blockquote><p class="signature">THE ETHOS OF BEING / A PHILOSOPHICAL INQUIRY</p><a href="${link('ethos-of-being')}" class="text-link">Read The Ethos of Being <span>↗</span></a></div></section>
+      <section class="manifesto"><span class="eyebrow">A foundational research text</span><div><blockquote>Being. Perceiving.<br>Participating in what becomes.</blockquote><p class="signature">THE ETHOS OF BEING / RESEARCH &amp; PHILOSOPHICAL INQUIRY</p><a href="${link('ethos-of-being')}" class="text-link">Read The Ethos of Being <span>↗</span></a></div></section>
       ${pathBanner('Follow your curiosity.', 'Search across the framework, the protocol, the experiments and the notes.', '#/library', 'Open the library')}
       <div style="height:70px"></div>
     </div>`;
   }
 
-  const SHOW_ETHOS_OPENER = false;
-
   function collectionPage(c) {
     const items = inCollection(c.id);
     const others = collections.filter(x => x.id !== c.id && !x.hidden && !x.standalone).slice(0, 3);
-    /* Parked: the architecture feature that opened the Ethos page. The block is
-       kept in ethosOpener() and is one flag away from returning, here or on
-       another page. */
-    const opener = SHOW_ETHOS_OPENER && c.id === 'ethos' ? ethosOpener() : '';
-    return pageHero(c.short, c.name + '.', c.intro, c.green !== false) + opener + `<div class="wrap"><div class="category-layout"><aside class="side-note"><h3>Inside this collection</h3><p>${c.description}</p><p>${c.label}</p><h3 style="margin-top:28px">Connected paths</h3>${others.map(x => `<a href="#/${x.id}">${x.name} ↗</a>`).join('')}</aside><div>${items.length ? items.map(row).join('') : '<div class="empty"><h3>Nothing here yet.</h3><p>This collection is still being written.</p></div>'}${c.id === 'research' ? `<a class="entry-row" href="#/protocol"><span class="entry-number">↗</span><div><h3>The protocol this leads to</h3><p>The operating document: the three-tier daily protocol, the epigenetic architecture behind it, and the diagnostic suite that reads it back.</p><span class="article-meta">Connected · operating document</span></div><span>↗</span></a>` : ''}</div></div></div>`;
-  }
-
-  function ethosOpener() {
-    const a = byId('time-crystalline-v2');
-    if (!a) return '';
-    return `<div class="wrap" style="padding-top:56px"><section class="feature"><div class="feature-art">${art('orbit')}<span class="diagram-caption">FIG. 01 — FOUR OPERATIONS, TWO CLOSURES</span></div><div class="feature-copy"><span class="eyebrow">The architecture</span><h2>A living architecture<br>of coherence.</h2><p>Difference, selection, realization, integration — and the two closures that make the chain self-actualizing. The framework the rest of the work runs on.</p><div class="feature-meta">${a.type} · ${a.minutes} min read</div><a class="button dark" href="${link(a.id)}">Enter the framework <span>↗</span></a></div></section></div>`;
+    const connected = c.id === 'research'
+      ? [
+          { href: link('start-here'), name: 'Start here' },
+          { href: link('ethos-of-being'), name: 'The Ethos of Being' },
+          { href: '#/protocol', name: 'The Protocol' },
+          { href: '#/lab', name: 'The Lab' }
+        ]
+      : others.map(x => ({ href: '#/' + x.id, name: x.name }));
+    return pageHero(c.short, c.name + '.', c.intro, c.green !== false) + `<div class="wrap"><div class="category-layout"><aside class="side-note"><h3>Inside this collection</h3><p>${c.description}</p><p>${c.label}</p><h3 style="margin-top:28px">Connected paths</h3>${connected.map(x => `<a href="${x.href}">${x.name} ↗</a>`).join('')}</aside><div>${items.length ? items.map(row).join('') : '<div class="empty"><h3>Nothing here yet.</h3><p>This collection is still being written.</p></div>'}${c.id === 'research' ? `<a class="entry-row" href="#/protocol"><span class="entry-number">↗</span><div><h3>The protocol this leads to</h3><p>The operating document: the three-tier daily protocol, the epigenetic architecture behind it, and the diagnostic suite that reads it back.</p><span class="article-meta">Connected · operating document</span></div><span>↗</span></a>` : ''}</div></div></div>`;
   }
 
   function lab() {
@@ -194,18 +186,33 @@
   }
 
   function about() {
-    return pageHero('About', 'The person.<br>The questions. The work.', 'Science Coherence is an independent body of work by Dr. William Conroy, developed from a single premise: that there is no position outside the process from which the process can be judged.') + `<div class="wrap section category-layout"><div class="side-note" style="color:var(--acc-green)">${art('leaf')}<p style="margin-top:20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase">Growing through the questions.</p></div><div class="prose">
-      <h2>There is a thread<br>through all of it.</h2>
+    return pageHero('About', 'The person.<br>The questions. The work.', 'Science Coherence is an independent body of work by Dr. William Conroy, developed from a single premise: that there is no position outside the process from which the process can be judged.') + `<div class="wrap about-page">
+    <section class="about-intro" aria-labelledby="about-spirit-title">
+      <figure class="about-image">
+        <img src="assets/el-ignorante.png" width="1086" height="1448" alt="El Ignorante: a figure in a straw hat holds an open book and tends a flask beneath a tree, surrounded by books, glassware and a sunlit garden." decoding="async">
+        <figcaption><span lang="es">El Ignorante</span><span>Growing through the questions.</span></figcaption>
+      </figure>
+      <div class="about-opening">
+        <span class="eyebrow" id="about-spirit-title">The spirit of the work</span>
+        <div class="about-spirit-principles">
+          <div><h2>Imagination opens the question.</h2><p>Imagination is the first operation, not a preliminary to the real one. What is imagined is already inside the recursion; the only question is whether it survives being run.</p></div>
+          <div><h2>Coherence decides.</h2><p>Not agreement, and not endorsement. Alignment that holds on contact — with a body, with a rhythm, with another account. What cannot hold on contact dissolves, whoever is holding it.</p></div>
+          <div><h2>The work remains revisable.</h2><p>Definitions, arguments, code, and conclusions all stay open. A structure that could not be contradicted would not be strong; it would be untested.</p></div>
+        </div>
+        <a class="about-text-link" href="#/principles">How the work stays open to revision <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <section class="about-thread" aria-labelledby="about-thread-title">
+      <div class="about-section-heading"><span class="eyebrow">One inquiry, across scales</span><h2 id="about-thread-title">There is a thread<br>through all of it.</h2></div>
+      <div class="prose">
       <p>The work moves between scales: the personal and the theoretical, the spoken moment and the formal model, an intuition and a piece of code. What connects them is not subject matter. It is the claim that these are the same operation performed at different depths — difference, selection, realisation, integration — and that a body, a thought and a world are all instances of the same loop holding its shape.</p>
-      <p>Science Coherence gives those strands a shared home. <a href="${link('ethos-of-being')}">The Ethos of Being</a> sets out the architecture. <a href="#/research">Research &amp; frameworks</a> carries it into specific territory, including what it means where the loop meets tissue. <a href="#/protocol">The protocol</a> is that question answered in practice, on one body, daily. <a href="#/lab">The Lab</a> is the experimental record — where a proposition is run rather than argued.</p>
+      <p>Science Coherence gives those strands a shared home. <a href="#/research">Research</a> brings together <a href="${link('ethos-of-being')}">The Ethos of Being</a>, the wider framework, and the questions that carry it into specific territory, including what it means where the loop meets tissue. <a href="#/protocol">The protocol</a> is that question answered in practice, on one body, daily. <a href="#/lab">The Lab</a> is the experimental record — where a proposition is run rather than argued.</p>
       <p>The intention is to make the connections visible while letting each form of work speak in its own voice.</p>
-      <h3>Imagination opens the question.</h3>
-      <p>Imagination is the first operation, not a preliminary to the real one. What is imagined is already inside the recursion; the only question is whether it survives being run.</p>
-      <h3>Coherence decides.</h3>
-      <p>Not agreement, and not endorsement. Alignment that holds on contact — with a body, with a rhythm, with another account. What cannot hold on contact dissolves, whoever is holding it.</p>
-      <h3>The work remains revisable.</h3>
-      <p>Definitions, arguments, code and conclusions all stay open. A structure that could not be contradicted would not be strong; it would be untested.</p>
-      <p style="margin-top:32px"><a class="button dark" href="${link('start-here')}">Find your way into the work ↗</a></p>
+      </div>
+    </section>
+    <div class="about-invitation">
+      <div><span class="eyebrow">Keep following the questions</span><h2>A place to begin.</h2><p>Follow an idea into the writing, then see what happens when it is put to work.</p></div>
+      <a class="button dark" href="${link('start-here')}">Find your way into the work <span aria-hidden="true">↗</span></a>
     </div></div>`;
   }
 
@@ -341,7 +348,7 @@
     // lexicon
     if (doc.lexicon && $('#lexicon-grid', root)) {
       const grid = $('#lexicon-grid', root);
-      grid.innerHTML = doc.lexicon.map(item => `<article class="lex-card" data-search="${escapeHTML((item.term + ' ' + item.category + ' ' + item.desc).toLowerCase())}"><span class="tag">${escapeHTML(item.category)}</span><h4>${escapeHTML(item.term)}</h4><div class="formula">$$${item.formula}$$</div><p>${item.desc}</p></article>`).join('');
+      grid.innerHTML = doc.lexicon.map((item, idx) => `<article class="lex-card" data-idx="${idx}" data-search="${escapeHTML((item.term + ' ' + item.category + ' ' + item.desc).toLowerCase())}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${escapeHTML(item.term)}: click to view details"><span class="tag">${escapeHTML(item.category)}</span><h4>${escapeHTML(item.term)}</h4><div class="formula">$$${item.formula}$$</div></article>`).join('');
       const count = () => { const n = $$('.lex-card', grid).filter(c => !c.hidden).length; $('#lexicon-count').textContent = pluralize(n, 'term', 'terms'); };
       $('#lexicon-search', root).addEventListener('input', e => {
         const q = e.target.value.toLowerCase().trim();
@@ -349,6 +356,22 @@
         count();
       });
       count();
+
+      grid.addEventListener('click', e => {
+        const card = e.target.closest('.lex-card');
+        if (!card) return;
+        const item = doc.lexicon[card.dataset.idx];
+        if (item) openLexiconModal(item);
+      });
+      grid.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const card = e.target.closest('.lex-card');
+          if (!card) return;
+          e.preventDefault();
+          const item = doc.lexicon[card.dataset.idx];
+          if (item) openLexiconModal(item);
+        }
+      });
     }
 
     // pacer
@@ -624,8 +647,20 @@
     const idx      = ((dayCount % 360) + 360) % 360;
     const N        = dayCount + 1;             // the matrix date number, 1-based
 
-    // The clock cadence: anchored to the solar day, dilated inside it.
-    const phi      = livingPhase(sol.frac);
+    /* The clock cadence. A matrix day is one calendar date, so the uniform
+       position through the date is the modelled solar phase directly — no
+       accumulation, no divergence, no drift between day and date. The wave
+       redistributes time inside it; absorption flattens the wave. */
+    const xDate    = N + within / MS_CAL;      // fractional matrix date
+    const A        = absorbedAt(xDate);
+    /* Anchored to apparent solar time, exactly as before. The wave redistributes
+       time inside the solar day; absorption flattens the wave. So 12:00 is peak
+       sun at every A, and the clock's departure from the sun is never more than
+       the current excursion ε — minimal, and shrinking as the dilation
+       normalises. A is recomputed here every tick, so the wave relaxes
+       continuously rather than stepping at a rung. */
+    const uniform  = sol.frac;                 // apparent solar phase
+    const phi      = livingPhaseAt(uniform, A);
     const livingMs = phi * MS_DAY;
     const t        = Math.floor(livingMs / 1000);
 
@@ -639,13 +674,13 @@
        baseline value above is what the defined cadence actually gives.       */
     const level    = activeCoherenceLevel(N);
     const load     = LADDER[level].load;
-    const eps      = residualMs(N);
-    const solMidCivil = ((sol.civilMs - sol.frac * MS_DAY) % MS_DAY + MS_DAY) % MS_DAY;
-    const mTurnMs  = (solMidCivil + eps) % MS_DAY;
-    const mt       = Math.floor(mTurnMs / 1000);
+    const eps      = residualMs(N);                       // discrete, from the rung
+    const epsLive  = excursionMs(A);                      // continuous peak excursion
+    /* The clock's live departure from the sun, bounded by ε. */
+    const mt       = Math.floor(Math.abs(phi - uniform) * MS_DAY / 1000);
     const next     = nextMilestone(N);
 
-    // How far the dilated clock currently stands from apparent solar time.
+    // Reference only: the matrix clock against present-day apparent solar time.
     let drift = livingMs - sol.frac * MS_DAY;
 
     return {
@@ -657,7 +692,14 @@
       week: Math.floor(idx % 30 / 6) + 1,
       dayIndex: idx,
       arc: idx + within / MS_CAL,
-      v: velocity(phi),
+      v: velocityAt(phi, A),
+      vBase: velocity(phi),
+      A, xDate, uniform,
+      meanRate: RATE_R,
+      dayRefMs: MS_CAL,
+      epsLive,
+      /* how far the clock stands from steady flow right now */
+      excursion: (phi - uniform) * MS_DAY,
       regime: phi < SLEEP_END ? 'burn' : phi < NOON ? 'repay' : 'ripple',
       toTurn: MS_CAL - within,
       h: Math.floor(t / 3600) % 24, m: Math.floor(t % 3600 / 60), s: t % 60,
@@ -670,6 +712,22 @@
       epsMs: eps,
       next,
       toNext: next ? next.dates - N : 0,
+      /* Live approach to the next rung. This is NOT interpolated absorption:
+         J and A stay stepwise. It is position within the current interval,
+         which does change continuously, so the panel has something true to
+         show while the clock runs. */
+      dateFrac: N + within / MS_CAL,
+      rungFrom: LADDER[level].dates,
+      rungTo: next ? next.dates : null,
+      rungProgress: next
+        ? Math.min(1, Math.max(0, (N + within / MS_CAL - LADDER[level].dates) / (next.dates - LADDER[level].dates)))
+        : 1,
+      toNextMs: next ? (next.dates - (N + within / MS_CAL)) * MS_CAL : 0,
+      nextAbsorbed: next ? next.absorbed : 1,
+      /* Integrated, read continuously. This is now the CONTROL variable: it
+         drives the modelled clock as well as the display. The presentation-only
+         contract of the previous version is deliberately revised. */
+      absorbedLive: A,
       mTurnH: Math.floor(mt / 3600) % 24, mTurnM: Math.floor(mt % 3600 / 60), mTurnS: mt % 60,
       mode: MATRIX_MODE
     };
@@ -760,6 +818,73 @@
   const residualMs         = d => unresolvedLoad(d) * MS_DAY / Q;
   const nextMilestone      = d => LADDER.find(l => l.dates > d) || null;
 
+
+  /* ── Progress-coupled dilation ───────────────────────────────────────────
+     THE MODEL CHOICE, stated explicitly: the endpoint and the ladder do not fix
+     the transition law on their own.
+
+     The dilation is applied from day one. A matrix day is 24h 20m 58.128s of
+     reference time — one calendar date — at EVERY stage, so the mean never
+     moves. What absorption changes is the STRUCTURE of the dilation inside the
+     day, not its total. With R = 608737/600000,
+
+         v_A(φ) = R · [ 1 + (1 − A)(v(φ) − 1) ]
+         C_A(φ) = (1 − A)·consumed(φ) + A·φ        (normalised antiderivative)
+
+     Mean = R for all A. Amplitude scales by (1 − A). At A = 1 the wave is gone
+     and the day runs at one steady rate: 24h 20m 58.128s spread evenly over 24
+     clock hours. C_A(½) = ½ and C_A(1) = 1 for every A, so noon and midnight
+     stay anchored throughout.
+
+     ε IS THE RESIDUAL NON-UNIFORMITY. The clock's peak departure from steady
+     flow — at 04:00 — is (1 − A)·1258.128 s, which equals the ladder residual at
+     every rung exactly. It is not a turnover displacement and nothing imposes
+     it: it is what the wave does, and it goes to zero as the dilation
+     normalises.
+
+     THE FRAMEWORK'S CLAIM. Earth's rotation slows through the absorption,
+     quickly at first and then ever more slowly, so the solar day lengthens to
+     meet the 87,658.128-second matrix day; the flow of time slows with it, and
+     at date 600,000 the two are one and the dilation is fully normalised. By
+     date ~259 most of the 5.2422 and most of the 8,737 are already absorbed and
+     the day is close to 360 rotations of 24h 20m 58.128s. Present-day apparent
+     solar time is kept on the panel as a separate, labelled reference. The
+     coupling is the Science Coherence framework's proposal; NIST on
+     astronomical versus atomic time and NASA on solar versus sidereal rotation
+     are cited only for the standard distinction, not as support for it.      */
+  const RATE_R  = (Q + J0) / Q;                 // 1.014561666… ref s per matrix s
+  const RATE_C  = RATE_R - 1;                   // 8737/600000
+  /* The matrix day is 87,658.128 reference seconds FROM DAY ONE. The mean never
+     changes; a matrix day is always one calendar date. */
+  const dayRefMs = () => MS_CAL;
+  const meanAt   = () => RATE_R;
+
+  const velocityAt = (phi, A) => RATE_R * (1 + (1 - A) * (velocity(phi) - 1));
+  const consumedAt = (phi, A) => (1 - A) * consumed(phi) + A * phi;
+  function livingPhaseAt(fraction, A) {
+    let lo = 0, hi = 1;
+    for (let i = 0; i < 40; i++) {
+      const mid = (lo + hi) / 2;
+      if (consumedAt(mid, A) < fraction) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+  /* The residual ε is the PEAK WITHIN-DAY EXCURSION of the clock from steady
+     flow, which falls at 04:00 and equals (1−A)·1258.128 s — the ladder residual
+     at every rung, exactly. Nothing imposes it; it is what the wave does. */
+  const excursionMs = A => (1 - A) * LEAD_MS;
+
+  /* The continuous integrated fraction at a fractional matrix date. Linear
+     within each rung interval, 1 at and beyond completion. */
+  function absorbedAt(x) {
+    if (x >= CLOSURE.dates) return 1;
+    let k = 0;
+    for (let i = 0; i < LADDER.length; i++) if (x >= LADDER[i].dates) k = i;
+    const a = LADDER[k], b = LADDER[k + 1];
+    if (!b) return a.absorbed;
+    return a.absorbed + (b.absorbed - a.absorbed) * (x - a.dates) / (b.dates - a.dates);
+  }
+
   /* ── The effective epoch ─────────────────────────────────────────────────
      The March 2027 run has not started. Until it does the instrument works
      against a virtual epoch written once to storage and then left to advance
@@ -814,9 +939,63 @@
     if (fails.length) console.error('[matrix] ladder checks failed:\n  ' + fails.join('\n  '));
   })();
 
-  /* The project has no test runner and no build step, so the pure functions are
-     exposed for checking from the console or a headless browser. Read-only; the
-     instrument never reads them back. */
+  /* Coupling checks — the corrected law. Silent when they hold. */
+  (function checkCoupling() {
+    const fails = [];
+    const near = (x, y, tol, what) => { if (Math.abs(x - y) > tol) fails.push(`${what}: ${x} vs ${y}`); };
+    const quad = A => { let acc = 0; const n = 20000;
+      for (let i = 0; i < n; i++) { const a = i / n, b = (i + 1) / n;
+        acc += (velocityAt(a, A) + 4 * velocityAt((a + b) / 2, A) + velocityAt(b, A)) / 6 / n; }
+      return acc; };
+
+    // the dilation is applied from day one: the mean never moves
+    [0, 0.25, 0.5, 0.9796, 1].forEach(A => {
+      near(quad(A), RATE_R, 1e-9, `mean at A=${A}`);
+      near(MS_CAL / 1000, 87658.128, 1e-6, 'matrix day (s)');
+      near(consumedAt(0.5, A), 0.5, 1e-12, `noon anchor at A=${A}`);
+      near(consumedAt(1, A), 1, 1e-12, `midnight anchor at A=${A}`);
+    });
+    // at completion the wave is gone: one steady rate all day
+    [0, 0.08, 0.25, 0.5, 0.77, 0.99].forEach(p =>
+      near(velocityAt(p, 1), RATE_R, 1e-12, `v(${p}) at A=1`));
+    near(360 * MS_CAL / 1000, 365.2422 * 86400, 1e-3, '360 matrix days (s)');
+    near(1 / RATE_R, 0.985647332099084, 1e-12, 'displayed rate at completion');
+
+    // ε is the peak excursion from steady flow, and it IS the ladder residual
+    LADDER.forEach(L => {
+      let peak = 0;
+      for (let i = 0; i <= 20000; i++) { const u = i / 20000;
+        peak = Math.max(peak, Math.abs(consumedAt(u, L.absorbed) - u)); }
+      near(peak * MS_DAY, L.residualMs, 1e-3, `peak excursion at rung ${L.cycle}`);
+      near(excursionMs(L.absorbed), L.residualMs, 1e-6, `excursionMs at rung ${L.cycle}`);
+    });
+    // retained: nothing reopens after completion
+    [600000, 600001, 700000, 5e6].forEach(d => {
+      near(absorbedAt(d), 1, 0, `A at date ${d}`);
+      near(velocityAt(0.3, absorbedAt(d)), RATE_R, 1e-12, `no wave at date ${d}`);
+      near(excursionMs(absorbedAt(d)), 0, 0, `zero excursion at date ${d}`);
+    });
+    /* The clock never runs backwards in real time. Sampled across a rung
+       boundary in steps of ~0.09 s, the phase must strictly advance: A crawls
+       far too slowly for its effect on C_A to overtake the day's own motion. */
+    for (const centre of [68, 206, 3365, 600000]) {
+      let prev = -Infinity, back = 0;
+      for (let i = 0; i <= 2000; i++) {
+        const x = centre - 0.001 + i * 1e-6;
+        const ph = livingPhaseAt(x - Math.floor(x), absorbedAt(x));
+        /* a drop from near 1 to near 0 is midnight rolling over, not a jump */
+        if (ph < prev && !(prev > 0.9 && ph < 0.1)) back++;
+        prev = ph;
+      }
+      if (back) fails.push(`clock went backwards ${back}× across rung at date ${centre}`);
+    }
+    if (fails.length) console.error('[matrix] coupling checks failed:\n  ' + fails.join('\n  '));
+  })();
+
+  window.__matrixClock = {
+    RATE_R, RATE_C, meanAt, dayRefMs, velocityAt, consumedAt, livingPhaseAt,
+    absorbedAt, excursionMs
+  };
   window.__matrix = {
     LADDER, J0, Q, coherenceLadder, activeCoherenceLevel,
     unresolvedLoad, absorptionFraction, residualSeconds,
@@ -851,12 +1030,12 @@
 
     /* The velocity field, drawn across one day, with the sleep window shaded,
        noon marked, and a marker riding the curve at the present moment. */
-    function drawCurve(phi) {
+    function drawCurve(phi, A) {
       const node = el('curve');
       if (!node) return;
       const W = 320, H = 74, P = 6;
       const vs = []; let lo = Infinity, hi = -Infinity;
-      for (let i = 0; i <= 240; i++) { const v = velocity(i / 240); vs.push(v); if (v < lo) lo = v; if (v > hi) hi = v; }
+      for (let i = 0; i <= 240; i++) { const v = velocityAt(i / 240, A); vs.push(v); if (v < lo) lo = v; if (v > hi) hi = v; }
       const pad2 = (hi - lo) * 0.16 || 0.02;
       lo -= pad2; hi += pad2;
       const x = f => P + f * (W - 2 * P);
@@ -869,7 +1048,7 @@
         + `<line x1="${x(NOON)}" y1="0" x2="${x(NOON)}" y2="${H}" class="cal-curve-noon"/>`
         + (lo <= 1 && hi >= 1 ? `<line x1="0" y1="${y(1)}" x2="${W}" y2="${y(1)}" class="cal-curve-unity"/>` : '')
         + `<path d="${d}" class="cal-curve-line"/>`
-        + `<circle cx="${x(phi).toFixed(1)}" cy="${y(velocity(phi)).toFixed(1)}" r="4" class="cal-curve-dot"/>`;
+        + `<circle cx="${x(phi).toFixed(1)}" cy="${y(velocityAt(phi, A)).toFixed(1)}" r="4" class="cal-curve-dot"/>`;
     }
 
     /* The ladder only changes when the matrix date changes, so it is cached. */
@@ -882,6 +1061,9 @@
       return Math.floor(x / 60) + 'm ' + (sec.indexOf('.') === 1 ? '0' + sec : sec) + 's';
     };
     const pct = a => (a * 100).toLocaleString('en-GB', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + ' %';
+    /* Six decimals for the live readings: a rung interval runs to months, so at
+       four the number would sit still long enough to look broken. */
+    const live = a => (a * 100).toLocaleString('en-GB', { minimumFractionDigits: 6, maximumFractionDigits: 6 }) + ' %';
 
     function drawLadder(N) {
       const node = el('ladder');
@@ -905,25 +1087,47 @@
         + `<tbody>${rows}</tbody>`;
     }
 
-    /* The absorption state: everything here belongs to the matrix layer. */
+    /* A long span as days / hours / minutes / seconds, ticking. */
+    const dhms = ms => {
+      let x = Math.max(0, Math.floor(ms / 1000));
+      const d = Math.floor(x / 86400); x -= d * 86400;
+      const h = Math.floor(x / 3600);  x -= h * 3600;
+      const m = Math.floor(x / 60);    x -= m * 60;
+      return (d ? d + 'd ' : '') + (d || h ? pad(h) + 'h ' : '') + pad(m) + 'm ' + pad(x) + 's';
+    };
+
+    /* The absorption state: everything here belongs to the matrix layer.
+       Two meters, deliberately separate — the integrated fraction is stepwise
+       and only moves when a rung is attained; the approach meter is live and
+       shows position within the current interval. Conflating them would imply
+       a continuous absorption law the mathematics does not give.            */
     function drawAbsorption(t) {
+      el('m-datefrac').textContent = t.dateFrac.toLocaleString('en-GB', { minimumFractionDigits: 5, maximumFractionDigits: 5 });
+      /* Six decimals, not four: a rung interval is ~68 days, so at four the
+         reading would sit still for a quarter of an hour and look broken. */
+      el('m-approach').textContent = live(t.rungProgress);
+      const app = el('m-approach-bar');
+      if (app) {
+        app.style.width = (t.rungProgress * 100).toFixed(4) + '%';
+        app.parentElement.setAttribute('aria-valuenow', (t.rungProgress * 100).toFixed(2));
+      }
+      el('m-approach-label').textContent = t.next
+        ? `rung ${t.level} → ${t.next.cycle} · J ${t.load.toLocaleString('en-GB')} → ${t.next.load.toLocaleString('en-GB')} at date ${t.next.dates.toLocaleString('en-GB')}`
+        : 'exact dual equilibrium — nothing left to approach';
       el('m-date').textContent = t.matrixDate.toLocaleString('en-GB');
       el('m-rung').textContent = `${t.level} of ${LADDER.length - 1}`;
       el('m-load').textContent = t.load.toLocaleString('en-GB');
       el('m-load0').textContent = J0.toLocaleString('en-GB');
-      el('m-absorbed').textContent = pct(t.absorbed);
-      el('m-remaining').textContent = pct(1 - t.absorbed);
+      el('m-absorbed').textContent = live(t.absorbedLive);
+      el('m-remaining').textContent = live(1 - t.absorbedLive);
       el('m-residual').textContent = epsText(t.epsMs);
-      el('m-turnover').textContent = `${pad(t.mTurnH)}:${pad(t.mTurnM)}:${pad(t.mTurnS)}`;
+      (el('m-turnover')||{}).textContent = `${(Math.abs(t.excursion) / 1000).toFixed(3)} s`;
       el('m-next').textContent = t.next
         ? `rung ${t.next.cycle} · J ${t.next.load.toLocaleString('en-GB')} at date ${t.next.dates.toLocaleString('en-GB')}`
         : 'none — exact dual equilibrium reached';
-      el('m-tonext').textContent = t.next ? `${t.toNext.toLocaleString('en-GB')} dates` : '—';
-      const bar = el('m-bar');
-      if (bar) {
-        bar.style.width = (t.absorbed * 100).toFixed(4) + '%';
-        bar.parentElement.setAttribute('aria-valuenow', (t.absorbed * 100).toFixed(4));
-      }
+      el('m-tonext').textContent = t.next
+        ? `${t.toNext.toLocaleString('en-GB')} dates · ${dhms(t.toNextMs)}`
+        : '—';
     }
 
     const REGIME = {
@@ -941,9 +1145,18 @@
       badge.setAttribute('data-accent', r.accent);
       el('vector').textContent = `${t.v.toFixed(6)}×`;
       el('rate').textContent = `${(1 / t.v).toFixed(4)}× solar`;
+      el('meanrate').textContent = `${t.meanRate.toFixed(9)}× · constant`;
+      el('daylen').textContent = `${(t.dayRefMs / 1000).toFixed(3)} s = 24h 20m 58.128s`;
+      el('amp').textContent = `${((1 - t.A) * 100).toFixed(6)} % of full`;
+      (el('excursion')||{}).textContent = `${(t.excursion / 1000).toFixed(3)} s`;
+      el('peakexc').textContent = `${(t.epsLive / 1000).toFixed(6)} s`;
+      el('actualsolar').textContent = (() => {
+        const x = Math.floor(t.sol.frac * 86400);
+        return `${pad(Math.floor(x / 3600))}:${pad(Math.floor(x % 3600 / 60))}:${pad(x % 60)}`;
+      })();
       el('phase').textContent = `${(t.phi * 100).toFixed(3)} %`;
       el('drift').textContent = `${t.drift < 0 ? '−' : '+'}${mmss(t.drift)}`;
-      drawCurve(t.phi);
+      drawCurve(t.phi, t.A);
 
       el('caldaylen').textContent = `${(MS_CAL / 3600000).toFixed(4)} h`;
       el('turnover').textContent = `${pad(t.turnH)}:${pad(t.turnM)}:${pad(t.turnS)}`;
@@ -1027,6 +1240,31 @@
   }
   function openSearch() { $('#search-dialog').showModal(); $('#global-search').value = ''; search(); $('#global-search').focus(); }
 
+  function closeLexModal() {
+    const dlg = $('#lexicon-dialog');
+    if (!dlg || !dlg.open) return;
+    dlg.classList.add('closing');
+    const onEnd = () => {
+      dlg.classList.remove('closing');
+      dlg.removeEventListener('animationend', onEnd);
+      if (dlg.open) dlg.close();
+    };
+    dlg.addEventListener('animationend', onEnd);
+    setTimeout(onEnd, 220);
+  }
+
+  function openLexiconModal(item) {
+    const dlg = $('#lexicon-dialog');
+    if (!dlg || !item) return;
+    $('#lex-dialog-category').textContent = item.category;
+    $('#lex-dialog-term').textContent = item.term;
+    $('#lex-dialog-formula').innerHTML = `$$${item.formula}$$`;
+    $('#lex-dialog-desc').innerHTML = `<p>${item.desc}</p>`;
+    loadKatex().then(() => renderMath(dlg)).catch(() => {});
+    dlg.classList.remove('closing');
+    dlg.showModal();
+  }
+
   /* ---------- theme ------------------------------------------------------ */
   function currentTheme() { return document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
   function toggleTheme() {
@@ -1083,6 +1321,7 @@
     // Retired and relocated routes keep working rather than 404-ing.
     const doc0 = DOCUMENTS[0];
     if (page === 'explore') { location.replace('#/library'); return; }
+    if (page === 'ethos') { location.replace('#/research'); return; }
     if (page === 'read' && doc0 && id === doc0.id) { location.replace('#/protocol' + (sub ? '/' + sub : '')); return; }
 
     let html, title = 'A living body of work';
@@ -1110,7 +1349,7 @@
     document.title = `${title} — Science Coherence`;
     $$('.desktop-nav a').forEach(a => a.classList.toggle('active', a.hash === '#/' + page || (page === 'read' && byId(id) && a.hash === '#/library')));
     $('#mobile-nav').hidden = true; $('#menu-toggle').setAttribute('aria-expanded', 'false');
-    $('#search-dialog').close(); $('#link-dialog').close();
+    $('#search-dialog').close(); $('#link-dialog').close(); $('#lexicon-dialog')?.close();
     window.scrollTo({ top: 0, behavior: 'instant' });
     main.focus({ preventScroll: true });
 
@@ -1142,9 +1381,16 @@
   $('#search-open').addEventListener('click', openSearch);
   $('#search-close').addEventListener('click', () => $('#search-dialog').close());
   $('#link-close').addEventListener('click', () => $('#link-dialog').close());
+  $('#lex-dialog-close')?.addEventListener('click', closeLexModal);
+  $('#lexicon-dialog')?.addEventListener('cancel', e => { e.preventDefault(); closeLexModal(); });
   $('#global-search').addEventListener('input', search);
   $('#search-results').addEventListener('click', e => { if (e.target.closest('a')) $('#search-dialog').close(); });
-  $$('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+  $$('dialog').forEach(d => d.addEventListener('click', e => {
+    if (e.target === d) {
+      if (d.id === 'lexicon-dialog') closeLexModal();
+      else d.close();
+    }
+  }));
   $('#menu-toggle').addEventListener('click', () => {
     const expanded = $('#menu-toggle').getAttribute('aria-expanded') === 'true';
     $('#menu-toggle').setAttribute('aria-expanded', !expanded);

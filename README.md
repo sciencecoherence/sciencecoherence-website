@@ -162,6 +162,21 @@ the load never rises, and there is no supercycle after 600,000. It is stepwise
 on purpose: the mathematics gives discrete milestones, and a continuous
 absorption law would be an assumption this version does not make.
 
+**One meter, and two readings of the same progress.** The single meter is
+`rungProgress` (`m-approach-bar`): position within the interval between the rung
+in force and the next, so it sweeps 0 → 100% once per rung. `absorbedLive` is the
+continuous integrated fraction — the stepwise rung value carried toward the next
+in proportion to `rungProgress` — and `Integrated` + `Remaining` are read from
+it, so they always sum to 100 and move together.
+
+`unresolvedLoad`, `residualSeconds` and the ladder table remain discrete, and
+**`J` is never driven from the live value** — the continuous reading is
+presentation over a discrete state, not a redefinition of it. Keep that split if
+you touch this. The panel itself reports only the continuous reading: a second
+per-rung percentage next to it read as a contradiction, so it was removed. The
+exact value at each rung stays where it belongs, in the ladder table.
+Both the panel and the article say so in words.
+
 **Two layers, kept visibly apart.** The baseline is the defined year 365.2422,
 the raw slip, the passive convergents, and
 
@@ -176,6 +191,58 @@ the baseline free-running boundary, `mTurnH/M/S` is the modeled one, displaced
 from apparent solar midnight by ε and closing on 00:00 as the load falls. The
 instrument labels which is which; do not let a modeled value read as an
 observation.
+
+### Progress-coupled dilation
+
+The clock and the ladder are one system. `absorbedLive` (`A`) is the **control
+variable**: it drives the modelled clock as well as the display.
+
+**The dilation is applied from day one.** A matrix day is 24h 20m 58.128s of
+reference time — one calendar date — at every stage, so the mean never moves.
+With `R = 608737/600000`:
+
+```
+v_A(φ) = R · [ 1 + (1 − A)(v(φ) − 1) ]      the wave, renormalised
+C_A(φ) = (1 − A)·consumed(φ) + A·φ          its normalised antiderivative
+```
+
+Mean = R for all A; amplitude scales by (1 − A). What absorption changes is the
+**structure** of the dilation inside the day, not its total. At A = 1 the wave is
+gone and those 24h 20m 58.128s are spread evenly over 24 clock hours. Because
+`C_A` is a linear blend, `C_A(½) = ½` and `C_A(1) = 1` for every A — noon and
+midnight stay anchored throughout.
+
+**ε is the residual non-uniformity.** The clock's peak departure from steady
+flow, at 04:00, is `(1 − A)·1258.128 s` — the ladder residual at every rung,
+exactly. Nothing imposes it; it is what the wave does, and it reaches zero when
+the dilation is fully normalised. `excursionMs(A)` returns it.
+
+**The clock stays anchored to apparent solar time**, exactly as before the
+coupling. `phi = livingPhaseAt(sol.frac, A)`. Because `C_A(½) = ½` at every A,
+12:00 is peak sun throughout, and the clock's departure from the sun is bounded
+by the current ε — minimal, and shrinking as the dilation normalises. Do not
+re-anchor the clock to `within / MS_CAL`: that decouples it from the sun and the
+readings diverge by hours.
+
+`A` is recomputed from the fractional matrix date on **every tick**, so the wave
+relaxes continuously; nothing about the clock waits for a rung or a date
+boundary.
+
+**Solar anchoring.** The framework holds that Earth's rotation slows through the
+absorption — fast at first, then ever more slowly — so the solar day lengthens
+to meet the matrix day, and the flow of time slows with it. By around date 259
+most of the 5.2422 and most of the 8,737 are absorbed and the year is close to
+360 rotations of 24h 20m 58.128s. Present-day apparent solar time stays on the
+panel as *Actual apparent solar*, labelled as a reference. The coupling is the
+Science Coherence framework's proposal;
+[NIST](https://www.nist.gov/pml/time-and-frequency-division/leap-seconds-faqs) and
+[NASA](https://science.nasa.gov/learn/basics-of-space-flight/chapter2-1/) are
+cited only for the standard astronomical/atomic distinction, not as support.
+
+`checkCoupling()` asserts the constant mean at five values of A, the anchors at
+each, the wave's disappearance at completion, ε as the measured peak excursion at
+all nine rungs, retention at 600,001 / 700,000 / 5,000,000, and that the clock
+never steps backwards across a rung boundary (midnight rollover excluded).
 
 ### Simulation mode and the effective epoch
 
@@ -208,7 +275,7 @@ Append an object to the array in `content.js`:
   note, download, search, body }
 ```
 
-`category` is one of `research`, `regenesis`, `ethos`, `transmissions`, `lab`,
+`category` is one of `research`, `regenesis`, `transmissions`, `lab`,
 `learning`, `protocol` (defined at the top of `app.js`).
 
 Two flags shape where a collection appears.
@@ -218,19 +285,17 @@ but it appears in no navigation, no card grid, no library filter and no search
 result. `regenesis` and `learning` are hidden this way — remove the flag to bring
 one back.
 
-`standalone: true` keeps a collection out of the home page's three-card grid
+`standalone: true` keeps a collection outside the two primary home-page paths
 while leaving it fully listed everywhere else: its own route, its own nav entry,
 its own library filter, and its pieces in search and in the library.
 `transmissions` and `protocol` are both standalone, and each has its own feature
-block on the home page rather than a path card.
+block on the home page.
 
-The home page offers three paths: `research`, `ethos`, `lab`. Regenesis was
-folded into Research & frameworks, so restoring it means removing its `hidden`
-flag *and* moving its pieces back — they now carry `"category": "research"`.
-
-The architecture feature that opened the Ethos page is parked behind
-`SHOW_ETHOS_OPENER` in `app.js`. The markup is intact in `ethosOpener()`; set the
-flag to `true` to bring it back, on that page or another.
+The home page offers two primary feature paths: `research` and `lab`. The former
+Ethos collection has been folded into Research, so its two articles now carry
+`"category": "research"`; the retired `#/ethos` route redirects to
+`#/research`. Regenesis was also folded into Research earlier, so restoring it
+means removing its `hidden` flag and moving its piece back.
 
 Every page hero carries the green band: `pageHero()` defaults its `green`
 argument to `true`, and the protocol's own header uses `.page-hero.green
