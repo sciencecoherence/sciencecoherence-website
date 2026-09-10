@@ -286,3 +286,11 @@ Each article has a preserved Markdown source/download under `sources/`:
 - `sources/universe-biological-computer.md`
 
 The rendered reader copies live in `content.js`, remain in the `research` collection, and use the existing article reader, search, saved-reading, math-rendering, and source-download paths without changing routing or design.
+
+## Decision — Botanical replacement: Eyebright to Cistanche (CistaMAX) (2026-09-09)
+
+Crude Eyebright extract was superseded by high-potency *Cistanche tubulosa* (Nootropics Depot CistaMAX®) at half a standard dose (½ capsule / ~250–325 mg) in Phase 2 of the Master Protocol, Section 3 epigenetic compounds, and the master lexicon:
+- Provides concentrated phenylethanoid glycosides (≥10–20% pure acteoside/verbascoside plus echinacoside).
+- Mechanism: halts IκBα phosphorylation to silence NF-κB (p65) and AP-1 transcription (suppressing IL-6, IL-8, and pro-MMP-9 promoters); antioxidant catechol trap locks the conserved Cys73 thiol on pro-MMP-9 (cysteine-switch lock); upregulates neurotrophins BDNF and GDNF in synergy with ALCAR and Na-R-ALA.
+- Fully compatible with the body-mass dose scaler.
+

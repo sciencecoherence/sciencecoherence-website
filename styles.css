@@ -596,7 +596,7 @@ table.data td.drivers { color: var(--ink-2); font-family: var(--mono); font-size
 .lex-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .lex-card .tag { align-self: flex-start; margin-bottom: 12px; }
 .lex-card h4 { font-family: var(--serif); font-weight: 500; font-size: 21px; line-height: 1.25; margin: 0 0 14px; color: var(--ink); }
-.lex-card .formula { margin: 0; font-size: 13.5px; padding: 12px 14px; text-align: center; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); flex-grow: 1; display: flex; align-items: center; justify-content: center; overflow-x: auto; }
+.lex-card .formula { margin: 0; font-size: 13.5px; padding: 12px 14px; text-align: center; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); flex-grow: 1; display: flex; align-items: center; justify-content: center; overflow-x: auto; overflow-y: hidden; }
 .lex-card[hidden] { display: none; }
 
 /* Lexicon details pop-up dialog */
@@ -614,16 +614,20 @@ dialog.lex-dialog.closing::backdrop { animation: lexBackdropFadeOut .2s ease-in 
 .lex-dialog-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .lex-dialog-top .tag { --accent: var(--teal); --accent-soft: var(--teal-soft); }
 .lex-dialog-title { font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.25; margin: 0 0 16px; color: var(--ink); }
-.lex-dialog-formula { font-size: 15px; padding: 14px 18px; margin: 0 0 20px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); text-align: center; overflow-x: auto; color: var(--teal); }
-.lex-dialog-body { font-size: 15.5px; line-height: 1.68; color: var(--ink-2); margin-bottom: 20px; overflow-y: auto; max-height: 48vh; padding-right: 6px; }
+.lex-dialog-formula { font-size: 15px; padding: 14px 18px; margin: 0 0 20px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); text-align: center; overflow-x: auto; overflow-y: hidden; color: var(--teal); }
+.lex-dialog-body { font-size: 15.5px; line-height: 1.68; color: var(--ink-2); margin-bottom: 20px; overflow-y: auto; max-height: 52vh; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.lex-dialog-body::-webkit-scrollbar { width: 6px; }
+.lex-dialog-body::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
 .lex-dialog-body p { margin: 0 0 14px; }
 .lex-dialog-body p:last-child { margin-bottom: 0; }
 .lex-dialog .search-hint { margin: 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
 @media (max-width: 640px) {
   dialog.lex-dialog { padding: 20px; width: calc(100% - 24px); max-height: 88vh; }
   .lex-dialog-title { font-size: 22px; margin-bottom: 12px; }
-  .lex-dialog-formula { font-size: 13px; padding: 10px 12px; margin-bottom: 16px; }
-  .lex-dialog-body { font-size: 14.5px; max-height: 52vh; }
+  .lex-dialog-formula { font-size: 13px; padding: 12px 14px 14px; margin-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .lex-dialog-formula::-webkit-scrollbar { height: 4px; }
+  .lex-dialog-formula::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
+  .lex-dialog-body { font-size: 14.5px; max-height: 50vh; }
 }
 
 /* ---------- 10b. The 360° calendar instrument ---------------------------- */
