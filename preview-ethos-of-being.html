@@ -1,0 +1,817 @@
+<!doctype html>
+<!--
+  PREVIEW ONLY — not wired into the site.
+
+  This file renders the proposed document exactly as the real route would: it links the
+  live styles.css, reproduces the site header, the doc hero, the doc-nav and the
+  doc-panel markup that app.js emits for a document, and carries the instrument.
+
+  On approval it splits into three:
+    · the <section data-id …> blocks below  ->  documents/ethos-of-being.html
+                                                 (+ python tools/build-documents.py)
+    · the <style id="ethos-widget-css">     ->  styles.css, new section 10c
+    · the <script id="ethos-widget-js">     ->  app.js, plus one line in enhanceArticle/
+                                                 enhanceDocument to mount data-widget="recursion"
+
+  Serve over local HTTP so the self-hosted fonts and the vendored KaTeX load.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Ethos of Being — The Lab — Science Coherence</title>
+<meta name="description" content="The recursion walked: ∇Φ → Λ → Ω → Δ, with the closures Δ → Λ and Ω → ∇Φ. An instrument for reading the structure rather than memorising the terms.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#173d32" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1512" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/DMSans-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=20260911m">
+<script>
+  try { var t = JSON.parse(localStorage.getItem('sc-theme')); if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+
+<!-- ====================================================================== -->
+<!-- → styles.css, new section "10c. The recursion instrument"              -->
+<!-- ====================================================================== -->
+<style id="ethos-widget-css">
+/* ---------- 10c. The recursion instrument -------------------------------- */
+/* The instrument sits inside the reading column. The stage holds the loop;
+   the readout names the move the loop is currently making. Nothing here is
+   decorative: every mark is a node, a directed edge, or the pulse travelling
+   along the edge that is currently active. */
+.rec { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); margin: 26px 0 34px; overflow: hidden; }
+
+.rec-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--paper-2); }
+.rec-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec-count { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.rec-count b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Below the reading width the stage scrolls inside its own box rather than
+   shrinking the labels past legibility — the same contract as .table-scroll. */
+.rec-stage { padding: 10px 14px 0; background: var(--paper); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.rec-stage svg { width: 100%; height: auto; display: block; max-height: 430px; }
+
+/* Nodes ------------------------------------------------------------------- */
+.rec-node { cursor: pointer; }
+.rec-node .disc { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.2; transition: stroke .25s ease, stroke-width .25s ease, fill .25s ease; }
+.rec-node .glyph { font-family: var(--serif); font-style: italic; font-size: 30px; fill: var(--ink); transition: fill .25s ease; }
+.rec-node .name { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; fill: var(--muted); transition: fill .25s ease; }
+.rec-node .gloss { font-family: var(--sans); font-size: 12px; fill: var(--faint); transition: fill .25s ease; }
+.rec-node:hover .disc { stroke: var(--teal); }
+.rec-node:focus-visible { outline: none; }
+.rec-node:focus-visible .disc { stroke: var(--focus); stroke-width: 2.4; }
+.rec-node.on .disc { stroke: var(--accent); stroke-width: 2.6; fill: var(--accent-soft); }
+.rec-node.on .glyph { fill: var(--accent); }
+.rec-node.on .name { fill: var(--accent); }
+.rec-node.on .gloss { fill: var(--ink-2); }
+/* A node the loop has already passed this turn stays marked: the turn is
+   cumulative, not a sequence of unrelated states. */
+.rec-node.seen .disc { stroke: var(--line-strong); fill: var(--paper-2); }
+
+/* Edges ------------------------------------------------------------------- */
+.rec-edge { fill: none; stroke: var(--line-strong); stroke-width: 1.3; transition: stroke .25s ease, stroke-width .25s ease, opacity .25s ease; }
+.rec-edge.closure { stroke-dasharray: 5 4; }
+.rec-edge.on { stroke: var(--accent); stroke-width: 2.4; }
+.rec-arrow path { fill: var(--line-strong); transition: fill .25s ease; }
+.rec-arrow.on path { fill: var(--accent); }
+.rec-elabel { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; fill: var(--faint); transition: fill .25s ease; }
+.rec-elabel.on { fill: var(--accent); }
+.rec-pulse { fill: var(--accent); opacity: 0; }
+.rec-pulse.on { opacity: 1; }
+
+/* Ψ — primitive, and not on the loop -------------------------------------- */
+.rec-psi .disc { fill: var(--paper); stroke: var(--violet); stroke-width: 1.1; stroke-dasharray: 4 4; opacity: .55; transition: opacity .3s ease; }
+.rec-psi .glyph { font-family: var(--serif); font-style: italic; font-size: 22px; fill: var(--violet); opacity: .65; transition: opacity .3s ease; }
+.rec-psi .name { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; fill: var(--faint); transition: fill .3s ease; }
+.rec-psi.on .name { fill: var(--violet); }
+.rec-psi .tether { stroke: var(--violet); stroke-width: 1; stroke-dasharray: 2 5; opacity: .3; fill: none; }
+.rec-psi .halo { fill: none; stroke: var(--violet); stroke-width: 1.2; opacity: 0; }
+.rec-psi.on .disc { opacity: 1; fill: var(--violet-soft); stroke-width: 1.6; }
+.rec-psi.on .glyph { opacity: 1; }
+.rec-psi.on .halo { animation: recHalo 1.8s ease-out infinite; }
+@keyframes recHalo { 0% { r: 30px; opacity: .5; } 100% { r: 58px; opacity: 0; } }
+
+.rec .rec-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 2px 8px 14px; font-family: var(--mono); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint); }
+.rec .rec-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.rec .rec-legend i { width: 22px; height: 0; border-top: 1.4px solid var(--line-strong); flex: none; }
+.rec .rec-legend i.k-cls { border-top-style: dashed; }
+.rec .rec-legend i.k-psi { width: 12px; height: 12px; border: 1.2px dashed var(--violet); border-radius: 50%; }
+
+/* Readout ----------------------------------------------------------------- */
+.rec-readout { --accent: var(--muted); --accent-soft: var(--paper-2); border-top: 1px solid var(--line); padding: 20px 22px 22px; }
+.rec-move { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.rec-move h4 { font-family: var(--serif); font-weight: 500; font-size: 22px; letter-spacing: -.01em; margin: 0; color: var(--ink); }
+.rec-readout p { font-size: 15px; line-height: 1.7; color: var(--ink-2); margin: 0 0 12px; max-width: 68ch; }
+.rec-readout p:last-child { margin-bottom: 0; }
+.rec p.rec-status { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--muted); margin: 0; padding-top: 12px; border-top: 1px solid var(--line); }
+p.rec-hint { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--faint); }
+
+@media (max-width: 720px) {
+  .rec-bar { padding: 12px 14px; }
+  .rec-readout { padding: 18px 16px; }
+  .rec-move h4 { font-size: 19px; }
+  .rec-stage svg { max-height: none; min-width: 600px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rec-psi.on .halo { animation: none; opacity: .35; }
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- The site header, reproduced so the preview reads at true scale. -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="Science Coherence home">
+      <img src="assets/mark.svg" width="37" height="37" alt="">
+      <span>science<span class="brand-light">coherence</span><small>COSMIC AWAKENING</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="index.html#/research">Research</a>
+      <a href="index.html#/protocol">The Protocol</a>
+      <a href="index.html#/lab">The Lab</a>
+      <a href="index.html#/transmissions">Transmissions</a>
+      <a href="index.html#/library">Library</a>
+      <a href="index.html#/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button theme-toggle" id="theme-toggle" aria-label="Switch theme">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<div class="reading-progress" id="reading-progress"></div>
+
+<!-- doc hero — the markup app.js emits for a document -->
+<section class="page-hero green doc-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html#/">Home</a> / <a href="index.html#/lab">The Lab</a> / The Ethos of Being</div>
+    <span class="eyebrow">Experiment · Version 1.0</span>
+    <h1>The Ethos of Being</h1>
+    <p class="lede">The recursion walked, one move at a time — and what it would take for the walk to be wrong.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-facts">
+      <div><b>4</b><span>Nodes on the loop</span></div>
+      <div><b>5</b><span>Directed edges</span></div>
+      <div><b>5</b><span>Primitives</span></div>
+      <div><b class="accent">0</b><span>External drivers</span></div>
+    </div>
+    <div class="doc-meta-row">
+      <div class="reader-meta" style="margin:0">Science Coherence Institute · 12 September 2026 · 6 sections · interactive</div>
+    </div>
+    <aside class="reader-note doc-note">This is an instrument, not an illustration. Every mark on the stage is a node of the recursion, a directed edge between nodes, or the pulse travelling along the edge currently being made. Nothing on it is ornament, and nothing on it stands for a driver outside the loop. Section 05 states, line by line, which claims the framework defines, which follow from those definitions, and which are still open.</aside>
+  </header>
+</div>
+
+<div class="doc-nav-wrap"><div class="wrap">
+  <div class="doc-nav" role="tablist" aria-label="Document sections" id="doc-nav">
+    <button role="tab" id="tab-overview"     data-section="overview"     aria-selected="true"><i>00</i>Overview</button>
+    <button role="tab" id="tab-recursion"    data-section="recursion"    aria-selected="false"><i>01</i>The Recursion</button>
+    <button role="tab" id="tab-primitives"   data-section="primitives"   aria-selected="false"><i>02</i>Primitives</button>
+    <button role="tab" id="tab-closures"     data-section="closures"     aria-selected="false"><i>03</i>Closures</button>
+    <button role="tab" id="tab-stabilization" data-section="stabilization" aria-selected="false"><i>04</i>Stabilization</button>
+    <button role="tab" id="tab-standing"     data-section="standing"     aria-selected="false"><i>05</i>Standing</button>
+    <div class="mode">
+      <button type="button" id="mode-sections" aria-pressed="true">Sections</button>
+      <button type="button" id="mode-all" aria-pressed="false">Continuous</button>
+    </div>
+  </div>
+</div></div>
+
+<div class="wrap doc" id="doc">
+
+<!-- ===================================================================== -->
+<section class="doc-panel active" data-id="overview" data-num="0" data-label="Overview"
+         data-title="A model you can walk"
+         data-summary="What the model states, how the instrument works, and what is claimed as defined, derived, or still open."
+         id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Overview</span><h2>A model you can walk</h2><p>What the model states, how the instrument works, and what is claimed as defined, derived, or still open.</p></div>
+
+  <p class="doc-lede">Reality here is not a thing observed but a recursion that keeps producing the conditions of its own next pass. Imagination generates difference; selection admits some of it; what is admitted is rendered; what persists in the rendering goes back and changes how selection works, and what has been rendered changes what can be imagined next.</p>
+
+  <p>Written out, that is a sentence. Walked, it is a structure — and the difference matters, because the whole claim of the model rests on the loop being closed and generative in itself. A sentence can be read as a story with a beginning. A loop cannot. The instrument in section 01 exists to make that second reading the natural one.</p>
+
+  <div class="card-grid cols-3 doc-index">
+    <a class="card index-card" href="#panel-recursion" data-accent="teal"><span class="index-num">01</span><h3>The Recursion</h3><p>The instrument. Four nodes, five directed edges, and a pulse you can step move by move or let run.</p></a>
+    <a class="card index-card" href="#panel-primitives" data-accent="blue"><span class="index-num">02</span><h3>Primitives</h3><p>∇Φ, Λ, Ω and Δ on the loop; Ψ primitive and off it. What each one is, and what it is not.</p></a>
+    <a class="card index-card" href="#panel-closures" data-accent="amber"><span class="index-num">03</span><h3>Closures</h3><p>Δ → Λ and Ω → ∇Φ. Why each points one way, and what breaks if either is drawn as two.</p></a>
+    <a class="card index-card" href="#panel-stabilization" data-accent="violet"><span class="index-num">04</span><h3>Stabilization</h3><p>The dual condition: one constraint on the substrate, one on the chart, holding at once.</p></a>
+    <a class="card index-card" href="#panel-standing" data-accent="rose"><span class="index-num">05</span><h3>Standing</h3><p>Defined, derived, unresolved — every claim on this page sorted into one of the three.</p></a>
+    <a class="card index-card" href="index.html#/lab" data-accent="green"><span class="index-num">↗</span><h3>The Lab</h3><p>The experimental record this piece belongs to: what is varied, what is watched, what would count as failure.</p></a>
+  </div>
+
+  <div class="card" data-accent="teal">
+    <h3 class="card-title">How to read this document</h3>
+    <p>Each section stands on its own. The instrument can be stepped with the buttons, with the arrow keys, or by clicking any node directly; the readout beneath it names the move being made and says what that move is. Playing it is optional and the page loses nothing if you step it by hand — the animation carries no information the readout does not also carry in words.</p>
+    <p>Formulas are rendered inline. Terms are introduced only where they are needed, and the loop is never explained twice at different depths.</p>
+  </div>
+
+  <div class="card" data-accent="rose">
+    <h3 class="card-kicker">What is not on the stage</h3>
+    <p>There is no generator, controller, observer, Hamiltonian or first mover anywhere in the instrument, because the model does not have one. The loop is generative in itself. If the diagram appears to want something outside it to start it turning, that impression is the thing the instrument is built to dissolve: what looks like a start is only where you happened to enter.</p>
+  </div>
+</section>
+
+<!-- ===================================================================== -->
+<section class="doc-panel" data-id="recursion" data-num="1" data-label="The Recursion"
+         data-title="The recursion, walked"
+         data-summary="∇Φ → Λ → Ω → Δ, with the closures Δ → Λ and Ω → ∇Φ. Step it, or let it run."
+         id="panel-recursion" role="tabpanel" aria-labelledby="tab-recursion" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Section 1</span><h2>The recursion, walked</h2><p>∇Φ → Λ → Ω → Δ, with the closures Δ → Λ and Ω → ∇Φ. Step it, or let it run.</p></div>
+
+  <p>Nine moves make one turn: four arrivals at nodes, three forward passages between them, and two closures. The closures are what make the turn a recursion rather than a chain — they are not a return to the start, because there is no start to return to. They are the turn altering the conditions under which the next turn is made.</p>
+
+  <!-- The instrument. On integration this becomes: <div data-widget="recursion"></div> -->
+  <div class="rec" data-widget="recursion">
+    <div class="rec-bar">
+      <div class="rec-controls">
+        <button type="button" class="button small" id="rec-prev">← Back</button>
+        <button type="button" class="button small primary" id="rec-play" aria-pressed="false">Run the loop</button>
+        <button type="button" class="button small" id="rec-next">Step →</button>
+        <button type="button" class="button small" id="rec-reset">Reset</button>
+      </div>
+      <span class="rec-count">Turn <b id="rec-turn">1</b> · Move <b id="rec-move">1</b>/9</span>
+    </div>
+
+    <div class="rec-stage">
+      <svg id="rec-svg" viewBox="0 0 770 400" role="img"
+           aria-label="The Cohera recursion: four nodes in order — nabla phi, lambda, omega, delta — joined by three forward edges, with the closure omega to nabla phi arced above and the closure delta to lambda arced below, and psi shown off the loop.">
+        <title>The Cohera recursion</title>
+
+        <!-- ---- closures, arced clear of the chain: one above, one below ---- -->
+        <text id="l-on" class="rec-elabel" x="290" y="52" text-anchor="middle">Ω → ∇Φ · closure</text>
+        <path id="e-on" class="rec-edge closure" d="M480,164 L480,86 Q480,70 464,70 L116,70 Q100,70 100,86 L100,164"/>
+        <g id="a-on" class="rec-arrow"><path d="M100,164 L94.5,152 L105.5,152 Z"/></g>
+
+        <text id="l-dl" class="rec-elabel" x="480" y="382" text-anchor="middle">Δ → Λ · closure</text>
+        <path id="e-dl" class="rec-edge closure" d="M670,326 L670,344 Q670,360 654,360 L306,360 Q290,360 290,344 L290,326"/>
+        <g id="a-dl" class="rec-arrow"><path d="M290,326 L284.5,338 L295.5,338 Z"/></g>
+
+        <!-- ---- forward edges ---- -->
+        <path id="e-nl" class="rec-edge" d="M146,210 L232,210"/>
+        <g id="a-nl" class="rec-arrow"><path d="M244,210 L232,204.5 L232,215.5 Z"/></g>
+
+        <path id="e-lo" class="rec-edge" d="M336,210 L422,210"/>
+        <g id="a-lo" class="rec-arrow"><path d="M434,210 L422,204.5 L422,215.5 Z"/></g>
+
+        <path id="e-od" class="rec-edge" d="M526,210 L612,210"/>
+        <g id="a-od" class="rec-arrow"><path d="M624,210 L612,204.5 L612,215.5 Z"/></g>
+
+        <!-- travelling pulse -->
+        <circle id="rec-pulse" class="rec-pulse" r="5.5" cx="-20" cy="-20"/>
+
+        <!-- ---- Ψ — primitive, and off the loop: tethered, never arrowed ---- -->
+        <g class="rec-psi" id="n-psi">
+          <text class="name" x="670" y="54" text-anchor="middle">Ψ · off the loop</text>
+          <path class="tether" d="M670,126 C660,139 680,151 670,164"/>
+          <circle class="halo" cx="670" cy="96" r="30"/>
+          <circle class="disc" cx="670" cy="96" r="30"/>
+          <text class="glyph" x="670" y="104" text-anchor="middle">Ψ</text>
+        </g>
+
+        <!-- ---- nodes ---- -->
+        <g class="rec-node" id="n-nabla" data-node="nabla" tabindex="0" role="button" aria-label="Nabla Phi — imagination, generative differentiation">
+          <circle class="disc" cx="100" cy="210" r="46"/>
+          <text class="glyph" x="100" y="221" text-anchor="middle">∇Φ</text>
+          <text class="name" x="100" y="288" text-anchor="middle">Imagination</text>
+          <text class="gloss" x="100" y="306" text-anchor="middle">generative differentiation</text>
+        </g>
+
+        <g class="rec-node" id="n-lambda" data-node="lambda" tabindex="0" role="button" aria-label="Lambda — selection">
+          <circle class="disc" cx="290" cy="210" r="46"/>
+          <text class="glyph" x="290" y="221" text-anchor="middle">Λ</text>
+          <text class="name" x="290" y="288" text-anchor="middle">Selection</text>
+          <text class="gloss" x="290" y="306" text-anchor="middle">what is admitted</text>
+        </g>
+
+        <g class="rec-node" id="n-omega" data-node="omega" tabindex="0" role="button" aria-label="Omega — rendering, the realized world">
+          <circle class="disc" cx="480" cy="210" r="46"/>
+          <text class="glyph" x="480" y="221" text-anchor="middle">Ω</text>
+          <text class="name" x="480" y="288" text-anchor="middle">Rendering</text>
+          <text class="gloss" x="480" y="306" text-anchor="middle">the realized world</text>
+        </g>
+
+        <g class="rec-node" id="n-delta" data-node="delta" tabindex="0" role="button" aria-label="Delta — persistent recursive organization">
+          <circle class="disc" cx="670" cy="210" r="46"/>
+          <text class="glyph" x="670" y="221" text-anchor="middle">Δ</text>
+          <text class="name" x="670" y="288" text-anchor="middle">Persistence</text>
+          <text class="gloss" x="670" y="306" text-anchor="middle">what keeps organizing</text>
+        </g>
+      </svg>
+      <p class="rec-legend">
+        <span><i class="k-fwd"></i>forward edge</span>
+        <span><i class="k-cls"></i>closure — directed, never two-way</span>
+        <span><i class="k-psi"></i>Ψ — primitive, and no edge terminates on it</span>
+      </p>
+    </div>
+
+    <div class="rec-readout" id="rec-readout">
+      <div class="rec-move"><h4 id="rec-title">∇Φ — generative differentiation</h4><span class="tag" id="rec-kind">Node</span></div>
+      <p id="rec-text">Difference, prior to data, observation, proof, study and realization.</p>
+      <p class="rec-status" id="rec-status" aria-live="polite">Move 1 of 9 · turn 1</p>
+    </div>
+  </div>
+
+  <p class="rec-hint">Click any node to jump the walk to it. With the instrument focused: ← and → step, space runs and pauses.</p>
+
+  <div class="callout" data-accent="amber">
+    <span class="label-line">Where the walk begins</span>
+    <p>The instrument opens at ∇Φ because that is the order of causation: imagination precedes data, observation, proof, study and realization. It does not open there because the loop has a first moment. Click Ω and walk from there — the structure is identical, and nothing in the model distinguishes the entry point you chose from any other. A recursion that required a particular place to be entered would require something outside it to do the entering.</p>
+  </div>
+
+  <p>Watch what the two closures do rather than where they go. <strong>Δ → Λ</strong> does not deliver material back to selection; it changes selection. What persisted in the last turn is now part of the mechanism deciding what is admitted in this one. <strong>Ω → ∇Φ</strong> does not feed the world back into imagination as content; the rendered state alters what generation is able to produce. After one turn, neither Λ nor ∇Φ is the operation it was.</p>
+
+  <p>This is why the turn counter is on the instrument. The nine moves repeat; the loop does not. Each turn runs a selection mechanism and a generative capacity that the previous turn modified, which is the precise sense in which the loop is generative in itself and needs nothing outside it to keep producing.</p>
+</section>
+
+<!-- ===================================================================== -->
+<section class="doc-panel" data-id="primitives" data-num="2" data-label="Primitives"
+         data-title="Five primitives, four on the loop"
+         data-summary="∇Φ, Λ, Ω and Δ are the nodes of the recursion. Ψ is primitive and does not sit on it."
+         id="panel-primitives" role="tabpanel" aria-labelledby="tab-primitives" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Section 2</span><h2>Five primitives, four on the loop</h2><p>∇Φ, Λ, Ω and Δ are the nodes of the recursion. Ψ is primitive and does not sit on it.</p></div>
+
+  <p>Being primitive and being a node are different properties, and the distinction does real work. A node is a position in the directed structure: something the loop passes through, with edges in and edges out. A primitive is a term the framework does not define out of anything more basic. Four of the five primitives are nodes. Ψ is not, and the instrument shows it at the centre rather than on the ring for that reason.</p>
+
+  <div class="card-grid cols-2">
+    <div class="card" data-accent="teal">
+      <div class="card-head"><h3 class="card-kicker">First · on the loop</h3><span class="tag">∇Φ</span></div>
+      <h3 class="card-title">Imagination — generative differentiation</h3>
+      <p>The introduction of difference, prior to data, observation, proof, study and realization. ∇Φ is not a field living in spacetime and not a process running inside the realized world; it is part of what makes a coherent, spacetime-like description available at all. Its gradient form induces a directional holographic structure Φ — a distributed encoding of how local relations sit inside a global pattern.</p>
+      <div class="plain"><div class="plain-title">In plain terms</div><p>Nothing can be selected until something has been proposed. ∇Φ is the proposing.</p></div>
+    </div>
+
+    <div class="card" data-accent="blue">
+      <div class="card-head"><h3 class="card-kicker">Second · on the loop</h3><span class="tag">Λ</span></div>
+      <h3 class="card-title">Selection</h3>
+      <p>The constraint that admits some differences and not others. Λ compresses the substrate's raw degrees of freedom into effective regularities — the practical content of laws, constants and constraints as they are met from inside. Only a small fraction of what ∇Φ generates stays coherent under repeated updating; Λ is the operation that filters toward that fraction.</p>
+      <div class="plain"><div class="plain-title">In plain terms</div><p>Most of what could be is not. Λ is why.</p></div>
+    </div>
+
+    <div class="card" data-accent="amber">
+      <div class="card-head"><h3 class="card-kicker">Third · on the loop</h3><span class="tag">Ω</span></div>
+      <h3 class="card-title">Rendering — the realized world</h3>
+      <p>What is actually brought into structure: a coherent, time-extended organization with memory and constraint, not an inert output. Once present, Ω imposes consistency requirements on what can happen next. That is what makes the closure Ω → ∇Φ a structural feature rather than an afterthought — the realized world shapes what counts as an available difference.</p>
+      <div class="plain"><div class="plain-title">In plain terms</div><p>What has been built is now part of what can be built next.</p></div>
+    </div>
+
+    <div class="card" data-accent="green">
+      <div class="card-head"><h3 class="card-kicker">Fourth · on the loop</h3><span class="tag">Δ</span></div>
+      <h3 class="card-title">Persistent recursive organization</h3>
+      <p>What survives and keeps organizing. Δ is not the act of integrating considered as an event; it is the organization that holds across turns and goes on integrating — consolidating stable representations, and thereby modifying what is selected as relevant. In the language of being, Δ is the standing form of the local “I”: a participant in the recursion, not a witness to it.</p>
+      <div class="plain"><div class="plain-title">In plain terms</div><p>What lasts is not what was merely rendered, but what keeps doing something.</p></div>
+    </div>
+  </div>
+
+  <div class="card" data-accent="violet">
+    <div class="card-head"><h3 class="card-kicker">Fifth · primitive, not a node</h3><span class="tag">Ψ</span></div>
+    <h3 class="card-title">The mind-like wave variable</h3>
+    <div class="formula">$$\Psi := W_\Omega(\Delta)$$</div>
+    <p>Persistent recursive organization occurring within Ω has a wave expression. Physically, Ψ is propagating, radiative, oscillatory and phase-carrying. Experientially, Ψ is what it is like, from within, for that organization to be occurring. It is one primitive with two readings, not two things that happen to correlate — the carrier of coherence in Ω and the interface through which instantiated structures participate in the world they are stabilizing.</p>
+    <p>Ψ is primitive: the framework does not construct it out of the other four. It is nonetheless not a node, because the recursion does not pass through it. The loop runs ∇Φ → Λ → Ω → Δ and closes twice; Ψ accompanies Δ within Ω rather than taking a position in that order. On the instrument this is why Ψ brightens when Δ is active and why no directed edge ever terminates on it.</p>
+    <div class="callout" data-accent="rose">
+      <span class="label-line">Open</span>
+      <p>The operator $W_\Omega$ is named, not yet characterised. What is fixed is the relation — every persisting organization within Ω has a wave expression — and not the form of the map. Section 05 records this as unresolved rather than pending.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================================== -->
+<section class="doc-panel" data-id="closures" data-num="3" data-label="Closures"
+         data-title="Two closures, both directed"
+         data-summary="Δ → Λ and Ω → ∇Φ. Why each points one way, and what breaks if either is drawn as two."
+         id="panel-closures" role="tabpanel" aria-labelledby="tab-closures" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Section 3</span><h2>Two closures, both directed</h2><p>Δ → Λ and Ω → ∇Φ. Why each points one way, and what breaks if either is drawn as two.</p></div>
+
+  <p>Three forward edges make a chain. Two closures make it a recursion. The closures are drawn differently from the forward edges on the instrument — dashed rather than solid — because they carry a different kind of influence: a forward edge passes something along, a closure modifies the operation at its target.</p>
+
+  <div class="card" data-accent="amber">
+    <h3 class="card-kicker">Δ → Λ · persistence modifies selection</h3>
+    <p>Organizations that have persisted become part of the mechanism deciding what is admitted. Selection in turn <em>n</em> + 1 is not selection in turn <em>n</em> applied to new material; it is a different selection, altered by what survived. This is the sense in which the system learns without anything supervising it: the record of what held is not stored somewhere and consulted, it is incorporated into the filter.</p>
+    <p>The arrow does not point back. Λ does not modify Δ. Selection admits differences; what becomes persistent organization is settled downstream, through Ω. Drawing this edge as bidirectional would make selection and persistence mutually constituting, which collapses the distinction the model needs between what is admitted and what holds.</p>
+  </div>
+
+  <div class="card" data-accent="green">
+    <h3 class="card-kicker">Ω → ∇Φ · rendered states alter future generation</h3>
+    <p>The realized world is a boundary condition on generation. What ∇Φ can produce in the next turn is constrained by what has been rendered — not because the world supplies imagination with material, but because a coherent global organization narrows what counts as an available difference at all. Generation is free in the sense of being prior; it is not free in the sense of being unconditioned.</p>
+    <p>The arrow does not point back. ∇Φ does not act on Ω directly. Everything ∇Φ does reaches the realized world through Λ, and only through Λ. An arrow from ∇Φ to Ω would be imagination realizing itself without selection, which is the one path the model excludes.</p>
+  </div>
+
+  <div class="warning">
+    <h3 class="card-kicker">What a bidirectional closure would cost</h3>
+    <p>Make either closure two-way and the loop stops being a recursion and becomes a system of mutual constraints with no direction — at which point the order of causation is gone, and with it the claim that imagination precedes realization. The directedness is not a drawing convention. It is the content.</p>
+  </div>
+</section>
+
+<!-- ===================================================================== -->
+<section class="doc-panel" data-id="stabilization" data-num="4" data-label="Stabilization"
+         data-title="The dual condition"
+         data-summary="Two simultaneous conditions: one on the substrate, one on the chart."
+         id="panel-stabilization" role="tabpanel" aria-labelledby="tab-stabilization" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Section 4</span><h2>The dual condition</h2><p>Two simultaneous conditions: one on the substrate, one on the chart.</p></div>
+
+  <p>A turn of the loop leaves things changed. Coherence equilibrium is the state in which a further turn leaves them unchanged — and it takes two conditions at once, because there are two things that can still be drifting: the informational configuration itself, and the internal chart of it.</p>
+
+  <div class="card-grid cols-2">
+    <div class="card" data-accent="teal">
+      <h3 class="card-kicker">Informational stabilization</h3>
+      <div class="formula">$$\nabla_\rho \Phi(\rho) = 1$$</div>
+      <h3 class="card-title">The substrate stabilizes</h3>
+      <p>The informational configuration is held in a stable, normalized regime. The holographic structure no longer reconfigures in any essential way under further differentiation — the substrate has become quiet enough to be read.</p>
+    </div>
+    <div class="card" data-accent="violet">
+      <h3 class="card-kicker">Representational stabilization</h3>
+      <div class="formula">$$\Delta_x \Psi(x) = 0$$</div>
+      <h3 class="card-title">The chart becomes stationary</h3>
+      <p>The wave expression has no residual update under Δ. The self-model ceases to drift: persistence continues, but it stops changing what it is a model of.</p>
+    </div>
+  </div>
+
+  <p>Neither condition alone is equilibrium. A quiet substrate with a drifting chart is a world being misread; a settled chart over a reconfiguring substrate is a model that has stopped tracking. When both hold at once, geometry emerges as their joint expression — which is the model's account of why there is a stable spatial description of anything at all, rather than a further assumption added to produce one.</p>
+
+  <div class="callout" data-accent="rose">
+    <span class="label-line">Open</span>
+    <p>Whether the two conditions are independent is not settled. If $\nabla_\rho \Phi(\rho) = 1$ implied $\Delta_x \Psi(x) = 0$, the dual condition would be one condition stated twice, and the emergence of geometry would follow from the substrate alone. The framework currently states both and derives neither from the other. That is a real gap, and it is where this page stops rather than the place it argues hardest.</p>
+  </div>
+</section>
+
+<!-- ===================================================================== -->
+<section class="doc-panel" data-id="standing" data-num="5" data-label="Standing"
+         data-title="Defined, derived, unresolved"
+         data-summary="Every claim on this page sorted into one of three states — including what would count as this page being wrong."
+         id="panel-standing" role="tabpanel" aria-labelledby="tab-standing" tabindex="-1">
+  <div class="doc-panel-head"><span class="kicker-small">Section 5</span><h2>Defined, derived, unresolved</h2><p>Every claim on this page sorted into one of three states — including what would count as this page being wrong.</p></div>
+
+  <p>The Lab's standing requirement is that a piece states what is varied, what is watched, and what would count as failure. For a structural model the first two are read differently: what is varied is the entry point and the number of turns; what is watched is whether the structure stays the same under both. The third is unchanged.</p>
+
+  <div class="table-scroll">
+    <table class="data">
+      <thead><tr><th>Claim</th><th>Standing</th><th>On what grounds</th></tr></thead>
+      <tbody>
+        <tr><th>Imagination precedes data, observation, proof, study and realization</th><td class="role">Defined</td><td>The order of causation. Everything else on the page is arranged by it.</td></tr>
+        <tr><th>The recursion is ∇Φ → Λ → Ω → Δ</th><td class="role">Defined</td><td>The four nodes and three forward edges are given, not deduced.</td></tr>
+        <tr><th>The closures are Δ → Λ and Ω → ∇Φ, each directed</th><td class="role">Defined</td><td>Directedness is part of the definition, not a consequence of it.</td></tr>
+        <tr><th>∇Φ, Λ, Ω, Δ and Ψ are primitive</th><td class="role">Defined</td><td>None is constructed from the others.</td></tr>
+        <tr><th>Ψ is not a node of the recursion</th><td class="role">Derived</td><td>The loop's edge set terminates only on ∇Φ, Λ, Ω and Δ. Primitive status does not confer a position in the order.</td></tr>
+        <tr><th>The loop needs no external driver</th><td class="role">Derived</td><td>Both closures modify operations already inside the loop, so each turn's conditions are produced within it.</td></tr>
+        <tr><th>The loop has no first moment</th><td class="role">Derived</td><td>No node is distinguished by the edge structure. A first moment would have to be imposed from outside.</td></tr>
+        <tr><th>After one turn, neither Λ nor ∇Φ is the operation it was</th><td class="role">Derived</td><td>Follows from the two closures being modifications rather than transfers.</td></tr>
+        <tr><th>Geometry emerges when both stabilization conditions hold</th><td class="drivers">Unresolved</td><td>Stated by the framework; the mechanism by which the joint condition yields a metric structure is not given.</td></tr>
+        <tr><th>The two stabilization conditions are independent</th><td class="drivers">Unresolved</td><td>Neither is derived from the other, and neither is shown not to be.</td></tr>
+        <tr><th>The form of $W_\Omega$ in $\Psi := W_\Omega(\Delta)$</th><td class="drivers">Unresolved</td><td>The relation is fixed; the map is named only.</td></tr>
+        <tr><th>Ψ's physical and experiential readings are one primitive</th><td class="drivers">Unresolved</td><td>Asserted as identity. No argument on this page rules out their being two primitives that coincide.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warning">
+    <h3 class="card-kicker">What would count as failure</h3>
+    <p>Three things. If the structure turns out to depend on the entry point — if walking from Ω gives a different model than walking from ∇Φ — then something outside the loop is doing work and the loop is not generative in itself. If either closure has to be made bidirectional to make the account work, the order of causation does not hold and the model is a system of mutual constraints wearing a direction it has not earned. And if the dual stabilization conditions collapse into one, then geometry follows from the substrate alone and Ψ is not doing the work this page assigns it.</p>
+  </div>
+
+  <p>None of the three has been run. This page states the structure precisely enough that they could be, which is the whole of what it claims to have done.</p>
+</section>
+
+</div><!-- /doc -->
+</main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <a href="index.html#/" class="footer-brand">sciencecoherence<span>One inquiry. Many ways in.</span></a>
+    <div>
+      <a href="index.html#/lab">The Lab</a>
+      <a href="index.html#/research">Research</a>
+      <a href="index.html#/library">Library</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Dr. William Conroy · Science Coherence</span>
+    <span>Always becoming.</span>
+  </div>
+</footer>
+
+<!-- ====================================================================== -->
+<!-- → app.js. recursionInstrument(root) returns its own cleanup, matching   -->
+<!--   the calendar360 contract; enhanceArticle/enhanceDocument gain one line -->
+<!--   for data-widget="recursion".                                           -->
+<!-- ====================================================================== -->
+<script id="ethos-widget-js">
+(function () {
+  'use strict';
+
+  /* ---------- the walk ---------------------------------------------------
+     Nine moves make one turn: four arrivals, three forward passages, two
+     closures. The sequence is the canonical edge set and nothing else — it is
+     read off the recursion, not composed for the animation. */
+  const NODES = {
+    nabla:  { el: 'n-nabla',  accent: 'teal'   },
+    lambda: { el: 'n-lambda', accent: 'blue'   },
+    omega:  { el: 'n-omega',  accent: 'amber'  },
+    delta:  { el: 'n-delta',  accent: 'acc-green' }
+  };
+
+  const MOVES = [
+    { kind: 'node', node: 'nabla', accent: 'teal',
+      title: '∇Φ — generative differentiation',
+      text: 'Difference is introduced, prior to data, observation, proof, study and realization. Not a field inside the world: part of what makes a coherent description of a world available at all.' },
+    { kind: 'edge', edge: 'nl', from: 'nabla', to: 'lambda', accent: 'teal',
+      title: '∇Φ → Λ', label: 'Forward',
+      text: 'Generated difference reaches selection. This is the only route by which anything imagined can become anything realized.' },
+    { kind: 'node', node: 'lambda', accent: 'blue',
+      title: 'Λ — selection',
+      text: 'Some differences are admitted and others are not. The substrate’s raw degrees of freedom are compressed into effective regularities — laws, constants and constraints, as met from inside.' },
+    { kind: 'edge', edge: 'lo', from: 'lambda', to: 'omega', accent: 'blue',
+      title: 'Λ → Ω', label: 'Forward',
+      text: 'What was admitted is rendered. Selection does not describe the world; passing through it is what brings structure into being.' },
+    { kind: 'node', node: 'omega', accent: 'amber',
+      title: 'Ω — the realized world',
+      text: 'A coherent, time-extended organization with memory and constraint. Not an inert output: once present it imposes consistency requirements on what can happen next.' },
+    { kind: 'edge', edge: 'od', from: 'omega', to: 'delta', accent: 'amber',
+      title: 'Ω → Δ', label: 'Forward',
+      text: 'Within the realized world, some organization holds across turns. What is rendered and what persists are not the same thing, and this edge is where they separate.' },
+    { kind: 'node', node: 'delta', accent: 'acc-green', psi: true,
+      title: 'Δ — persistent recursive organization',
+      text: 'What survives and keeps organizing. Ψ is shown brightening here: persistence occurring within Ω has a wave expression, physical and experiential at once. Ψ is primitive, and no edge of the loop terminates on it.' },
+    { kind: 'edge', edge: 'dl', from: 'delta', to: 'lambda', accent: 'amber', closure: true,
+      title: 'Δ → Λ — closure', label: 'Closure',
+      text: 'Persisting organizations modify the mechanism of selection. Nothing is carried back: what held is incorporated into the filter, so the next turn selects differently.' },
+    { kind: 'edge', edge: 'on', from: 'omega', to: 'nabla', accent: 'acc-green', closure: true,
+      title: 'Ω → ∇Φ — closure', label: 'Closure',
+      text: 'Rendered states alter future generation. The realized world is a boundary condition on what counts as an available difference. The turn ends with both Λ and ∇Φ changed — which is why the next one is not a repetition.' }
+  ];
+
+  function recursionInstrument(root) {
+    const $ = (s) => root.querySelector(s);
+    const svg    = $('#rec-svg');
+    const pulse  = $('#rec-pulse');
+    const readTitle = $('#rec-title');
+    const readKind  = $('#rec-kind');
+    const readText  = $('#rec-text');
+    const readStat  = $('#rec-status');
+    const turnEl = $('#rec-turn');
+    const moveEl = $('#rec-move');
+    const playBtn = $('#rec-play');
+    const readout = $('#rec-readout');
+    if (!svg) return () => {};
+
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let index = 0;       // position within the turn, 0 … MOVES.length - 1
+    let turn = 1;        // how many times the loop has come round
+    let playing = false;
+    let raf = 0;
+    let timer = 0;
+
+    /* ---------- rendering one move ---------------------------------------- */
+    function clearMarks() {
+      root.querySelectorAll('.rec-node, .rec-edge, .rec-arrow, .rec-elabel')
+          .forEach(el => el.classList.remove('on'));
+      root.querySelector('#n-psi').classList.remove('on');
+      pulse.classList.remove('on');
+    }
+
+    function accentVars(el, accent) {
+      el.style.setProperty('--accent', 'var(--' + accent + ')');
+      el.style.setProperty('--accent-soft', 'var(--' + accent + '-soft)');
+    }
+
+    function show(i, opts) {
+      const m = MOVES[i];
+      clearMarks();
+      cancelAnimationFrame(raf);
+
+      /* Everything the turn has already passed stays marked, so the readout is
+         a position in a turn rather than an isolated state. */
+      for (let k = 0; k <= i; k++) {
+        const p = MOVES[k];
+        if (p.kind === 'node') root.querySelector('#n-' + p.node).classList.add('seen');
+      }
+
+      accentVars(svg, m.accent);
+      accentVars(readout, m.accent);
+
+      if (m.kind === 'node') {
+        const g = root.querySelector('#n-' + m.node);
+        g.classList.remove('seen');
+        g.classList.add('on');
+        accentVars(g, m.accent);
+        if (m.psi) root.querySelector('#n-psi').classList.add('on');
+      } else {
+        const path  = root.querySelector('#e-' + m.edge);
+        const arrow = root.querySelector('#a-' + m.edge);
+        const label = root.querySelector('#l-' + m.edge);
+        path.classList.add('on');
+        arrow.classList.add('on');
+        if (label) label.classList.add('on');
+        accentVars(path, m.accent);
+        accentVars(arrow, m.accent);
+        if (label) accentVars(label, m.accent);
+        accentVars(pulse, m.accent);
+        travel(path, opts && opts.instant);
+      }
+
+      readTitle.textContent = m.title;
+      readKind.textContent  = m.label || 'Node';
+      accentVars(readKind, m.accent);
+      readText.textContent  = m.text;
+      readStat.textContent  = 'Move ' + (i + 1) + ' of ' + MOVES.length + ' · turn ' + turn;
+      moveEl.textContent = i + 1;
+      turnEl.textContent = turn;
+    }
+
+    /* The pulse travels the actual path geometry, so what is animated is the
+       passage along that edge and not a decoration near it. */
+    function travel(path, instant) {
+      const len = path.getTotalLength();
+      if (reduced || instant) {
+        const p = path.getPointAtLength(len);
+        pulse.setAttribute('cx', p.x); pulse.setAttribute('cy', p.y);
+        pulse.classList.add('on');
+        return;
+      }
+      pulse.classList.add('on');
+      const t0 = performance.now();
+      const dur = 900;
+      (function frame(now) {
+        const t = Math.min(1, (now - t0) / dur);
+        const p = path.getPointAtLength(len * t);
+        pulse.setAttribute('cx', p.x);
+        pulse.setAttribute('cy', p.y);
+        if (t < 1) raf = requestAnimationFrame(frame);
+      })(t0);
+    }
+
+    /* ---------- movement --------------------------------------------------- */
+    function step(delta) {
+      const next = index + delta;
+      if (next >= MOVES.length) {
+        index = 0; turn += 1;
+        root.querySelectorAll('.rec-node').forEach(el => el.classList.remove('seen'));
+      }
+      else if (next < 0) { index = MOVES.length - 1; turn = Math.max(1, turn - 1); }
+      else index = next;
+      show(index);
+    }
+
+    function jumpToNode(name) {
+      const i = MOVES.findIndex(m => m.kind === 'node' && m.node === name);
+      if (i < 0) return;
+      index = i;
+      show(index, { instant: true });
+    }
+
+    function setPlaying(on) {
+      playing = on;
+      playBtn.textContent = on ? 'Pause' : 'Run the loop';
+      playBtn.setAttribute('aria-pressed', String(on));
+      clearInterval(timer);
+      if (on) timer = setInterval(() => step(1), 1900);
+    }
+
+    function reset() {
+      setPlaying(false);
+      index = 0; turn = 1;
+      root.querySelectorAll('.rec-node').forEach(el => el.classList.remove('seen'));
+      show(0, { instant: true });
+    }
+
+    /* ---------- events ----------------------------------------------------- */
+    const onPrev  = () => { setPlaying(false); step(-1); };
+    const onNext  = () => { setPlaying(false); step(1); };
+    const onPlay  = () => setPlaying(!playing);
+    const onReset = () => reset();
+
+    $('#rec-prev').addEventListener('click', onPrev);
+    $('#rec-next').addEventListener('click', onNext);
+    $('#rec-play').addEventListener('click', onPlay);
+    $('#rec-reset').addEventListener('click', onReset);
+
+    const nodeEls = Array.from(root.querySelectorAll('.rec-node'));
+    const nodeHandlers = nodeEls.map(el => {
+      const fn = () => { setPlaying(false); jumpToNode(el.dataset.node); };
+      const key = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
+      el.addEventListener('click', fn);
+      el.addEventListener('keydown', key);
+      return { el, fn, key };
+    });
+
+    /* Keys act only while the instrument holds focus. An instrument that
+       captured the arrow keys from anywhere on the page would take the reader's
+       scrolling away from them. */
+    const onKey = (e) => {
+      if (!root.contains(document.activeElement)) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); onNext(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); onPrev(); }
+      else if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); onPlay(); }
+    };
+    root.addEventListener('keydown', onKey);
+
+    /* Stop the loop when it scrolls out of view: an instrument running where
+       nobody is reading it is motion without information. */
+    let io = null;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(entries => {
+        entries.forEach(en => { if (!en.isIntersecting && playing) setPlaying(false); });
+      }, { threshold: 0.15 });
+      io.observe(root);
+    }
+
+    show(0, { instant: true });
+
+    return function cleanup() {
+      clearInterval(timer);
+      cancelAnimationFrame(raf);
+      root.removeEventListener('keydown', onKey);
+      if (io) io.disconnect();
+      $('#rec-prev').removeEventListener('click', onPrev);
+      $('#rec-next').removeEventListener('click', onNext);
+      $('#rec-play').removeEventListener('click', onPlay);
+      $('#rec-reset').removeEventListener('click', onReset);
+      nodeHandlers.forEach(h => {
+        h.el.removeEventListener('click', h.fn);
+        h.el.removeEventListener('keydown', h.key);
+      });
+    };
+  }
+
+  document.querySelectorAll('[data-widget="recursion"]').forEach(recursionInstrument);
+
+  /* ====================================================================== */
+  /* Preview-only scaffolding. app.js already does all of the following for  */
+  /* a real document route; none of it is part of the deliverable.          */
+  /* ====================================================================== */
+  const doc = document.getElementById('doc');
+  const nav = document.getElementById('doc-nav');
+
+  function showSection(id, scroll) {
+    document.querySelectorAll('.doc-panel').forEach(p => p.classList.toggle('active', p.dataset.id === id));
+    nav.querySelectorAll('[role=tab]').forEach(t => t.setAttribute('aria-selected', String(t.dataset.section === id)));
+    if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  nav.addEventListener('click', e => {
+    const tab = e.target.closest('[role=tab]');
+    if (tab) { showSection(tab.dataset.section, true); return; }
+    if (e.target.id === 'mode-all' || e.target.id === 'mode-sections') {
+      const all = e.target.id === 'mode-all';
+      doc.classList.toggle('all', all);
+      document.getElementById('mode-all').setAttribute('aria-pressed', String(all));
+      document.getElementById('mode-sections').setAttribute('aria-pressed', String(!all));
+    }
+  });
+
+  document.querySelectorAll('a[href^="#panel-"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(a.getAttribute('href').replace('#panel-', ''), true);
+    });
+  });
+
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('sc-theme', JSON.stringify(next)); } catch (e) {}
+  });
+
+  const bar = document.getElementById('reading-progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
+  }, { passive: true });
+
+  /* KaTeX, loaded the way app.js loads it. */
+  (function katex() {
+    const base = 'assets/vendor/katex/';
+    const css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = base + 'katex.min.css';
+    document.head.appendChild(css);
+    const load = (src) => new Promise((res, rej) => {
+      const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+    load(base + 'katex.min.js')
+      .then(() => load(base + 'contrib/auto-render.min.js'))
+      .then(() => window.renderMathInElement(document.body, {
+        delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }],
+        throwOnError: false
+      }))
+      .catch(() => {});
+  })();
+})();
+</script>
+</body>
+</html>

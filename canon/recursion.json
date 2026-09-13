@@ -1,0 +1,77 @@
+{
+  "name": "The Cohera recursion",
+  "status": "canon",
+  "note": "The loop itself is generative. There is no external generator, controller, observer, Hamiltonian or first mover. Do not add one, and do not make the closures bidirectional.",
+  "nodes": [
+    {
+      "symbol": "∇Φ",
+      "id": "nabla-phi",
+      "gloss": "imagination",
+      "long": "generative differentiation — difference, prior to data, observation, proof, study and realization"
+    },
+    {
+      "symbol": "Λ",
+      "id": "lambda",
+      "gloss": "selection",
+      "long": "the constraint that admits some differences and not others"
+    },
+    {
+      "symbol": "Ω",
+      "id": "omega",
+      "gloss": "rendering",
+      "long": "the realized world — what is actually brought into structure"
+    },
+    {
+      "symbol": "Δ",
+      "id": "delta",
+      "gloss": "recursive persistence",
+      "long": "persistent recursive organization — what survives and keeps organizing"
+    }
+  ],
+  "edges": [
+    {
+      "from": "∇Φ",
+      "to": "Λ",
+      "kind": "forward",
+      "directed": true
+    },
+    {
+      "from": "Λ",
+      "to": "Ω",
+      "kind": "forward",
+      "directed": true
+    },
+    {
+      "from": "Ω",
+      "to": "Δ",
+      "kind": "forward",
+      "directed": true
+    },
+    {
+      "from": "Δ",
+      "to": "Λ",
+      "kind": "closure",
+      "directed": true,
+      "note": "persisting recursive organizations modify the mechanism of selection"
+    },
+    {
+      "from": "Ω",
+      "to": "∇Φ",
+      "kind": "closure",
+      "directed": true,
+      "note": "rendered states alter future generation"
+    }
+  ],
+  "causal_order": [
+    "imagination",
+    "selection",
+    "rendering",
+    "recursive persistence"
+  ],
+  "forbidden": [
+    "reversing the causal order (data, observation or proof preceding imagination)",
+    "bidirectional closures",
+    "an external generator, controller, observer, Hamiltonian or first mover",
+    "an absolute beginning or singularity introduced to complete a pattern"
+  ]
+}

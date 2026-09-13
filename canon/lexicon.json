@@ -1,0 +1,108 @@
+{
+  "status": "canon",
+  "total": 64,
+  "note": "The Meta-Mathematical Lexicon holds exactly 64 genuine entries. Do not add a symbol to reach a desired correspondence. A new primitive enters only when it has been genuinely discovered and justified, and entering one means the census below changes deliberately, in a logged decision.",
+  "classes": [
+    {
+      "id": "base13",
+      "count": 13,
+      "label": "base-13 digits",
+      "members": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "unresolved": 3,
+      "note": "Ten digits are fixed. The three glyphs above 9 are not fixed in canon. A model must not invent them."
+    },
+    {
+      "id": "latin",
+      "count": 26,
+      "label": "Latin letters",
+      "members": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "unresolved": 0
+    },
+    {
+      "id": "greek",
+      "count": 24,
+      "label": "Greek letters",
+      "members": [
+        "Α",
+        "Β",
+        "Γ",
+        "Δ",
+        "Ε",
+        "Ζ",
+        "Η",
+        "Θ",
+        "Ι",
+        "Κ",
+        "Λ",
+        "Μ",
+        "Ν",
+        "Ξ",
+        "Ο",
+        "Π",
+        "Ρ",
+        "Σ",
+        "Τ",
+        "Υ",
+        "Φ",
+        "Χ",
+        "Ψ",
+        "Ω"
+      ],
+      "unresolved": 0
+    },
+    {
+      "id": "operator",
+      "count": 1,
+      "label": "the differential operator",
+      "members": [
+        "∇"
+      ],
+      "unresolved": 0
+    }
+  ],
+  "principle": "One connected mathematical language: a symbol carries the same fundamental meaning across equations and disciplines, rather than unrelated meanings in isolation.",
+  "meanings": {
+    "∇Φ": "imagination / generative differentiation",
+    "Λ": "selection",
+    "Ω": "rendering, the realized world",
+    "Δ": "recursive persistence"
+  }
+}

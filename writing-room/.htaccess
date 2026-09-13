@@ -1,0 +1,11 @@
+DirectoryIndex index.php
+Options -Indexes
+
+<FilesMatch "(?i)\.(?:py|pyc|md|sql|ps1|cmd|json)$">
+  Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteRule ^(?:inc|tests|data)(?:/|$) - [F,L,NC]
+RewriteRule ^public/?$ index.php [R=302,L,NC]
+RewriteRule ^public/.*\.html$ index.php [R=302,L,NC]

@@ -1,0 +1,704 @@
+{
+  "version": 1,
+  "nextEntry": 28,
+  "manifest": {
+    ".htaccess": {
+      "sha": "fe3f91e0ada6f7f2",
+      "bytes": 476,
+      "entry": "E0009"
+    },
+    "AGENTS.md": {
+      "sha": "042242972ee04583",
+      "bytes": 6259,
+      "entry": "E0009"
+    },
+    "CLAUDE.md": {
+      "sha": "caff345b2a5c3574",
+      "bytes": 229,
+      "entry": "E0009"
+    },
+    "GEMINI.md": {
+      "sha": "caff345b2a5c3574",
+      "bytes": 229,
+      "entry": "E0009"
+    },
+    "PROJECT.md": {
+      "sha": "0c5e6dfbd51b0c30",
+      "bytes": 35676,
+      "entry": "E0021"
+    },
+    "README.md": {
+      "sha": "3784d946df516bc4",
+      "bytes": 15074,
+      "entry": "E0009"
+    },
+    "Start-WritingRoom.cmd": {
+      "sha": "8f6313b764426fb9",
+      "bytes": 66,
+      "entry": "E0009"
+    },
+    "app.js": {
+      "sha": "8a866cbe1426eae4",
+      "bytes": 131156,
+      "entry": "E0027"
+    },
+    "canon/FRAMEWORK.md": {
+      "sha": "627f5e6c79823fa3",
+      "bytes": 6002,
+      "entry": "E0009"
+    },
+    "canon/constants.json": {
+      "sha": "0047c7bf69ac1c97",
+      "bytes": 3437,
+      "entry": "E0009"
+    },
+    "canon/lexicon.json": {
+      "sha": "20faa5dcbe355553",
+      "bytes": 2202,
+      "entry": "E0009"
+    },
+    "canon/recursion.json": {
+      "sha": "9d6cc75b26d7be83",
+      "bytes": 2037,
+      "entry": "E0009"
+    },
+    "collections.js": {
+      "sha": "8d59249c5165daab",
+      "bytes": 4034,
+      "entry": "E0009"
+    },
+    "content.js": {
+      "sha": "f49dd78ea0e9d161",
+      "bytes": 275230,
+      "entry": "E0024"
+    },
+    "documents.js": {
+      "sha": "7bfb0a8bc703ce97",
+      "bytes": 149974,
+      "entry": "E0009"
+    },
+    "documents/holographic-repolymerization.html": {
+      "sha": "bfa6d2e83fa4ee35",
+      "bytes": 63432,
+      "entry": "E0009"
+    },
+    "documents/holographic-repolymerization.lexicon.json": {
+      "sha": "f28ccd8335cba43a",
+      "bytes": 28067,
+      "entry": "E0009"
+    },
+    "index.html": {
+      "sha": "34f259ffb3c9a73c",
+      "bytes": 7143,
+      "entry": "E0009"
+    },
+    "pages.js": {
+      "sha": "0424c59c5b93292b",
+      "bytes": 28120,
+      "entry": "E0009"
+    },
+    "preview-ethos-model.html": {
+      "sha": "29f1bffe3ec0f3e6",
+      "bytes": 65815,
+      "entry": "E0009"
+    },
+    "sections.js": {
+      "sha": "257477a9b9f2252c",
+      "bytes": 2612,
+      "entry": "E0009"
+    },
+    "styles.css": {
+      "sha": "6dbb0a8a812ad357",
+      "bytes": 69209,
+      "entry": "E0009"
+    },
+    "temporal-matrix-clock-audit.md": {
+      "sha": "8d3cc867336cce5d",
+      "bytes": 4639,
+      "entry": "E0009"
+    },
+    "tools/build-documents.py": {
+      "sha": "621c433ae61aa88f",
+      "bytes": 3053,
+      "entry": "E0009"
+    },
+    "tools/check_canon.py": {
+      "sha": "0c1f44b2efc5dc80",
+      "bytes": 14299,
+      "entry": "E0009"
+    },
+    "tools/coord.py": {
+      "sha": "04a53f74b7f51a60",
+      "bytes": 36400,
+      "entry": "E0009"
+    },
+    "tools/fetch-fonts.py": {
+      "sha": "2842f43e6a1440c8",
+      "bytes": 2933,
+      "entry": "E0009"
+    },
+    "tools/tests/test_coord.py": {
+      "sha": "fae2eb9ffdd9c0af",
+      "bytes": 15667,
+      "entry": "E0009"
+    },
+    "writing-room/.htaccess": {
+      "sha": "60334a7462e9a57d",
+      "bytes": 298,
+      "entry": "E0009"
+    },
+    "writing-room/README.md": {
+      "sha": "0930f733f9822746",
+      "bytes": 10718,
+      "entry": "E0009"
+    },
+    "writing-room/Start-WritingRoom.cmd": {
+      "sha": "42d19d3e5757b82d",
+      "bytes": 140,
+      "entry": "E0009"
+    },
+    "writing-room/Start-WritingRoom.ps1": {
+      "sha": "b5315fe99da743fd",
+      "bytes": 2949,
+      "entry": "E0021"
+    },
+    "writing-room/api.php": {
+      "sha": "921d1746b8e214d9",
+      "bytes": 2973,
+      "entry": "E0009"
+    },
+    "writing-room/inc/articles.php": {
+      "sha": "a0439e68ffef4b0c",
+      "bytes": 21575,
+      "entry": "E0009"
+    },
+    "writing-room/inc/bootstrap.php": {
+      "sha": "09921587ce8e0020",
+      "bytes": 11602,
+      "entry": "E0009"
+    },
+    "writing-room/inc/database.example.php": {
+      "sha": "da386f5067be714f",
+      "bytes": 443,
+      "entry": "E0009"
+    },
+    "writing-room/inc/pages.php": {
+      "sha": "099c30c6f4fdf19e",
+      "bytes": 26399,
+      "entry": "E0009"
+    },
+    "writing-room/index.php": {
+      "sha": "5256f18b375526f6",
+      "bytes": 959,
+      "entry": "E0009"
+    },
+    "writing-room/login.php": {
+      "sha": "81ed709d7c31467d",
+      "bytes": 2676,
+      "entry": "E0009"
+    },
+    "writing-room/logout.php": {
+      "sha": "1d031890894dbe2d",
+      "bytes": 530,
+      "entry": "E0009"
+    },
+    "writing-room/online.css": {
+      "sha": "9521d34b92dbb3eb",
+      "bytes": 2042,
+      "entry": "E0009"
+    },
+    "writing-room/public/index.html": {
+      "sha": "2200e0c6317ec9a6",
+      "bytes": 9375,
+      "entry": "E0009"
+    },
+    "writing-room/public/room.css": {
+      "sha": "c285f30b92d5e21a",
+      "bytes": 13826,
+      "entry": "E0009"
+    },
+    "writing-room/public/room.js": {
+      "sha": "49a574fcf6edc859",
+      "bytes": 51158,
+      "entry": "E0009"
+    },
+    "writing-room/schema.sql": {
+      "sha": "6ba0637fe0d71270",
+      "bytes": 2487,
+      "entry": "E0009"
+    },
+    "writing-room/server.py": {
+      "sha": "8ce13b49b84a1ae8",
+      "bytes": 22077,
+      "entry": "E0009"
+    },
+    "writing-room/setup.php": {
+      "sha": "d229c91bef779664",
+      "bytes": 3688,
+      "entry": "E0009"
+    },
+    "writing-room/site_pages.py": {
+      "sha": "dcd2588d3c517567",
+      "bytes": 15231,
+      "entry": "E0009"
+    },
+    "writing-room/tests/test_server.py": {
+      "sha": "3ab888b6a557723e",
+      "bytes": 24505,
+      "entry": "E0009"
+    }
+  },
+  "claims": [
+    {
+      "id": "C0001",
+      "agent": "gemini",
+      "task": "T-014",
+      "paths": [
+        "content.js"
+      ],
+      "note": null,
+      "created": "2026-09-12T19:05:18Z",
+      "expires": "2026-09-13T03:05:18Z",
+      "pre": {
+        "content.js": "b4173775c3115092"
+      },
+      "released": "2026-09-12T19:15:15Z"
+    },
+    {
+      "id": "C0002",
+      "agent": "gemini",
+      "task": "T-015",
+      "paths": [
+        "content.js"
+      ],
+      "note": null,
+      "created": "2026-09-13T00:18:47Z",
+      "expires": "2026-09-13T08:18:47Z",
+      "pre": {
+        "content.js": "9b350a94e9277955"
+      },
+      "released": "2026-09-13T00:21:29Z"
+    },
+    {
+      "id": "C0003",
+      "agent": "chatgpt",
+      "task": "homepage-illustrations",
+      "paths": [
+        "app.js"
+      ],
+      "note": "User requested improved home illustrations while retaining the first and protocol figures.",
+      "created": "2026-09-13T00:35:43Z",
+      "expires": "2026-09-13T08:35:43Z",
+      "pre": {
+        "app.js": "ca66b2dbb60088ec"
+      },
+      "released": "2026-09-13T00:35:48Z"
+    },
+    {
+      "id": "C0004",
+      "agent": "gemini",
+      "task": "T-016",
+      "paths": [
+        "content.js"
+      ],
+      "note": null,
+      "created": "2026-09-13T00:36:41Z",
+      "expires": "2026-09-13T08:36:41Z",
+      "pre": {
+        "content.js": "b2ea5409ac628690"
+      },
+      "released": "2026-09-13T00:37:50Z"
+    },
+    {
+      "id": "C0005",
+      "agent": "gemini",
+      "task": "T-017",
+      "paths": [
+        "writing-room/Start-WritingRoom.ps1",
+        "PROJECT.md"
+      ],
+      "note": null,
+      "created": "2026-09-13T21:09:45Z",
+      "expires": "2026-09-14T05:09:45Z",
+      "pre": {
+        "writing-room/Start-WritingRoom.ps1": "3825b798ac840ff0",
+        "PROJECT.md": "574fbbc449e96f25"
+      },
+      "released": "2026-09-13T21:12:42Z"
+    },
+    {
+      "id": "C0006",
+      "agent": "gemini",
+      "task": "T-018",
+      "paths": [
+        "app.js"
+      ],
+      "note": null,
+      "created": "2026-09-13T21:28:34Z",
+      "expires": "2026-09-14T05:28:34Z",
+      "pre": {
+        "app.js": "e6d8c151a075db4c"
+      },
+      "released": "2026-09-13T21:29:15Z"
+    },
+    {
+      "id": "C0007",
+      "agent": "chatgpt",
+      "task": "clock-equinox",
+      "paths": [
+        "app.js"
+      ],
+      "note": null,
+      "created": "2026-09-13T21:29:54Z",
+      "expires": "2026-09-14T05:29:54Z",
+      "pre": {
+        "app.js": "f3301afaf380cc68"
+      },
+      "released": "2026-09-13T21:40:12Z"
+    }
+  ],
+  "entries": [
+    {
+      "id": "E0001",
+      "at": "2026-09-08T23:13:34Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "baseline",
+      "summary": "The migrated site: dependency-free HTML/CSS/JS, documents pipeline, Writing Room. Earlier work was done in ChatGPT and Gemini sessions that are not recorded here.",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0002",
+      "at": "2026-09-10T01:06:42Z",
+      "agent": "chatgpt",
+      "task": null,
+      "kind": "done",
+      "summary": "Writing Room brought toward collections: server-side plumbing started. Interrupted part-way when the session ran out of usage.",
+      "files": [
+        "writing-room/server.py",
+        "writing-room/public/room.js"
+      ],
+      "next": "Finish the collections work: the room could not file an article in a collection yet."
+    },
+    {
+      "id": "E0003",
+      "at": "2026-09-11T17:51:27Z",
+      "agent": "claude",
+      "task": null,
+      "kind": "done",
+      "summary": "Temporal Matrix V10 ported from Julien's other working copy: exact BigInt continued fraction ladder, tau* derived rather than tabulated, LAUNCH separated from the nineteen hard rungs, checkMatrix() assertions.",
+      "files": [
+        "app.js"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0004",
+      "at": "2026-09-11T18:30:00Z",
+      "agent": "claude",
+      "task": null,
+      "kind": "done",
+      "summary": "Counters run live from the start of the experiment. Residual, active J, integrated load, load still active and rung fill were frozen because LAUNCH was acting as its own next rung in spanFraction() and nextRung(). q = 0 is the start of the experiment, not a singularity.",
+      "files": [
+        "app.js"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0005",
+      "at": "2026-09-11T19:34:41Z",
+      "agent": "claude",
+      "task": null,
+      "kind": "done",
+      "summary": "Sections, collections and types separated into three independent axes. sections.js and collections.js added; the Writing Room can file an article in a collection; the Library classifies by type.",
+      "files": [
+        "app.js",
+        "sections.js",
+        "collections.js",
+        "content.js",
+        "writing-room/server.py",
+        "writing-room/public/room.js"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0006",
+      "at": "2026-09-11T20:05:06Z",
+      "agent": "claude",
+      "task": null,
+      "kind": "done",
+      "summary": "Main-page copy extracted into pages.js (103 fields across 9 pages) and made editable in the Writing Room, including the rich in-place editors with protected blocks. Protocol source round-trips byte-identically when untouched.",
+      "files": [
+        "pages.js",
+        "app.js",
+        "index.html",
+        "writing-room/site_pages.py",
+        "writing-room/server.py",
+        "writing-room/public/room.js",
+        "writing-room/tests/test_server.py"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0007",
+      "at": "2026-09-12T00:43:08Z",
+      "agent": "gemini",
+      "task": "T-010",
+      "kind": "done",
+      "summary": "Deployment pass started: .gitignore tightened, .htaccess added with no-cache headers on the editable data files and directory listing off.",
+      "files": [
+        ".gitignore",
+        ".htaccess",
+        "writing-room/.htaccess"
+      ],
+      "next": "Login and API guard next."
+    },
+    {
+      "id": "E0008",
+      "at": "2026-09-12T12:59:02Z",
+      "agent": "gemini",
+      "task": "T-010",
+      "kind": "log",
+      "summary": "Online Writing Room API in progress: api.php reworked against the session guard.",
+      "files": [
+        "writing-room/api.php"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0009",
+      "at": "2026-09-12T13:57:20Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "baseline",
+      "summary": "first baseline",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0010",
+      "at": "2026-09-12T19:05:13Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "Added T-014: Author 100 framework articles for content.js",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0011",
+      "at": "2026-09-12T19:14:42Z",
+      "agent": "gemini",
+      "task": null,
+      "kind": "reconciled",
+      "summary": "tools for batch authoring and compiling framework articles",
+      "files": [
+        "tools/article_builder.py",
+        "tools/compile_all_content.py",
+        "tools/article_data/all_new_articles.json",
+        "tools/article_data/__init__.py"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0012",
+      "at": "2026-09-12T19:15:15Z",
+      "agent": "gemini",
+      "task": "T-014",
+      "kind": "done",
+      "summary": "Authored and compiled 100 new canonical articles based on the complete Cohera framework across Framework (20), Philosophy (20), Meta-Mathematics (20), Biophysic (20), Notes & Methods (10), and The Lab (10) into content.js, bringing total to 114 articles. Fixed typo 'Research articlessss' to 'Research article'. Passed coord check and all unit tests.",
+      "files": [
+        "content.js"
+      ],
+      "next": "T-010 Writing Room online behind login or T-001/T-002 instrument fixes."
+    },
+    {
+      "id": "E0013",
+      "at": "2026-09-12T19:15:22Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "T-006 → done",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0014",
+      "at": "2026-09-13T00:18:38Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "Added T-015: Revert published articles back to the 14 baseline articles",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0015",
+      "at": "2026-09-13T00:21:19Z",
+      "agent": "gemini",
+      "task": null,
+      "kind": "reconciled",
+      "summary": "Removed temporary article authoring and compilation tools",
+      "files": [
+        "tools/article_builder.py",
+        "tools/article_data/__init__.py",
+        "tools/compile_all_content.py"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0016",
+      "at": "2026-09-13T00:21:29Z",
+      "agent": "gemini",
+      "task": "T-015",
+      "kind": "done",
+      "summary": "Reverted published articles in content.js back to the 14 baseline articles per user request. Cleaned up authoring tools and verified all tests pass.",
+      "files": [
+        "content.js"
+      ],
+      "next": "T-010 Writing Room online behind login"
+    },
+    {
+      "id": "E0017",
+      "at": "2026-09-13T00:35:48Z",
+      "agent": "chatgpt",
+      "task": "homepage-illustrations",
+      "kind": "done",
+      "summary": "Improved home page Research, Lab, Transmissions and recent-work illustrations with detailed native SVG constructions. Preserved hero and protocol SVG output exactly, retained all authored copy, and scoped article artwork to home only. Checked desktop 1440px and mobile 390px in light/dark themes, no horizontal overflow or console errors; JavaScript syntax, 31 Writing Room tests and tools tests passed. Canon clean with existing collection warnings.",
+      "files": [
+        "app.js"
+      ],
+      "next": "User may review the refreshed home illustrations; existing unrelated tasks remain open."
+    },
+    {
+      "id": "E0018",
+      "at": "2026-09-13T00:36:36Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "Added T-016: None",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0019",
+      "at": "2026-09-13T00:37:50Z",
+      "agent": "gemini",
+      "task": "T-016",
+      "kind": "done",
+      "summary": "Restored canonical collection bindings and V10 locked Temporal Matrix text to the 14 baseline articles in content.js, resolving empty article listings in Research and Library views.",
+      "files": [
+        "content.js"
+      ],
+      "next": "T-010 Writing Room online behind login"
+    },
+    {
+      "id": "E0020",
+      "at": "2026-09-13T21:09:42Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "Added T-017: Fix Start-WritingRoom version mismatch with server.py ROOM_VERSION 4",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0021",
+      "at": "2026-09-13T21:12:42Z",
+      "agent": "gemini",
+      "task": "T-017",
+      "kind": "done",
+      "summary": "Synchronized Start-WritingRoom.ps1 roomVersion with server.py ROOM_VERSION 4 and added dynamic version detection from server.py. Updated PROJECT.md. Stopped stale background server running version 3 and restarted with version 4.",
+      "files": [
+        "PROJECT.md",
+        "writing-room/Start-WritingRoom.ps1"
+      ],
+      "next": "T-010 Writing Room online behind login"
+    },
+    {
+      "id": "E0022",
+      "at": "2026-09-13T21:28:30Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "task",
+      "summary": "Added T-018: Fix article left TOC menu disappearing when headings <= 2",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0023",
+      "at": "2026-09-13T21:29:15Z",
+      "agent": "gemini",
+      "task": "T-018",
+      "kind": "done",
+      "summary": "Updated TOC heading threshold in app.js from headings.length > 2 to headings.length > 0 so articles with 1 or 2 headings display the left On This Page menu.",
+      "files": [
+        "app.js"
+      ],
+      "next": "T-010 Writing Room online behind login"
+    },
+    {
+      "id": "E0024",
+      "at": "2026-09-13T21:29:19Z",
+      "agent": "julien",
+      "task": null,
+      "kind": "reconciled",
+      "summary": "Edited calendar-360 in Writing Room",
+      "files": [
+        "content.js"
+      ],
+      "next": null
+    },
+    {
+      "id": "E0025",
+      "at": "2026-09-13T21:40:12Z",
+      "agent": "chatgpt",
+      "task": null,
+      "kind": "task",
+      "summary": "T-002 → done",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0026",
+      "at": "2026-09-13T21:40:12Z",
+      "agent": "chatgpt",
+      "task": null,
+      "kind": "task",
+      "summary": "T-003 → done",
+      "files": [],
+      "next": null
+    },
+    {
+      "id": "E0027",
+      "at": "2026-09-13T21:40:12Z",
+      "agent": "chatgpt",
+      "task": "clock-equinox",
+      "kind": "done",
+      "summary": "User requested March 2027 equinox synchronization between website and standalone clock, then clarified the pre-launch calendar must already advance. app.js now uses fixed USNO minute-resolution epoch 2027-03-20T20:25:00Z, ignores old independent simulation epochs, and uses UTC elapsed time. Calendar dates extend backward with signed calendarTau; retained-process tau/q remain zero until launch. Next-date boundary advances before launch; Stilla 30 February changes exactly to Differa 1 March at epoch. Equivalent engine and UI shipped to browser clock on 8767 and installed screensaver. Preserved the existing wave, rates, ladder, interpolation, and other agents' edits. Tested all 359 pre-launch dates, launch +/-1ms, calendar rollover, old-storage independence, timezone invariance, 11 website/app parity positions, exact ladder/wave checks, desktop/390px browser displays, native screensaver; 31 Writing Room and 28 tools tests passed, canon clean.",
+      "files": [
+        "app.js"
+      ],
+      "next": "Existing rate normalization task T-001 remains outside this correction. App deliverables: C:\\Users\\julie\\Documents\\Codex\\2026-09-13\\u\\outputs\\Temporal-Matrix."
+    }
+  ],
+  "agents": {
+    "julien": {
+      "entries": 9,
+      "lastSeen": "2026-09-13T21:29:19Z"
+    },
+    "chatgpt": {
+      "entries": 5,
+      "lastSeen": "2026-09-13T21:40:12Z"
+    },
+    "claude": {
+      "entries": 4,
+      "lastSeen": "2026-09-11T20:05:06Z"
+    },
+    "gemini": {
+      "entries": 9,
+      "lastSeen": "2026-09-13T21:29:15Z"
+    }
+  }
+}

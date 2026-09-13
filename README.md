@@ -8,6 +8,9 @@ index.html              page shell: header, footer, dialogs, meta, JSON-LD
 styles.css              the whole design system (tokens, light + dark, layouts)
 app.js                  router, renderers, search, reader, document register
 content.js              the articles (imported texts + collection introductions)
+sections.js             the sections: Research, The Lab, Transmissions… (menu-level)
+collections.js          the collections inside a section: Research 01 Framework…
+pages.js                the text of the main pages: Home, The Lab, Library, About…
 documents.js            generated — do not edit by hand
 documents/              the source of documents.js
   holographic-repolymerization.html          sections, as authored
@@ -49,7 +52,7 @@ pieces.
 
 **Documents** are versioned, interactive operating documents. The protocol is
 one, and it has its own top-level route (`#/protocol`) and nav entry rather than
-sitting inside a collection — `collections` marks it `standalone: true`, which
+sitting inside a section — `sections.js` marks it `standalone: true`, which
 keeps it out of the six-card grid while leaving it in the library and search. They render in
 their own register: a sticky section bar, per-section panels (or one continuous
 scroll — the reader chooses, and the choice is remembered), rendered maths, dose
@@ -137,155 +140,127 @@ Two identities are load-bearing and must survive any edit to the constants:
 zero. Changing any of the three without re-deriving the others breaks an anchor
 silently — the clock will still run, it will just no longer be noon at noon.
 
-### The absorption ladder
+### Two coordinates
 
-The calendar carries a rational slip of exactly `8737/600000` of a day per date,
-so the Euclidean algorithm on it terminates. `coherenceLadder()` runs that one
-recursion and returns **two** sequences per rung, because they are two views of
-the same quantity:
+| | meaning | range | label |
+| --- | --- | --- | --- |
+| `tau` | physical Matrix time — elapsed time in the calendar | 0 → ∞ | "Matrix time" / "Matrix date" |
+| `q` | informational recurrence depth — internal coordinate | 0 → 600,000,000,000 | "depth" / "rung", **never** "date" |
 
-| field | meaning | layer |
-| --- | --- | --- |
-| `dates` | convergent denominator q — the date the rung is attained | baseline |
-| `load` | Euclidean remainder r — the load still active | matrix |
-| `residualMs` | ε(J) = J/600000 × 86400 s | matrix |
-| `absorbed` | A = 1 − J/J₀, from integers | matrix |
-
-The two are tied by `r_k = |q_k·J0 − p_k·Q|`, which the function **asserts at
-every rung** rather than assuming, so the table can never drift from the
-arithmetic. Products stay far inside the exact-integer range.
-
-**Retained absorption.** `activeCoherenceLevel(N)` returns the rung of the
-highest milestone matrix date `N` has already passed; `unresolvedLoad`,
-`absorptionFraction` and `residualSeconds` read off it. The reduction is kept —
-the load never rises, and there is no supercycle after 600,000. It is stepwise
-on purpose: the mathematics gives discrete milestones, and a continuous
-absorption law would be an assumption this version does not make.
-
-**One meter, and two readings of the same progress.** The single meter is
-`rungProgress` (`m-approach-bar`): position within the interval between the rung
-in force and the next, so it sweeps 0 → 100% once per rung. `absorbedLive` is the
-continuous integrated fraction — the stepwise rung value carried toward the next
-in proportion to `rungProgress` — and `Integrated` + `Remaining` are read from
-it, so they always sum to 100 and move together.
-
-`unresolvedLoad`, `residualSeconds` and the ladder table remain discrete, and
-**`J` is never driven from the live value** — the continuous reading is
-presentation over a discrete state, not a redefinition of it. Keep that split if
-you touch this. The panel itself reports only the continuous reading: a second
-per-rung percentage next to it read as a contradiction, so it was removed. The
-exact value at each rung stays where it belongs, in the ladder table.
-Both the panel and the article say so in words.
-
-**Two layers, kept visibly apart.** The baseline is the defined year 365.2422,
-the raw slip, the passive convergents, and
+The singular relation is active **from launch** — no delayed onset:
 
 ```
-600,000 matrix dates = 608,737 defined solar days   residual exactly 0
+dtau/dq = J_ret(q) / J0      from tau = 0, q = 0
 ```
 
-asserted in integers (comparing the float `MS_CAL` would fail on binary
-rounding, not on arithmetic). The matrix layer is J(n), A(n), the retained rung
-and the modeled turnover displacement. `cal360()` returns both — `turnH/M/S` is
-the baseline free-running boundary, `mTurnH/M/S` is the modeled one, displaced
-from apparent solar midnight by ε and closing on 00:00 as the load falls. The
-instrument labels which is which; do not let a modeled value read as an
-observation.
+The calendar continues indefinitely. There is no end of time and no stop at
+closure. Rung `q = 206` is reached at `tau ≈ 113.391347139501`, not at date 206.
 
-### Progress-coupled dilation
-
-The clock and the ladder are one system. `absorbedLive` (`A`) is the **control
-variable**: it drives the modelled clock as well as the display.
-
-**The dilation is applied from day one.** A matrix day is 24h 20m 58.128s of
-reference time — one calendar date — at every stage, so the mean never moves.
-With `R = 608737/600000`:
+### The exact foundation
 
 ```
-v_A(φ) = R · [ 1 + (1 − A)(v(φ) − 1) ]      the wave, renormalised
-C_A(φ) = (1 − A)·consumed(φ) + A·φ          its normalised antiderivative
+Y     = 365.2421896698                             frozen reference
+alpha = E/360 = 8,736,982,783 / 600,000,000,000    irreducible
+J0    = 8,736,982,783      Q = 600,000,000,000
 ```
 
-Mean = R for all A; amplitude scales by (1 − A). What absorption changes is the
-**structure** of the dilation inside the day, not its total. At A = 1 the wave is
-gone and those 24h 20m 58.128s are spread evenly over 24 clock hours. Because
-`C_A` is a linear blend, `C_A(½) = ½` and `C_A(1) = 1` for every A — noon and
-midnight stay anchored throughout.
+One Matrix date is `1.014561637971666…`, so the clock dilation is fixed at
+**20m 58.125520752s** and a Matrix date is **24h 20m 58.125520752s**. That
+dilation does **not** change when the retained load changes — the clock reading
+and the integration process are distinct readings. `q·J0` reaches 5.2 × 10²¹, so
+the ladder is computed in **BigInt**.
 
-**ε is the residual non-uniformity.** The clock's peak departure from steady
-flow, at 04:00, is `(1 − A)·1258.128 s` — the ladder residual at every rung,
-exactly. Nothing imposes it; it is what the wave does, and it reaches zero when
-the dilation is fully normalised. `excursionMs(A)` returns it.
+### Framework semantics
 
-**The clock stays anchored to apparent solar time**, exactly as before the
-coupling. `phi = livingPhaseAt(sol.frac, A)`. Because `C_A(½) = ½` at every A,
-12:00 is peak sun throughout, and the clock's departure from the sun is bounded
-by the current ε — minimal, and shrinking as the dilation normalises. Do not
-re-anchor the clock to `within / MS_CAL`: that decouples it from the sun and the
-readings diverge by hours.
+`Q` is total system capacity, the complete normalised domain — **not joules**, no
+unit conversion claimed; if an elementary unit `epsilon` is derived,
+`E_total = Q·epsilon`. `J` is the unresolved load in the same units. Two
+fractions, kept apart: the direct `J0/Q = 1.4561637971666…%`, and the 12-fold
+Matrix-month translation `12·J0/Q = 17.473965566%`, a cross-domain quantity. The
+UI must not claim physics or genetics has established either reading.
 
-`A` is recomputed from the fractional matrix date on **every tick**, so the wave
-relaxes continuously; nothing about the clock waits for a rung or a date
-boundary.
+### Retained integration and the absorption point
 
-**Solar anchoring.** The framework holds that Earth's rotation slows through the
-absorption — fast at first, then ever more slowly — so the solar day lengthens
-to meet the matrix day, and the flow of time slows with it. By around date 259
-most of the 5.2422 and most of the 8,737 are absorbed and the year is close to
-360 rotations of 24h 20m 58.128s. Present-day apparent solar time stays on the
-panel as *Actual apparent solar*, labelled as a reference. The coupling is the
-Science Coherence framework's proposal;
-[NIST](https://www.nist.gov/pml/time-and-frequency-division/leap-seconds-faqs) and
-[NASA](https://science.nasa.gov/learn/basics-of-space-flight/chapter2-1/) are
-cited only for the standard astronomical/atomic distinction, not as support.
+`J_ret` is monotonically non-increasing; a later wave recurrence may never raise
+it. Integrating the staircase from launch gives, as a derived rational:
 
-`checkCoupling()` asserts the constant mean at five values of A, the anchors at
-each, the wave's disappearance at completion, ε as the measured peak excursion at
-all nine rungs, retention at 600,001 / 700,000 / 5,000,000, and that the clock
-never steps backwards across a rung boundary (midnight rollover excluded).
+```
+tau* = 6,251,584,658,434 / 8,736,982,783 ≈ 715.5313011029427 Matrix dates
+```
 
-### Simulation mode and the effective epoch
-
-`MATRIX_MODE` is `'simulation'` until the March 2027 run begins. Everything
-downstream reads the matrix clock through `getMatrixEpoch()`, `getMatrixNow()`
-and `getMatrixDayCount()`, so going live is a one-line change: set
-`MATRIX_MODE = 'live'` and fill in `CAL360.epochLive`.
-
-In simulation the epoch is `Date.now() - MS_CAL`, written once to `localStorage`
-under `sc-matrix-epoch` and then left to advance naturally — so first load opens
-at about matrix date 2 and time runs forward from there rather than resetting on
-every reload. The reset control rewinds it to one matrix date ago. The banner
-saying this is simulated state is load-bearing, not decoration.
+Not chosen, not rounded, not calibrated. Past it the state is clamped — `q = Q`,
+`J = 0`, residual 0, integration 100%, permanently — and nothing divides by zero.
+`tau*` is internal: it may appear in detail, never as a headline countdown.
 
 ### Checking it
 
-There is no test runner and no build step, so `app.js` runs its own assertions
-at load: the ten date→load→residual cases (including 600001, which proves
-closure stays closed), monotone descent of the load, and the baseline identity.
-They log to `console.error` and are silent when they pass. The pure functions
-are also exposed read-only on `window.__matrix` for checking from the console or
-a headless browser.
+`checkMatrix()` runs at load, silent on success: the 20-rung ladder, `J` and
+residual at each, the monotone staircase, `tau` at every rung, `tau*` as the
+exact rational, the `q = 206` collapse figures, clamped absolute state at and
+past `tau*`, the calendar still advancing there, `qOfTau` inverting `tauOfQ`, and
+no reading reversing across 8,000 samples. Pure functions are on `window.__matrix`.
+
+## The main pages' text
+
+Every heading, paragraph, button and caption on the Home page, The Lab, the
+Library, About, Editorial principles and Privacy lives in `pages.js`
+(`window.SC_PAGES`). Each page is a list of fields `{ key, group, label, kind,
+value }`. `kind` is `line` (inline HTML), `text` (a paragraph, inline HTML),
+`rich` (block HTML) or `plain` (escaped text, used in attributes). `app.js` reads
+them through `copy(page, key, fallback)`. Every call keeps the original wording
+as its fallback, so a page opened without `pages.js` reads exactly as before.
+Layout, links and the figures stay in `app.js`.
+
+A page can also be tied to a section (`"section": "research"`) or to the
+Protocol (`"document": "holographic-repolymerization"`). The Writing Room then
+adds the section's and its collections' texts, or the Protocol's title, key
+figures and sections, to that page's fields. It writes each one back where it
+lives: `sections.js`, `collections.js`, or `documents/<id>.html`, after which
+`documents.js` is rebuilt.
 
 ## Adding an article
 
 Append an object to the array in `content.js`:
 
 ```js
-{ id, title, category, type, date, minutes, words, description, tone,
-  note, download, search, body }
+{ id, title, category, collection, type, date, minutes, words, description,
+  tone, note, download, search, body }
 ```
 
-`category` is one of `research`, `regenesis`, `transmissions`, `lab`,
-`learning`, `protocol` (defined at the top of `app.js`).
+Every piece is classified three ways, and the three are kept apart:
 
-Two flags shape where a collection appears.
+| field | what it is | where it is defined |
+| --- | --- | --- |
+| `category` | the **section** it lives in: `research`, `lab`, `transmissions`, `learning`, `regenesis` | `sections.js` (`window.SC_SECTIONS`) |
+| `collection` | the **collection** inside that section — for Research: `framework`, `philosophy`, `meta-mathematics`, `biophysic`, `notes-methods` | `collections.js` (`window.SC_COLLECTIONS`) |
+| `type` | what **kind** of piece it is: Research article, Collection introduction, Transmission… | free text on the piece |
 
-`hidden: true` keeps a collection reachable at its own URL with all its pieces,
+A section that has collections requires every article in it to name one; a
+section without collections takes none. `protocol` is marked
+`acceptsArticles: false`: it holds the operating document, not articles.
+
+Each collection is `{ id, section, num, name, description, tagline, connected,
+order }`. The Research page's tabs are the research section's collections in
+`num` order; a tab lists the articles that name the collection, those in
+`order` first and the rest newest first. The Library classifies by `type`
+(the row of filters) and can be narrowed to a section or a collection.
+
+The Writing Room can create a collection (numbered after the last one in its
+section) and rename one or change its description. It cannot change an
+address, renumber, move between sections or delete — edit `collections.js` for
+those. A section's texts (name, introduction, description) are edited from the
+Writing Room's Pages; its address, number and flags by hand in `sections.js`. `app.js` keeps a copy of
+both lists as a fallback for a page opened without the files, so keep them in
+step. The top navigation in `index.html` is written by hand.
+
+Two flags shape where a section appears.
+
+`hidden: true` keeps a section reachable at its own URL with all its pieces,
 but it appears in no navigation, no card grid, no library filter and no search
 result. `regenesis` and `learning` are hidden this way — remove the flag to bring
 one back.
 
-`standalone: true` keeps a collection outside the two primary home-page paths
+`standalone: true` keeps a section outside the two primary home-page paths
 while leaving it fully listed everywhere else: its own route, its own nav entry,
 its own library filter, and its pieces in search and in the library.
 `transmissions` and `protocol` are both standalone, and each has its own feature

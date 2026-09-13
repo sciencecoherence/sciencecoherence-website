@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Ethos of Being: The Self-Actualizing Recursion Engine — The Lab — Science Coherence</title>
+  <meta name="description" content="An interactive instrument modeling reality as a self-actualizing closed recursion: generative differentiation, coherence selection, realized configuration, and recursive integration.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#173d32" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1512" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=20260911m">
+
+  <script>
+    /* Synchronize theme with website's stored preferences */
+    try {
+      var t = JSON.parse(localStorage.getItem('sc-theme'));
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+
+  <style>
+    /* Custom enhancements for the Ethos Instrument matching Temporal Matrix styles */
+    .inst-canvas-wrap {
+      width: 100%;
+      height: 380px;
+      margin: 14px 0 10px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inst-canvas-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .inst-view-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .inst-view-toggles {
+      display: flex;
+      gap: 6px;
+    }
+    .inst-node {
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+    .inst-node rect, .inst-node circle.pnode-ring {
+      fill: var(--surface);
+      stroke: var(--line-strong);
+      stroke-width: 1.2;
+      transition: stroke .25s, fill .25s, stroke-width .25s;
+    }
+    .inst-node:hover rect, .inst-node:hover circle.pnode-ring {
+      stroke: var(--teal);
+      fill: var(--paper-2);
+    }
+    .inst-node.active rect, .inst-node.active circle.pnode-ring {
+      stroke: var(--teal);
+      stroke-width: 2.4;
+      fill: var(--paper);
+      filter: drop-shadow(0 0 8px rgba(17,106,96,.3));
+    }
+    .inst-node text.glyph {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 26px;
+      fill: var(--ink);
+      user-select: none;
+      transition: fill .25s;
+    }
+    .inst-node.active text.glyph {
+      fill: var(--teal);
+      font-weight: 600;
+    }
+    .inst-node text.sublabel {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      fill: var(--muted);
+      user-select: none;
+    }
+    .inst-flow-line {
+      stroke: var(--line-strong);
+      stroke-width: 1.4;
+      transition: stroke .25s, stroke-width .25s;
+    }
+    .inst-flow-line.active {
+      stroke: var(--teal);
+      stroke-width: 2.2;
+    }
+    .inst-flow-head {
+      fill: var(--line-strong);
+      transition: fill .25s;
+    }
+    .inst-flow-head.active {
+      fill: var(--teal);
+    }
+    .inst-arc-top {
+      stroke: var(--acc-green);
+      stroke-width: 1.4;
+      opacity: .65;
+      fill: none;
+      transition: opacity .3s, stroke-width .3s;
+    }
+    .inst-arc-top.active {
+      opacity: 1;
+      stroke-width: 2.4;
+      filter: drop-shadow(0 0 6px rgba(53,107,49,.4));
+    }
+    .inst-arc-bottom {
+      stroke: var(--amber);
+      stroke-width: 1.4;
+      opacity: .65;
+      fill: none;
+      transition: opacity .3s, stroke-width .3s;
+    }
+    .inst-arc-bottom.active {
+      opacity: 1;
+      stroke-width: 2.4;
+      filter: drop-shadow(0 0 6px rgba(150,89,15,.4));
+    }
+    .stab-btn-group {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .stab-btn-group button {
+      font-size: 11.5px;
+      padding: 5px 9px;
+    }
+    .stab-btn-group button.active {
+      background: var(--green);
+      color: var(--on-green);
+      border-color: var(--green);
+    }
+    .theorems-container {
+      margin-top: 48px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header matching Science Coherence shell -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html#/" class="brand" aria-label="Science Coherence home">
+        <img src="assets/mark.svg" width="37" height="37" alt="">
+        <span>science<span class="brand-light">coherence</span><small>COSMIC AWAKENING</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="index.html#/research">Research</a>
+        <a href="index.html#/protocol">The Protocol</a>
+        <a href="index.html#/lab" class="active">The Lab</a>
+        <a href="index.html#/transmissions">Transmissions</a>
+        <a href="index.html#/library">Library</a>
+        <a href="index.html#/about">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" aria-label="Switch theme">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></svg>
+        </button>
+        <button class="icon-button menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="index.html#/research">Research</a>
+      <a href="index.html#/protocol">The Protocol</a>
+      <a href="index.html#/lab" class="active">The Lab</a>
+      <a href="index.html#/transmissions">Transmissions</a>
+      <a href="index.html#/library">Library</a>
+      <a href="index.html#/about">About</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- Page Hero with Green Band -->
+    <section class="page-hero green">
+      <div class="wrap">
+        <div class="breadcrumb">
+          <a href="index.html#/">Home</a> / <a href="index.html#/lab">The Lab</a> / The Ethos of Being
+        </div>
+        <span class="eyebrow">The Lab · Instrument 02</span>
+        <h1>The Ethos of Being:<br><em>The Self-Actualizing Recursion Engine</em></h1>
+        <p class="lede">
+          Four irreducible operations. Two feedback closures. One dual equilibrium condition. An interactive laboratory instrument modeling reality as a closed recursion from which existence, structure, and consciousness emerge without external driver.
+        </p>
+      </div>
+    </section>
+
+    <div class="wrap" style="padding-top:36px;">
+
+      <!-- Conceptual Framing matching Temporal Matrix structure -->
+      <div class="prose" style="max-width:820px; margin-bottom:36px;">
+        <p>
+          There is no vantage point outside the process from which the process can be judged. Observer and observed, law and structure, matter and mind are not separate substances: they are aspects of a single recursive loop holding its shape across scale.
+        </p>
+        <h2>The structure</h2>
+        <p>
+          What the recursion is made of: four operations forming a closed circuit, two non-linear closures that make the loop self-generating and self-correcting, and the dual stillness where the recursion has nothing left to correct.
+        </p>
+      </div>
+
+      <!-- Two Primary Closures Cards -->
+      <div class="card-grid cols-2" style="margin-bottom:28px;">
+        <div class="card" data-accent="teal">
+          <h3>Ω ⇝ ∇Φ — Global boundary dependence</h3>
+          <p>The realized macroscopic universe constrains the next update of the substrate. Geometry is not inherited from initial conditions; it is generated, cycle after cycle, by the accumulated constraints of realized coherence.</p>
+        </div>
+        <div class="card" data-accent="amber">
+          <h3>∆ ⇝ Λ — Recursive learning &amp; agency</h3>
+          <p>What has been integrated updates the criteria for what gets selected. The recursion does not merely repeat: it improves its capacity to sustain coherent structure. In biology, evolution; in mind, learning.</p>
+        </div>
+      </div>
+
+      <p class="prose" style="max-width:820px; margin-bottom:14px;">
+        The next excitation arises through the self-referential action of the loop, embeddable in the realized medium:
+      </p>
+      <div class="formula">
+        $$\Omega(t+\delta t)\,|\tilde{\psi}(t+\delta t)\rangle = \Delta(t+\delta t)\,\Lambda(t+\delta t)\,\nabla(t+\delta t)\,|\psi(t)\rangle$$
+      </div>
+
+      <!-- ============================================================
+           THE INSTRUMENT DASHBOARD (.cal layout)
+           ============================================================ -->
+      <div class="cal" id="ethos-instrument">
+
+        <!-- LEFT PANEL: Main Visual Engine Stage (.cal-main) -->
+        <div class="cal-main">
+
+          <!-- Controls Header -->
+          <div class="cal-controls">
+            <button type="button" class="button small" id="inst-prev">← Prev</button>
+            <div class="cal-title">
+              <h3 id="inst-op-title">∇Φ — Primitive Differential</h3>
+              <span id="inst-op-sub">Phase 1 of 4 · Holographic generation</span>
+            </div>
+            <button type="button" class="button small" id="inst-next">Next →</button>
+          </div>
+
+          <!-- View Mode & Sim Action Bar -->
+          <div class="inst-view-bar">
+            <div class="inst-view-toggles">
+              <button type="button" class="button small active" id="btn-view-loop">Closed Loop</button>
+              <button type="button" class="button small" id="btn-view-nexus">Pentagon Nexus</button>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button type="button" class="button small primary" id="inst-toggle-run">Auto-Cycle ❚❚</button>
+            </div>
+          </div>
+
+          <!-- Interactive Visual Canvas -->
+          <div class="inst-canvas-wrap">
+
+            <!-- VIEW 1: Closed Loop SVG (default) -->
+            <svg id="svg-loop" viewBox="0 0 760 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- TOP ARC: Ω ⇝ ∇Φ -->
+              <path id="loop-arc-top" class="inst-arc-top"
+                    d="M410,120 L410,65 Q410,50 395,50 L125,50 Q110,50 110,65 L110,120" />
+              <polygon id="loop-arrow-top" points="104,112 110,121 116,112" fill="var(--acc-green)" opacity=".8" />
+              <text x="260" y="42" fill="var(--acc-green)" font-size="8.5" font-family="var(--mono)"
+                    text-anchor="middle" letter-spacing="1.5" font-weight="600">
+                Ω ⇝ ∇Φ — GLOBAL BOUNDARY CONSTRAINT
+              </text>
+
+              <!-- FORWARD ARROWS -->
+              <line id="fwd-1-line" class="inst-flow-line" x1="160" y1="165" x2="202" y2="165" />
+              <polygon id="fwd-1-head" class="inst-flow-head" points="198,160 208,165 198,170" />
+
+              <line id="fwd-2-line" class="inst-flow-line" x1="310" y1="165" x2="352" y2="165" />
+              <polygon id="fwd-2-head" class="inst-flow-head" points="348,160 358,165 348,170" />
+
+              <line id="fwd-3-line" class="inst-flow-line" x1="460" y1="165" x2="502" y2="165" />
+              <polygon id="fwd-3-head" class="inst-flow-head" points="498,160 508,165 498,170" />
+
+              <!-- NODES -->
+              <!-- ∇Φ (cx=110) -->
+              <g id="opnode-0" class="inst-node active" data-op="0" tabindex="0" role="button" aria-label="Primitive Differential">
+                <rect x="60" y="125" width="100" height="80" rx="6" />
+                <text x="110" y="170" class="glyph" text-anchor="middle">∇Φ</text>
+                <text x="110" y="192" class="sublabel" text-anchor="middle">DIFFERENTIAL</text>
+              </g>
+
+              <!-- Λ (cx=260) -->
+              <g id="opnode-1" class="inst-node" data-op="1" tabindex="0" role="button" aria-label="Coherence Selection">
+                <rect x="210" y="125" width="100" height="80" rx="6" />
+                <text x="260" y="170" class="glyph" text-anchor="middle">Λ</text>
+                <text x="260" y="192" class="sublabel" text-anchor="middle">SELECTION</text>
+              </g>
+
+              <!-- Ω (cx=410) -->
+              <g id="opnode-2" class="inst-node" data-op="2" tabindex="0" role="button" aria-label="The Realized Universe">
+                <rect x="360" y="125" width="100" height="80" rx="6" />
+                <text x="410" y="170" class="glyph" text-anchor="middle">Ω</text>
+                <text x="410" y="192" class="sublabel" text-anchor="middle">REALIZATION</text>
+              </g>
+
+              <!-- ∆ (cx=560) -->
+              <g id="opnode-3" class="inst-node" data-op="3" tabindex="0" role="button" aria-label="Recursive Integration">
+                <rect x="510" y="125" width="100" height="80" rx="6" />
+                <text x="560" y="170" class="glyph" text-anchor="middle">∆</text>
+                <text x="560" y="192" class="sublabel" text-anchor="middle">INTEGRATION</text>
+              </g>
+
+              <!-- Sub-labels under boxes -->
+              <text x="110" y="222" fill="var(--muted)" font-size="9.5" font-family="var(--serif)" font-style="italic" text-anchor="middle">Primitive Differential</text>
+              <text x="260" y="222" fill="var(--muted)" font-size="9.5" font-family="var(--serif)" font-style="italic" text-anchor="middle">Coherence Selection</text>
+              <text x="410" y="222" fill="var(--muted)" font-size="9.5" font-family="var(--serif)" font-style="italic" text-anchor="middle">Realized Universe</text>
+              <text x="560" y="222" fill="var(--muted)" font-size="9.5" font-family="var(--serif)" font-style="italic" text-anchor="middle">Self-Modeling 'I'</text>
+
+              <!-- BOTTOM ARC: ∆ ⇝ Λ -->
+              <path id="loop-arc-bottom" class="inst-arc-bottom"
+                    d="M560,235 L560,285 Q560,298 545,298 L275,298 Q260,298 260,285 L260,235" />
+              <polygon id="loop-arrow-bottom" points="254,244 260,234 266,244" fill="var(--amber)" opacity=".8" />
+              <text x="410" y="316" fill="var(--amber)" font-size="8.5" font-family="var(--mono)"
+                    text-anchor="middle" letter-spacing="1.5" font-weight="600">
+                ∆ ⇝ Λ — RECURSIVE LEARNING (INTEGRATION MODIFIES SELECTION)
+              </text>
+
+              <!-- Wave Carrier Footnote -->
+              <text x="380" y="344" fill="var(--muted)" font-size="11" font-family="var(--serif)" font-style="italic" text-anchor="middle">
+                Ψ := W_Ω(∆) — The propagating mind-like wave carrier: oscillatory, radiative, and phase-carrying
+              </text>
+            </svg>
+
+            <!-- VIEW 2: Radial Nexus SVG (hidden by default) -->
+            <svg id="svg-nexus" viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+              <!-- Outer pentagon wireframe -->
+              <polygon points="260,50 395,145 345,305 175,305 125,145"
+                       stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="3 3" fill="none" />
+
+              <!-- Spokes -->
+              <line x1="260" y1="190" x2="260" y2="50"  stroke="var(--line)" stroke-width="1" />
+              <line x1="260" y1="190" x2="395" y2="145" stroke="var(--line)" stroke-width="1" />
+              <line x1="260" y1="190" x2="345" y2="305" stroke="var(--line)" stroke-width="1" />
+              <line x1="260" y1="190" x2="175" y2="305" stroke="var(--line)" stroke-width="1" />
+              <line x1="260" y1="190" x2="125" y2="145" stroke="var(--line)" stroke-width="1" />
+
+              <!-- Hub -->
+              <circle cx="260" cy="190" r="7" fill="var(--paper-2)" stroke="var(--line-strong)" stroke-width="1.2" />
+              <circle cx="260" cy="190" r="2.5" fill="var(--teal)" />
+
+              <!-- Node 0: ∇Φ -->
+              <g class="inst-node active" id="pnode-0" data-op="0" tabindex="0" role="button">
+                <circle cx="260" cy="50" r="32" class="pnode-ring" />
+                <text x="260" y="50" class="glyph" text-anchor="middle" dominant-baseline="middle">∇Φ</text>
+                <text x="260" y="92" class="sublabel" text-anchor="middle">DIFFERENTIAL</text>
+              </g>
+
+              <!-- Node 1: Ω -->
+              <g class="inst-node" id="pnode-2" data-op="2" tabindex="0" role="button">
+                <circle cx="395" cy="145" r="32" class="pnode-ring" />
+                <text x="395" y="145" class="glyph" text-anchor="middle" dominant-baseline="middle">Ω</text>
+                <text x="415" y="186" class="sublabel" text-anchor="middle">REALIZATION</text>
+              </g>
+
+              <!-- Node 2: ∆ -->
+              <g class="inst-node" id="pnode-3" data-op="3" tabindex="0" role="button">
+                <circle cx="345" cy="305" r="32" class="pnode-ring" />
+                <text x="345" y="305" class="glyph" text-anchor="middle" dominant-baseline="middle">∆</text>
+                <text x="365" y="348" class="sublabel" text-anchor="middle">INTEGRATION</text>
+              </g>
+
+              <!-- Node 3: Λ -->
+              <g class="inst-node" id="pnode-1" data-op="1" tabindex="0" role="button">
+                <circle cx="175" cy="305" r="32" class="pnode-ring" />
+                <text x="175" y="305" class="glyph" text-anchor="middle" dominant-baseline="middle">Λ</text>
+                <text x="155" y="348" class="sublabel" text-anchor="middle">SELECTION</text>
+              </g>
+
+              <!-- Node 4: Ψ -->
+              <g class="inst-node" id="pnode-4" data-op="4" tabindex="0" role="button">
+                <circle cx="125" cy="145" r="32" class="pnode-ring" />
+                <text x="125" y="145" class="glyph" text-anchor="middle" dominant-baseline="middle">Ψ</text>
+                <text x="105" y="186" class="sublabel" text-anchor="middle">WAVE</text>
+              </g>
+            </svg>
+
+          </div>
+
+          <!-- Note below instrument stage (.cal-note) -->
+          <p class="cal-note" id="inst-live-note">
+            Recursion state active: <strong>∇Φ</strong> generates admissible local variation. Every differential carries holographic information about the whole configuration.
+          </p>
+
+        </div>
+
+        <!-- RIGHT PANEL: Side Telemetry Rack (.cal-side) -->
+        <div class="cal-side">
+
+          <!-- Card 1: Recursion Phase Clock (.card[data-accent="teal"]) -->
+          <div class="card" data-accent="teal">
+            <span class="kicker-small">Recursion Phase Clock</span>
+            <div class="cal-clock" id="inst-clock">∇Φ 00:00:00</div>
+            <p class="cal-regime" id="inst-regime" data-accent="teal">DIFFERENTIAL GENERATION — ∇Φ</p>
+
+            <!-- Wave Curve SVG (.cal-curve) -->
+            <svg class="cal-curve" id="inst-curve" viewBox="0 0 320 74" role="img" aria-label="Mind-like wave carrier phase oscillation">
+              <rect x="0" y="0" width="80" height="74" class="cal-curve-sleep" />
+              <line x1="160" y1="0" x2="160" y2="74" class="cal-curve-noon" />
+              <line x1="0" y1="37" x2="320" y2="37" class="cal-curve-unity" />
+              <path id="inst-curve-path" class="cal-curve-line" d="" />
+              <circle id="inst-curve-dot" class="cal-curve-dot" cx="16" cy="37" r="4" />
+            </svg>
+
+            <dl class="cal-readout">
+              <dt>Cycle phase φ</dt><dd id="out-phi">0.000000</dd>
+              <dt>Phase velocity v(φ)</dt><dd id="out-vel">1.014562×</dd>
+              <dt>Field coherence C</dt><dd id="out-coh">0.999842</dd>
+              <dt>Wave coupling Ψ ⇝ ∆</dt><dd id="out-wave">Active (Phase-locked)</dd>
+              <dt>Residual divergence ε</dt><dd id="out-drift">0.000000 s</dd>
+            </dl>
+
+            <p class="cal-sub">
+              Zero residual update at dual equilibrium by design. The wave is recurrent: it revisits phases without restoring unresolved historical load.
+            </p>
+          </div>
+
+          <!-- Card 2: Dual Stabilization State (.card[data-accent="amber"]) -->
+          <div class="card" data-accent="amber">
+            <span class="kicker-small">Dual Stabilization Invariant</span>
+
+            <dl class="cal-readout">
+              <dt>Substrate ∇<sub>ρ</sub>Φ(ρ)</dt><dd id="out-rho">1.000000</dd>
+              <dt>Chart stationarity ∆<sub>x</sub>Ψ(x)</dt><dd id="out-chart">0.000000</dd>
+              <dt>Resonant lock Ω(∆Ψ<sub>A</sub>+∆Ψ<sub>B</sub>)</dt><dd id="out-res">0.999981 ≈ 1</dd>
+              <dt>Gauge connection ∇<sub>µ</sub></dt><dd id="out-gauge">∂<sub>µ</sub> − iA<sub>µ</sub></dd>
+            </dl>
+
+            <p class="cal-sub">
+              Equilibrium requires simultaneous unit-stable configuration and stationary representation: the substrate quiet enough to be readable, the internal chart stable enough to be trusted.
+            </p>
+
+            <!-- Interactive Mode Switcher -->
+            <div class="cal-interval">
+              <span class="cal-out-label">Simulated stabilization regime:</span>
+              <div class="stab-btn-group">
+                <button type="button" class="button small active" id="btn-mode-both">Dual Equilibrium</button>
+                <button type="button" class="button small" id="btn-mode-drift1">Substrate Drift</button>
+                <button type="button" class="button small" id="btn-mode-drift2">Chart Drift</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Retained State & Coherence Matrix (.card.cal-span[data-accent="green"]) -->
+          <div class="card cal-span" data-accent="green">
+            <div class="cal-mode">
+              <span class="cal-mode-dot" aria-hidden="true"></span>
+              <span id="inst-mode-text">Simulation Mode · Live Closed Recursion Engine</span>
+              <button type="button" class="button small" id="inst-reset-epoch">Reset simulation</button>
+            </div>
+
+            <span class="kicker-small">Retained state · Two coordinates</span>
+            <p class="cal-sub">
+              <strong>τ and q remain distinct coordinates.</strong> τ is physical Matrix time in the calendar; q is informational recurrence depth. Prior integrations modify selection criteria (∆ ⇝ Λ); realized configurations constrain subsequent local differentials (Ω ⇝ ∇Φ).
+            </p>
+
+            <!-- 3-Column Metrics Grid (.cal-abs) -->
+            <div class="cal-abs">
+              <div class="cal-live">
+                <span>Recursion Iterations <i class="sym">N</i> <i class="cal-pulse" aria-hidden="true"></i></span>
+                <b id="m-iters">1,420,892</b>
+              </div>
+              <div><span>Active Operator</span><b id="m-op">∇Φ Differential</b></div>
+              <div><span>Boundary Closure</span><b id="m-cl1" style="color:var(--acc-green)">Ω ⇝ ∇Φ Locked</b></div>
+              <div><span>Learning Closure</span><b id="m-cl2" style="color:var(--amber)">∆ ⇝ Λ Active</b></div>
+              <div><span>Wave Amplitude |Ψ|²</span><b id="m-psi">0.999842</b></div>
+              <div><span>Persistence P(X)</span><b id="m-pers">&gt; C_crit</b></div>
+              <div><span>System Capacity Q</span><b>600,000,000,000</b></div>
+            </div>
+
+            <!-- Track Meter (.cal-track) -->
+            <div class="cal-track" data-accent="amber">
+              <p class="cal-meter-label live">
+                <span id="meter-label">Span progression · Current operator window</span>
+                <b id="meter-val">24.5000 %</b>
+              </p>
+              <div class="cal-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="24.5">
+                <span id="meter-bar" style="width:24.5%"></span>
+              </div>
+              <dl class="cal-readout">
+                <dt>Next operator transition</dt><dd id="out-next-op">in 2.4s</dd>
+                <dt>Full cycle circuit duration</dt><dd>12.0s</dd>
+              </dl>
+            </div>
+
+            <!-- Coherence Ladder / Operator Table (.cal-ladder) -->
+            <div style="margin-top:20px;">
+              <span class="kicker-small" style="margin-bottom:10px; display:block;">The Coherence Ladder of Operators</span>
+              <div class="table-scroll" style="margin-top:8px;">
+                <table class="data cal-ladder" id="inst-ladder">
+                  <thead>
+                    <tr>
+                      <th>Op</th>
+                      <th>Element</th>
+                      <th>Formal Role</th>
+                      <th>Symbol</th>
+                      <th>Target Invariant</th>
+                      <th>State</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="row-op-0" class="here">
+                      <td>01</td>
+                      <td>Differential</td>
+                      <td>Generation of admissible differences</td>
+                      <td>∇Φ</td>
+                      <td>∇Φ ≡ Distinguishable</td>
+                      <td>active</td>
+                    </tr>
+                    <tr id="row-op-1">
+                      <td>02</td>
+                      <td>Selection</td>
+                      <td>Filtration of raw degrees of freedom</td>
+                      <td>Λ</td>
+                      <td>Λ({x_i}) → {x_j}</td>
+                      <td>held</td>
+                    </tr>
+                    <tr id="row-op-2">
+                      <td>03</td>
+                      <td>Realization</td>
+                      <td>Macroscopic configuration &amp; memory</td>
+                      <td>Ω</td>
+                      <td>Ω ⇝ ∇Φ constraint</td>
+                      <td>held</td>
+                    </tr>
+                    <tr id="row-op-3">
+                      <td>04</td>
+                      <td>Integration</td>
+                      <td>Internal self-model &amp; agency</td>
+                      <td>∆</td>
+                      <td>∆ ⇝ Λ learning</td>
+                      <td>held</td>
+                    </tr>
+                    <tr id="row-op-4">
+                      <td>05</td>
+                      <td>Mind-like Wave</td>
+                      <td>Propagating field carrier of coherence</td>
+                      <td>Ψ</td>
+                      <td>∇Ψ = 0 transport</td>
+                      <td>radiating</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           KEY THEOREMS & FOUNDATIONAL DEDUCTIONS
+           ============================================================ -->
+      <section class="theorems-container">
+        <span class="eyebrow">Formal Deductions</span>
+        <h2 style="font-size:clamp(28px, 3.2vw, 42px); line-height:1.15; margin-bottom:14px;">
+          Key theorems of the architecture
+        </h2>
+        <p class="prose" style="max-width:820px; color:var(--muted); margin-bottom:28px;">
+          From the single axiom that coherence is alignment across relations, five mathematical statements govern the physical and phenomenological dynamics of the closed recursion.
+        </p>
+
+        <div class="card-grid cols-2">
+          <!-- Theorem 1 -->
+          <div class="card" data-accent="teal">
+            <span class="kicker-small">Theorem 01 · Dynamical Closure</span>
+            <div class="formula small">$$\nabla\Phi \longrightarrow \Lambda \longrightarrow \Omega \longrightarrow \Delta, \quad \Delta \rightsquigarrow \Lambda, \quad \Omega \rightsquigarrow \nabla\Phi$$</div>
+            <p>Reality is determined by the closure of the loop itself. The next state arises through self-referential action: $\Omega(t+\delta t)|\tilde{\psi}(t+\delta t)\rangle = \Delta(t+\delta t)\Lambda(t+\delta t)\nabla(t+\delta t)|\psi(t)\rangle$. No outside clock or judge.</p>
+          </div>
+
+          <!-- Theorem 2 -->
+          <div class="card" data-accent="blue">
+            <span class="kicker-small">Theorem 02 · Radiative Carrier</span>
+            <div class="formula small">$$\Psi := W_\Omega(\Delta), \quad \Psi \rightsquigarrow \Delta$$</div>
+            <p>Every local act of integration produces a propagating, phase-carrying wave pattern $\Psi$. Waves from prior integrations couple back to bias future possibilities: what has been integrated continues participating in the world.</p>
+          </div>
+
+          <!-- Theorem 3 -->
+          <div class="card" data-accent="violet">
+            <span class="kicker-small">Theorem 03 · Covariant Transport</span>
+            <div class="formula small">$$\nabla_\mu = \partial_\mu - iA_\mu, \quad \nabla\Psi = 0 \quad (\text{with } \Omega \subset \nabla C)$$</div>
+            <p>Temporal phase-locking and spatial phase-order unify into parallel transport of coherence. This is the kinematic starting point for emergent gauge interactions and spacetime curvature.</p>
+          </div>
+
+          <!-- Theorem 4 -->
+          <div class="card" data-accent="amber">
+            <span class="kicker-small">Theorem 04 · Equilibrium Invariant</span>
+            <div class="formula small">$$\nabla_\rho \Phi(\rho) = 1 \quad \text{and} \quad \Delta_x \Psi(x) = 0$$</div>
+            <p>Coherence equilibrium requires simultaneous unit-stable configuration and stationary representation. When both hold, geometry is not added as an external container — geometry is what coherence equilibrium looks like from within.</p>
+          </div>
+        </div>
+
+        <!-- Theorem 5 (Full Width Callout) -->
+        <div class="callout" style="margin-top:24px;">
+          <span class="kicker-small" style="color:var(--teal)">Theorem 05 · Resonant Interconnection</span>
+          <div class="formula small" style="margin:10px 0;">$$\Omega(\Delta\Psi_A + \Delta\Psi_B) \approx 1$$</div>
+          <p style="font-size:14.5px; line-height:1.7; color:var(--ink);">
+            Between two separate integrators with compatible phase structures, interference is constructive along specific relational channels. The target is 1, not 0: a living equilibrium recognized by the substrate as a single unified pattern, scaling with internal coherence rather than signal strength.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           CROSS-SCALE IMPLICATIONS
+           ============================================================ -->
+      <section style="margin-top:48px; padding-top:36px; border-top:1px solid var(--line);">
+        <span class="eyebrow">Cross-Scale Applications</span>
+        <h2 style="font-size:clamp(28px, 3.2vw, 42px); line-height:1.15; margin-bottom:24px;">
+          Where the loop meets tissue and cosmos
+        </h2>
+
+        <div class="card-grid cols-3">
+          <div class="card" data-accent="blue">
+            <span class="kicker-small">Cosmos &amp; Physics</span>
+            <h3>The Holographic Time Crystal</h3>
+            <p>At universal scale, the substrate operates as a time crystal whose ground state is periodic informational updating holding global phase continuity. Spacetime is the long-wavelength expression of accumulated constraints.</p>
+            <a href="index.html#/read/reality-survives-recursion" class="text-link" style="margin-top:14px; display:inline-block;">Reality Survives Recursion ↗</a>
+          </div>
+
+          <div class="card" data-accent="green">
+            <span class="kicker-small">Biophysics &amp; Tissue</span>
+            <h3>Aging as Loss of Phase</h3>
+            <p>An organism is a localized standing wave sustained by continuous integration. Senescence is not mere damage accumulation, but progressive decoherence of cross-scale rhythms. Restoration is re-phasing.</p>
+            <a href="index.html#/read/regenesis" class="text-link" style="margin-top:14px; display:inline-block;">Regenesis Framework ↗</a>
+          </div>
+
+          <div class="card" data-accent="amber">
+            <span class="kicker-small">Consciousness &amp; Mind</span>
+            <h3>Consciousness as Phase</h3>
+            <p>Consciousness is not an added substance; it is stabilized coherence in its first-person form. When the internal chart ceases to drift, reality becomes internally navigable. Knowing is reality re-aligning with itself.</p>
+            <a href="index.html#/read/ethos-of-being" class="text-link" style="margin-top:14px; display:inline-block;">The Ethos of Being ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           WHAT WOULD COUNT AGAINST THIS (FAILURE CONDITIONS)
+           ============================================================ -->
+      <section style="margin-top:48px; padding-top:36px; border-top:1px solid var(--line);">
+        <div class="warning">
+          <span class="card-kicker">What would count against this architecture</span>
+          <p>
+            A framework with no failure conditions is not strong — it is empty. These are the explicit conditions under which this architecture fails:
+          </p>
+          <ul class="list" style="margin-top:12px; margin-bottom:0;">
+            <li><strong>Drift:</strong> The internal chart requires continual revision to agree with itself; each cycle requires an ad-hoc accommodation.</li>
+            <li><strong>Brittleness:</strong> Coherence that holds only in isolation and breaks upon contact with other integrators or physical measurements.</li>
+            <li><strong>Narrowing:</strong> The space of admissible differences shrinks over iterations, indicating loss of degrees of freedom rather than stability.</li>
+            <li><strong>Divergence of scales:</strong> The formal account holds at one scale but contradicts observations at another (e.g. chart reporting equilibrium while tissue decoheres).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Foundation & Source Links -->
+      <div class="path-banner" style="margin-top:36px; margin-bottom:48px;">
+        <div>
+          <h3>Foundation &amp; Authored Paper</h3>
+          <p>The formal mathematics and philosophical arguments behind this instrument are set out in <em>The Ethos of Being</em> by Dr. William Conroy.</p>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="button dark" href="index.html#/read/ethos-of-being">Read The Paper ↗</a>
+          <a class="button" href="sources/the-ethos-of-being.html" download>Source Download ↓</a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="index.html#/" class="footer-brand">sciencecoherence<span>One inquiry. Many ways in.</span></a>
+      <div>
+        <a href="https://github.com/sciencecoherence" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="index.html#/reading-list">Your reading list</a>
+        <a href="index.html#/principles">Editorial principles</a>
+        <a href="index.html#/privacy">Privacy &amp; accessibility</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dr. William Conroy · Science Coherence</span>
+      <span>Always becoming.</span>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       INSTRUMENT ENGINE JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* --- Theme Toggle --- */
+      const themeToggle = document.getElementById('theme-toggle');
+      function updateTheme(theme) {
+        if (theme) {
+          document.documentElement.dataset.theme = theme;
+          localStorage.setItem('sc-theme', JSON.stringify(theme));
+        } else {
+          const current = document.documentElement.dataset.theme;
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const next = current === 'dark' ? 'light' : current === 'light' ? 'dark' : prefersDark ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          localStorage.setItem('sc-theme', JSON.stringify(next));
+        }
+      }
+      themeToggle?.addEventListener('click', () => updateTheme());
+
+      /* --- Mobile Nav Toggle --- */
+      const menuBtn = document.getElementById('menu-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      menuBtn?.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !expanded);
+        mobileNav.hidden = expanded;
+      });
+
+      /* --- Operators Model Definition --- */
+      const OPERATORS = [
+        {
+          id: 0,
+          glyph: '∇Φ',
+          name: 'Primitive Differential & Holography',
+          sub: 'Phase 1 of 4 · Holographic generation',
+          regime: 'DIFFERENTIAL GENERATION — ∇Φ',
+          accent: 'teal',
+          note: 'Recursion state active: <strong>∇Φ</strong> generates admissible local variation. Every differential carries holographic information about the whole configuration.',
+          fwdLines: ['fwd-1-line', 'fwd-1-head']
+        },
+        {
+          id: 1,
+          glyph: 'Λ',
+          name: 'Coherence Selection',
+          sub: 'Phase 2 of 4 · Relational filtration',
+          regime: 'COHERENCE SELECTION — Λ',
+          accent: 'amber',
+          note: 'Recursion state active: <strong>Λ</strong> compresses raw possibilities into persistent regularities. Conservation laws and physical symmetries survive this filtration.',
+          fwdLines: ['fwd-2-line', 'fwd-2-head']
+        },
+        {
+          id: 2,
+          glyph: 'Ω',
+          name: 'The Realized Universe',
+          sub: 'Phase 3 of 4 · Global boundary constraint',
+          regime: 'MACROSCOPIC REALIZATION — Ω',
+          accent: 'blue',
+          note: 'Recursion state active: <strong>Ω</strong> instantiates the macroscopic configuration with memory. Imposes boundary conditions on subsequent updates (<strong>Ω ⇝ ∇Φ</strong>).',
+          fwdLines: ['fwd-3-line', 'fwd-3-head'],
+          arc: 'loop-arc-top'
+        },
+        {
+          id: 3,
+          glyph: '∆',
+          name: 'Integration & Self-Modeling',
+          sub: 'Phase 4 of 4 · Recursive learning & agency',
+          regime: 'INTEGRATION & AGENCY — ∆',
+          accent: 'violet',
+          note: 'Recursion state active: <strong>∆</strong> forms internal observer models. Integrated criteria update selection mechanisms (<strong>∆ ⇝ Λ</strong>); wave <strong>Ψ</strong> radiates.',
+          fwdLines: [],
+          arc: 'loop-arc-bottom'
+        },
+        {
+          id: 4,
+          glyph: 'Ψ',
+          name: 'The Mind-Like Wave Variable',
+          sub: 'Carrier · Propagating phase carrier',
+          regime: 'WAVE PROPAGATION — Ψ',
+          accent: 'green',
+          note: 'Carrier state active: <strong>Ψ := W_Ω(∆)</strong> radiates through the realized medium, transporting phase coherence across spacetime without dissipation (<strong>∇Ψ = 0</strong>).'
+        }
+      ];
+
+      /* --- State Variables --- */
+      let currentOp = 0;
+      let isRunning = true;
+      let activeView = 'loop'; // 'loop' or 'nexus'
+      let stabMode = 'both'; // 'both', 'drift1', 'drift2'
+      let iterationCount = 1420892;
+      let cycleDuration = 12000; // 12 seconds per full cycle
+      let startTime = performance.now();
+
+      /* --- DOM Elements --- */
+      const opTitle = document.getElementById('inst-op-title');
+      const opSub = document.getElementById('inst-op-sub');
+      const liveNote = document.getElementById('inst-live-note');
+      const clockEl = document.getElementById('inst-clock');
+      const regimeEl = document.getElementById('inst-regime');
+      const outPhi = document.getElementById('out-phi');
+      const outVel = document.getElementById('out-vel');
+      const outCoh = document.getElementById('out-coh');
+      const outWave = document.getElementById('out-wave');
+      const outDrift = document.getElementById('out-drift');
+      const outRho = document.getElementById('out-rho');
+      const outChart = document.getElementById('out-chart');
+      const outRes = document.getElementById('out-res');
+      const mIters = document.getElementById('m-iters');
+      const mOp = document.getElementById('m-op');
+      const meterBar = document.getElementById('meter-bar');
+      const meterVal = document.getElementById('meter-val');
+      const outNextOp = document.getElementById('out-next-op');
+      const curvePath = document.getElementById('inst-curve-path');
+      const curveDot = document.getElementById('inst-curve-dot');
+
+      /* --- Wave Curve Generator --- */
+      function renderCurve(phi) {
+        if (!curvePath) return;
+        const W = 320, H = 74, P = 6;
+        let d = '';
+        for (let i = 0; i <= 200; i++) {
+          const p = i / 200;
+          // Harmonic formula based on the recursion field
+          const val = Math.sin(p * Math.PI * 2) * 0.7 + Math.sin(p * Math.PI * 6) * 0.2;
+          const x = P + p * (W - 2 * P);
+          const y = H / 2 - val * (H / 2 - P);
+          d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        curvePath.setAttribute('d', d);
+
+        // Dot position
+        const dotVal = Math.sin(phi * Math.PI * 2) * 0.7 + Math.sin(phi * Math.PI * 6) * 0.2;
+        const dotX = P + phi * (W - 2 * P);
+        const dotY = H / 2 - dotVal * (H / 2 - P);
+        if (curveDot) {
+          curveDot.setAttribute('cx', dotX.toFixed(1));
+          curveDot.setAttribute('cy', dotY.toFixed(1));
+        }
+      }
+
+      /* --- Set Active Operator --- */
+      function setOperator(idx) {
+        currentOp = (idx + 4) % 4; // Cycles through 4 main operators
+        const op = OPERATORS[currentOp];
+
+        // Update header & note
+        opTitle.textContent = `${op.glyph} — ${op.name}`;
+        opSub.textContent = op.sub;
+        liveNote.innerHTML = op.note;
+        regimeEl.textContent = op.regime;
+        regimeEl.setAttribute('data-accent', op.accent);
+        mOp.textContent = `${op.glyph} ${op.name.split(' ')[0]}`;
+
+        // Highlight SVG Nodes in Loop View
+        for (let i = 0; i < 4; i++) {
+          const n = document.getElementById('opnode-' + i);
+          if (n) n.classList.toggle('active', i === currentOp);
+        }
+
+        // Highlight SVG Nodes in Nexus View
+        for (let i = 0; i < 5; i++) {
+          const pn = document.getElementById('pnode-' + i);
+          if (pn) pn.classList.toggle('active', i === currentOp);
+        }
+
+        // Reset Flow Lines
+        ['fwd-1-line', 'fwd-1-head', 'fwd-2-line', 'fwd-2-head', 'fwd-3-line', 'fwd-3-head', 'loop-arc-top', 'loop-arrow-top', 'loop-arc-bottom', 'loop-arrow-bottom'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('active');
+        });
+
+        // Activate matching flow lines
+        if (op.fwdLines) {
+          op.fwdLines.forEach(id => document.getElementById(id)?.classList.add('active'));
+        }
+        if (op.arc) {
+          document.getElementById(op.arc)?.classList.add('active');
+          if (op.arc === 'loop-arc-top') document.getElementById('loop-arrow-top')?.classList.add('active');
+          if (op.arc === 'loop-arc-bottom') document.getElementById('loop-arrow-bottom')?.classList.add('active');
+        }
+
+        // Highlight table row in ladder
+        for (let i = 0; i < 5; i++) {
+          const row = document.getElementById('row-op-' + i);
+          if (row) {
+            row.className = (i === currentOp) ? 'here' : (i < currentOp ? 'reached' : '');
+          }
+        }
+      }
+
+      /* --- Main Loop Tick --- */
+      function tick() {
+        const now = performance.now();
+        const elapsed = (now - startTime) % cycleDuration;
+        const phi = elapsed / cycleDuration; // 0.0 to 1.0
+
+        if (isRunning) {
+          // Determine operator from phase (4 quarters)
+          const targetOp = Math.floor(phi * 4);
+          if (targetOp !== currentOp) {
+            setOperator(targetOp);
+            iterationCount++;
+            mIters.textContent = iterationCount.toLocaleString('en-GB');
+          }
+
+          // Span progress inside current operator (0.0 to 1.0)
+          const spanFrac = (phi * 4) % 1;
+          const spanPct = (spanFrac * 100).toFixed(4);
+          meterBar.style.width = spanPct + '%';
+          meterVal.textContent = (spanFrac * 100).toFixed(2) + ' %';
+
+          const timeToNext = ((1 - spanFrac) * (cycleDuration / 4) / 1000).toFixed(1);
+          outNextOp.textContent = `in ${timeToNext}s`;
+
+          // Format simulated clock
+          const totalSec = Math.floor(elapsed / 1000);
+          const msFrac = Math.floor((elapsed % 1000) / 10);
+          const pad = n => String(n).padStart(2, '0');
+          clockEl.textContent = `${OPERATORS[currentOp].glyph} 00:${pad(totalSec)}:${pad(msFrac)}`;
+
+          // Readouts
+          outPhi.textContent = phi.toFixed(6);
+          const v = 1 + 0.014562 * Math.sin(phi * Math.PI * 2);
+          outVel.textContent = v.toFixed(6) + '×';
+
+          renderCurve(phi);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      /* --- Stabilization Mode Handler --- */
+      const btnBoth = document.getElementById('btn-mode-both');
+      const btnDrift1 = document.getElementById('btn-mode-drift1');
+      const btnDrift2 = document.getElementById('btn-mode-drift2');
+
+      function setStabilizationMode(mode) {
+        stabMode = mode;
+        btnBoth.classList.toggle('active', mode === 'both');
+        btnDrift1.classList.toggle('active', mode === 'drift1');
+        btnDrift2.classList.toggle('active', mode === 'drift2');
+
+        if (mode === 'both') {
+          outRho.textContent = '1.000000';
+          outRho.style.color = 'var(--teal)';
+          outChart.textContent = '0.000000';
+          outChart.style.color = 'var(--teal)';
+          outRes.textContent = '0.999981 ≈ 1';
+          outCoh.textContent = '0.999842';
+          outDrift.textContent = '0.000000 s';
+          outWave.textContent = 'Active (Phase-locked)';
+        } else if (mode === 'drift1') {
+          outRho.textContent = '1.084219 ≠ 1';
+          outRho.style.color = 'var(--rose)';
+          outChart.textContent = '0.041892';
+          outChart.style.color = 'var(--amber)';
+          outRes.textContent = '0.841920 (decoupled)';
+          outCoh.textContent = '0.712490';
+          outDrift.textContent = '+0.841920 s';
+          outWave.textContent = 'Decoherent';
+        } else if (mode === 'drift2') {
+          outRho.textContent = '0.961420';
+          outRho.style.color = 'var(--amber)';
+          outChart.textContent = '0.142857 ≠ 0';
+          outChart.style.color = 'var(--rose)';
+          outRes.textContent = '0.628190 (lurching)';
+          outCoh.textContent = '0.641020';
+          outDrift.textContent = '−1.284019 s';
+          outWave.textContent = 'Drifting';
+        }
+      }
+
+      btnBoth?.addEventListener('click', () => setStabilizationMode('both'));
+      btnDrift1?.addEventListener('click', () => setStabilizationMode('drift1'));
+      btnDrift2?.addEventListener('click', () => setStabilizationMode('drift2'));
+
+      /* --- View Toggles --- */
+      const btnViewLoop = document.getElementById('btn-view-loop');
+      const btnViewNexus = document.getElementById('btn-view-nexus');
+      const svgLoop = document.getElementById('svg-loop');
+      const svgNexus = document.getElementById('svg-nexus');
+
+      btnViewLoop?.addEventListener('click', () => {
+        activeView = 'loop';
+        btnViewLoop.classList.add('active');
+        btnViewNexus.classList.remove('active');
+        svgLoop.style.display = 'block';
+        svgNexus.style.display = 'none';
+      });
+
+      btnViewNexus?.addEventListener('click', () => {
+        activeView = 'nexus';
+        btnViewNexus.classList.add('active');
+        btnViewLoop.classList.remove('active');
+        svgLoop.style.display = 'none';
+        svgNexus.style.display = 'block';
+      });
+
+      /* --- Prev / Next / Pause Controls --- */
+      const btnPrev = document.getElementById('inst-prev');
+      const btnNext = document.getElementById('inst-next');
+      const btnRun = document.getElementById('inst-toggle-run');
+
+      btnPrev?.addEventListener('click', () => {
+        isRunning = false;
+        btnRun.textContent = 'Run Loop ▶';
+        btnRun.classList.remove('primary');
+        setOperator(currentOp - 1);
+      });
+
+      btnNext?.addEventListener('click', () => {
+        isRunning = false;
+        btnRun.textContent = 'Run Loop ▶';
+        btnRun.classList.remove('primary');
+        setOperator(currentOp + 1);
+      });
+
+      btnRun?.addEventListener('click', () => {
+        isRunning = !isRunning;
+        if (isRunning) {
+          startTime = performance.now() - (currentOp / 4) * cycleDuration;
+          btnRun.textContent = 'Auto-Cycle ❚❚';
+          btnRun.classList.add('primary');
+        } else {
+          btnRun.textContent = 'Run Loop ▶';
+          btnRun.classList.remove('primary');
+        }
+      });
+
+      document.getElementById('inst-reset-epoch')?.addEventListener('click', () => {
+        iterationCount = 0;
+        startTime = performance.now();
+        setOperator(0);
+        mIters.textContent = '0';
+      });
+
+      // Node direct click bindings
+      document.querySelectorAll('.inst-node').forEach(node => {
+        node.addEventListener('click', () => {
+          isRunning = false;
+          btnRun.textContent = 'Run Loop ▶';
+          btnRun.classList.remove('primary');
+          const op = parseInt(node.dataset.op, 10);
+          setOperator(op);
+        });
+      });
+
+      // Start initial state & animation
+      setOperator(0);
+      renderCurve(0);
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

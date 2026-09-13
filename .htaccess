@@ -1,0 +1,15 @@
+﻿Options -Indexes
+
+<IfModule mod_headers.c>
+  # Prevent aggressive caching of editable JavaScript data files
+  <FilesMatch "(?i)^(?:content|collections|pages|sections)\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # HTML shell should always revalidate
+  <FilesMatch "(?i)\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

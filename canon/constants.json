@@ -1,0 +1,118 @@
+{
+  "status": "canon",
+  "note": "Every constant the instrument uses is declared here. Nothing is calibrated, rounded or chosen to fit. A change to any value in this file is a change to the framework and needs an entry in handoff/LOG.md saying why.",
+  "declared": {
+    "Y": {
+      "value": 365.2421896698,
+      "role": "frozen reference tropical year, in days",
+      "appears_as": [
+        "CAL360.tropical",
+        "YEAR_REF"
+      ],
+      "binding": "const\\s+YEAR_REF\\s*=\\s*365\\.2421896698\\b",
+      "binding2": "tropical:\\s*365\\.2421896698\\b"
+    },
+    "J0": {
+      "value": 8736982783,
+      "exact": true,
+      "role": "initial retained load",
+      "appears_as": [
+        "J0n"
+      ],
+      "binding": "const\\s+J0n\\s*=\\s*8736982783n"
+    },
+    "Q": {
+      "value": 600000000000,
+      "exact": true,
+      "role": "recurrence horizon; q runs 0 … Q",
+      "appears_as": [
+        "Qn"
+      ],
+      "binding": "Qn\\s*=\\s*600000000000n"
+    },
+    "alpha": {
+      "expression": "J0 / Q",
+      "numerator": 8736982783,
+      "denominator": 600000000000,
+      "value": 0.014561637971666666,
+      "role": "the ratio whose continued fraction generates the hard rungs",
+      "binding": "J0n\\s*=\\s*8736982783n,\\s*Qn\\s*=\\s*600000000000n"
+    },
+    "tau_star": {
+      "numerator": 6251584658434,
+      "denominator": 8736982783,
+      "value": 715.5313011029427,
+      "role": "natural absorption point, derived by exact integration of dτ = (J_ret/J0) dq; not chosen",
+      "derived": true,
+      "binding": "TAU_STAR_FR\\.n\\s*===\\s*6251584658434n\\s*&&\\s*TAU_STAR_FR\\.d\\s*===\\s*8736982783n"
+    }
+  },
+  "ladder": {
+    "length": 20,
+    "launch": {
+      "index": 0,
+      "q": 1,
+      "J": 8736982783,
+      "note": "LAUNCH is the zeroth convergent 0/1. It is a state, not a reduction, and must never be drawn as a rung that integrated nothing."
+    },
+    "hard_rungs": 19,
+    "derivation": "continued fraction convergents of alpha, in BigInt; J_i = |q_i*J0 - p_i*Q| exactly",
+    "states": [
+      "LAUNCH",
+      "FIRST DESCENT",
+      "CLEAVAGE",
+      "COLLAPSE",
+      "SETTLING",
+      "CONSOLIDATION",
+      "REFINEMENT",
+      "ATTENUATION",
+      "TRACE",
+      "RESIDUE",
+      "REMNANT",
+      "FILAMENT",
+      "THREAD",
+      "STRAND",
+      "GRAIN",
+      "MOTE",
+      "SPECK",
+      "GLINT",
+      "UNIT",
+      "ABSOLUTE"
+    ]
+  },
+  "time": {
+    "tau": "physical Matrix time, in Matrix days",
+    "q": "informational recurrence depth",
+    "relation": "dτ/dq = J_ret / J0",
+    "civil_time": "civil time may drive the display, never τ itself",
+    "origin": "q = 0 is the start of the experiment, not a singularity. Every counter runs live from it."
+  },
+  "calendar": {
+    "days_per_year": 360,
+    "MS_CAL": "Y * 86400000 / 360",
+    "day_names": [
+      "Differa",
+      "Selecta",
+      "Realis",
+      "Integra",
+      "Resona",
+      "Stilla"
+    ],
+    "months": [
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ]
+  },
+  "verified_by": "checkMatrix() in app.js, and tools/check_canon.py",
+  "binding_note": "Each constant declares the exact binding site in app.js. A check that only greps for the number would pass while the real binding was changed, because the validation tables repeat the digits."
+}

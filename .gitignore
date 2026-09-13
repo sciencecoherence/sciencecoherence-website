@@ -9,3 +9,7 @@ Thumbs.db
 /work/
 /outputs/
 *.log
+
+# Writing Room private local state
+/writing-room/data/
+/writing-room/inc/database.php

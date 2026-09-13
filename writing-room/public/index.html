@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>The Writing Room · Science Coherence</title>
+  <link rel="icon" href="/site-assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site-assets/fonts.css">
+  <link rel="stylesheet" href="./room.css">
+  <script defer src="/site-assets/vendor/katex/katex.min.js"></script>
+  <script defer src="/site-assets/vendor/katex/contrib/auto-render.min.js"></script>
+  <script defer src="./room.js"></script>
+</head>
+<body>
+  <section id="file-launcher" class="file-launcher" hidden aria-labelledby="file-launcher-title">
+    <div class="file-launcher-card">
+      <img src="../../assets/mark.svg" alt="" loading="lazy">
+      <span class="eyebrow">SCIENCE COHERENCE · LOCAL AUTHORING</span>
+      <h1 id="file-launcher-title">Open the Writing Room through its local service.</h1>
+      <p>The website can be read directly from disk. The Writing Room also saves drafts, creates backups, and updates <code>content.js</code>, so your browser requires the local Writing Room service before it can edit.</p>
+      <a class="button primary" href="http://127.0.0.1:8765/">Open the Writing Room</a>
+      <p id="file-launcher-status" class="file-launcher-status" role="status">Checking whether the Writing Room is already running…</p>
+      <div class="file-launcher-help">
+        <strong>If it does not open</strong>
+        <span>Return to the main <code>science-coherence-website</code> folder and double-click <code>Start-WritingRoom.cmd</code>.</span>
+      </div>
+    </div>
+  </section>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Writing Room home"><img src="/site-assets/mark.svg" alt=""><span>Science Coherence<small>THE WRITING ROOM</small></span></a>
+    <span class="local-badge"><i></i> Local workspace</span>
+    <div class="header-actions"><button id="theme" class="quiet" aria-label="Switch color theme">◐</button><a id="website" class="button quiet" target="_blank" rel="noopener">View website ↗</a></div>
+  </header>
+  <div class="workspace">
+    <aside class="library">
+      <div class="modes" role="tablist" aria-label="What to edit"><button id="mode-articles" class="active" role="tab" aria-selected="true">Articles</button><button id="mode-pages" role="tab" aria-selected="false">Pages</button></div>
+      <div class="library-heading articles-only"><span class="eyebrow">YOUR LIBRARY</span><span id="count" class="count">…</span></div>
+      <button id="new" class="new-button articles-only">＋ New article</button>
+      <label class="search articles-only"><span class="sr-only">Search articles</span><input id="search" type="search" placeholder="Find a piece of writing…"></label><label class="library-place articles-only"><span class="sr-only">Show one collection</span><select id="library-place"><option value="all">All collections</option></select></label>
+      <div class="filters articles-only" aria-label="Article filter"><button class="active" data-filter="all" aria-pressed="true">All writing</button><button data-filter="drafts" aria-pressed="false">Drafts <span id="draft-count">0</span></button></div>
+      <nav id="articles" class="articles-only" aria-label="Articles"></nav><nav id="page-list" aria-label="Pages of the website" hidden></nav>
+      <div class="library-foot"><span class="eyebrow">A SPACE TO THINK CLEARLY</span><p>Your words, at your own pace.<br>Drafts stay here until you update the site.</p><button id="help" class="text-button">How this room works ↗</button></div>
+    </aside>
+    <main id="main">
+      <div class="document-bar" id="article-bar"><div><span id="collection-label" class="eyebrow">WRITING</span><span class="divider">/</span><span id="save-status" role="status">Opening your library…</span></div><div class="document-actions"><button id="preview-toggle" class="quiet" aria-pressed="true">Preview</button><button id="save" class="secondary">Save draft</button><button id="apply" class="primary">Update local website</button></div></div>
+      <div class="document-bar" id="page-bar" hidden><div><span id="page-label" class="eyebrow">PAGE</span><span class="divider">/</span><span id="page-status" role="status"></span></div><div class="document-actions"><a id="page-view" class="button quiet" target="_blank" rel="noopener">View page ↗</a><button id="page-apply" class="primary">Update local website</button></div></div>
+      <div id="notice" role="status" hidden></div>
+      <div class="pages" id="pages">
+        <section class="compose" aria-label="Article editor">
+          <div class="paper-top"><span class="eyebrow">THE MANUSCRIPT</span><span id="word-count">0 words</span></div>
+          <label class="sr-only" for="title">Article title</label><textarea id="title" rows="2" placeholder="A thought worth exploring…"></textarea>
+          <label class="sr-only" for="description">Article summary</label><textarea id="description" rows="2" placeholder="A short introduction for the library…"></textarea>
+          <details class="settings" id="settings"><summary>Article details <span id="details-summary"></span></summary><div class="fields"><div class="collection-field"><label>Collection<select id="place"></select></label><div class="collection-actions"><button id="new-collection" type="button" class="text-button">＋ New collection</button><button id="rename-collection" type="button" class="text-button">Rename collection</button></div></div><label>Type<input id="type" list="type-options" placeholder="e.g. Research article"><datalist id="type-options"></datalist><small>What kind of piece this is. The Library classifies by it.</small></label><label>Subtitle (optional)<input id="subtitle" placeholder="A second line beneath the title"></label><label>Date<input id="date" placeholder="e.g. September 2026"></label><label>Article address<input id="slug" placeholder="a-thought-worth-exploring" pattern="[a-z0-9][a-z0-9-]*"><small id="slug-help">Existing addresses stay fixed so links keep working.</small></label></div></details>
+          <div class="toolbar" role="toolbar" aria-label="Text formatting"><button data-command="bold" title="Bold" aria-label="Bold"><b>B</b></button><button data-command="italic" title="Italic" aria-label="Italic"><i>I</i></button><span></span><button data-block="p" title="Paragraph">¶</button><button data-block="h2" title="Heading">H2</button><button data-block="h3" title="Subheading">H3</button><button data-block="blockquote" title="Quote">❝</button><span></span><button data-command="insertUnorderedList" title="Bullet list">• List</button><button id="link" title="Insert link">Link</button><button data-command="undo" title="Undo">↶</button><button data-command="redo" title="Redo">↷</button></div>
+          <div class="editor-hint">Write freely. Use $…$ for equations. Interactive blocks are protected.</div>
+          <iframe id="editor" title="Article body editor" sandbox="allow-same-origin"></iframe>
+          <div class="paper-foot"><span id="draft-time">Your original website is unchanged.</span><button id="discard" class="text-button" hidden>Discard saved draft</button></div>
+        </section>
+        <aside class="preview-panel" aria-label="Reading preview"><div class="preview-heading"><span class="eyebrow">THE READER’S VIEW</span><span class="preview-dot">Live preview</span></div><iframe id="preview" title="Article reading preview" sandbox="allow-same-origin"></iframe><p class="preview-note">Reading preview · Open “View website” to try live instruments after updating.</p></aside>
+      </div>
+        <section id="page-editor" class="page-editor" hidden aria-label="Page editor">
+        <div class="page-sheet">
+          <div class="toolbar" role="toolbar" aria-label="Text formatting"><button data-pcommand="bold" title="Bold" aria-label="Bold"><b>B</b></button><button data-pcommand="italic" title="Italic" aria-label="Italic"><i>I</i></button><span></span><button data-pblock="p" title="Paragraph">¶</button><button data-pblock="h2" title="Heading">H2</button><button data-pblock="h3" title="Subheading">H3</button><button data-pblock="blockquote" title="Quote">❝</button><span></span><button data-pcommand="insertUnorderedList" title="Bullet list">• List</button><button id="page-link" title="Insert link">Link</button><button data-pcommand="undo" title="Undo">↶</button><button data-pcommand="redo" title="Redo">↷</button></div>
+          <div class="editor-hint">Click any text to change it. Short texts take bold, italic and links; the longer texts also take headings, lists and quotes. Interactive blocks — the pacer, dose scaler, lexicon and tables’ live values — are protected. Nothing reaches the website until you choose Update.</div>
+          <div id="page-fields"></div>
+        </div>
+      </section>
+  </main>
+  </div>
+  <dialog id="dialog"><form method="dialog"><button class="dialog-close quiet" aria-label="Close dialog" value="cancel">×</button><h2 id="dialog-title"></h2><div id="dialog-body"></div><div class="dialog-actions"><button class="secondary" value="cancel">Cancel</button><button id="dialog-confirm" class="primary" value="confirm">Continue</button></div></form></dialog>
+</body>
+</html>

@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "nextId": 19,
+  "tasks": [
+    {
+      "id": "T-001",
+      "title": "Rate readouts on the Temporal Matrix are off by a factor of R",
+      "status": "open",
+      "owner": null,
+      "files": [
+        "app.js"
+      ],
+      "why": "The instrument shows rates in the wrong unit. Displayed rate values must agree with dtau/dq = J_ret/J0 and with the declared constants; a factor R has crept in between the computed rate and the rendered one.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-002",
+      "title": "Civil time leaks into tau in getMatrixNow()",
+      "status": "done",
+      "owner": null,
+      "files": [
+        "app.js"
+      ],
+      "why": "Canon keeps civil time and Matrix time separate: civil time may drive the display, never tau itself. getMatrixNow() currently mixes them.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-13T21:40:12Z",
+      "notes": [
+        "2026-09-13T21:40:12Z chatgpt: Removed timezone offset from getMatrixNow; elapsed UTC from fixed equinox is shared by website and clock app. Boundary and timezone tests passed."
+      ]
+    },
+    {
+      "id": "T-003",
+      "title": "CAL360.epochLive is referenced but never defined",
+      "status": "done",
+      "owner": null,
+      "files": [
+        "app.js"
+      ],
+      "why": "A live reference with no definition. Either define it in the calendar block or remove the reference; do not paper over it with a default.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-13T21:40:12Z",
+      "notes": [
+        "2026-09-13T21:40:12Z chatgpt: Defined CAL360.epochLive as 2027-03-20T20:25:00Z using USNO minute-resolution prediction, activated fixed shared launch, and added pre-launch calendar and process handling."
+      ]
+    },
+    {
+      "id": "T-004",
+      "title": "Declare the chosen constants on the instrument itself",
+      "status": "open",
+      "owner": "claude",
+      "files": [
+        "app.js",
+        "index.html",
+        "styles.css"
+      ],
+      "why": "Canon: no hidden constants. The instrument should show Y, J0, Q, alpha and tau* with their status (declared or derived), matching canon/constants.json exactly.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-005",
+      "title": "Protocol calendar callout is four versions behind",
+      "status": "open",
+      "owner": null,
+      "files": [
+        "documents/holographic-repolymerization.html",
+        "documents.js"
+      ],
+      "why": "The callout describes an older calendar model. Rewrite against the current one, then rebuild with python tools/build-documents.py.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-006",
+      "title": "Fix the live type string 'Research articlessss'",
+      "status": "done",
+      "owner": null,
+      "files": [
+        "content.js"
+      ],
+      "why": "A typo in an article's type. The Library filters by type, so it shows up as its own category on the live site.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T19:15:22Z",
+      "notes": []
+    },
+    {
+      "id": "T-007",
+      "title": "Mobile menu button has no aria-label",
+      "status": "open",
+      "owner": null,
+      "files": [
+        "index.html",
+        "app.js"
+      ],
+      "why": "The menu toggle is unlabelled for screen readers at phone width.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-008",
+      "title": "README and the older PROJECT decisions contain stale text",
+      "status": "open",
+      "owner": null,
+      "files": [
+        "README.md",
+        "PROJECT.md"
+      ],
+      "why": "Both still describe the pre-collections classification and the pre-V10 matrix. Bring them in line with canon/ and delete what canon now covers, rather than keeping two descriptions that can drift apart.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-009",
+      "title": "Delete the stray file 'er.namegit config user.name'",
+      "status": "open",
+      "owner": null,
+      "files": [],
+      "why": "A shell mishap left a file with a command for a name in the repository root.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-010",
+      "title": "Put the Writing Room online behind a login",
+      "status": "in_progress",
+      "owner": "gemini",
+      "files": [
+        "writing-room/api.php",
+        "writing-room/login.php",
+        "writing-room/inc/bootstrap.php",
+        ".htaccess",
+        "writing-room/.htaccess",
+        ".gitignore"
+      ],
+      "why": "Online mode for the Writing Room: PHP API, session guard, cache headers on the editable data files. In flight as of 2026-09-12.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-011",
+      "title": "Rotate the database password that was committed",
+      "status": "open",
+      "owner": "julien",
+      "files": [],
+      "why": "A MySQL password was published in the repository. Only rotating it at the host revokes it; removing the file does not. Julien has to do this at the hosting control panel - no model can and no model should.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-012",
+      "title": "Remove the blog from GitHub",
+      "status": "open",
+      "owner": "julien",
+      "files": [],
+      "why": "Only the website goes online for now. Julien is deleting the blog files from the repository.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-013",
+      "title": "Decide the three unresolved base-13 glyphs",
+      "status": "open",
+      "owner": "julien",
+      "files": [
+        "canon/lexicon.json"
+      ],
+      "why": "Ten of the thirteen base-13 digits are fixed. The three above 9 are not, and no model may invent them. This is a framework decision.",
+      "blockedBy": [],
+      "created": "2026-09-12T13:00:00Z",
+      "updated": "2026-09-12T13:00:00Z",
+      "notes": []
+    },
+    {
+      "id": "T-014",
+      "title": "Author 100 framework articles for content.js",
+      "status": "done",
+      "owner": "gemini",
+      "files": [
+        "content.js"
+      ],
+      "why": "",
+      "blockedBy": [],
+      "created": "2026-09-12T19:05:13Z",
+      "updated": "2026-09-12T19:15:15Z",
+      "notes": [
+        "E0012: Authored and compiled 100 new canonical articles based on the complete Cohera framework across Framework (20), Philosophy (20), Meta-Mathematics (20), Biophysic (20), Notes & Methods (10), and The Lab (10) into content.js, bringing total to 114 articles. Fixed typo 'Research articlessss' to 'Research article'. Passed coord check and all unit tests."
+      ]
+    },
+    {
+      "id": "T-015",
+      "title": "Revert published articles back to the 14 baseline articles",
+      "status": "done",
+      "owner": "gemini",
+      "files": [
+        "content.js"
+      ],
+      "why": "",
+      "blockedBy": [],
+      "created": "2026-09-13T00:18:38Z",
+      "updated": "2026-09-13T00:21:29Z",
+      "notes": [
+        "E0016: Reverted published articles in content.js back to the 14 baseline articles per user request. Cleaned up authoring tools and verified all tests pass."
+      ]
+    },
+    {
+      "id": "T-016",
+      "title": null,
+      "status": "done",
+      "owner": "gemini",
+      "files": [
+        "content.js"
+      ],
+      "why": "",
+      "blockedBy": [],
+      "created": "2026-09-13T00:36:36Z",
+      "updated": "2026-09-13T00:37:50Z",
+      "notes": [
+        "E0019: Restored canonical collection bindings and V10 locked Temporal Matrix text to the 14 baseline articles in content.js, resolving empty article listings in Research and Library views."
+      ]
+    },
+    {
+      "id": "T-017",
+      "title": "Fix Start-WritingRoom version mismatch with server.py ROOM_VERSION 4",
+      "status": "done",
+      "owner": "gemini",
+      "files": [
+        "writing-room/Start-WritingRoom.ps1",
+        "PROJECT.md"
+      ],
+      "why": "",
+      "blockedBy": [],
+      "created": "2026-09-13T21:09:42Z",
+      "updated": "2026-09-13T21:12:42Z",
+      "notes": [
+        "E0021: Synchronized Start-WritingRoom.ps1 roomVersion with server.py ROOM_VERSION 4 and added dynamic version detection from server.py. Updated PROJECT.md. Stopped stale background server running version 3 and restarted with version 4."
+      ]
+    },
+    {
+      "id": "T-018",
+      "title": "Fix article left TOC menu disappearing when headings <= 2",
+      "status": "done",
+      "owner": "gemini",
+      "files": [
+        "app.js"
+      ],
+      "why": "",
+      "blockedBy": [],
+      "created": "2026-09-13T21:28:30Z",
+      "updated": "2026-09-13T21:29:15Z",
+      "notes": [
+        "E0023: Updated TOC heading threshold in app.js from headings.length > 2 to headings.length > 0 so articles with 1 or 2 headings display the left On This Page menu."
+      ]
+    }
+  ]
+}

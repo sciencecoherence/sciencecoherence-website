@@ -453,9 +453,11 @@ mark { background: var(--lime); color: #173d32; padding: 0 2px; border-radius: 2
 .doc-nav button i { font-style: normal; font-family: var(--mono); font-size: 10.5px; opacity: .8; }
 .doc-nav button:hover { background: var(--paper-2); color: var(--ink); }
 .doc-nav button[aria-selected="true"] { background: var(--green); color: var(--on-green); }
-.doc-nav .mode { margin-left: auto; padding-left: 12px; border-left: 1px solid var(--line); }
+.doc-nav .mode { flex: none; margin-left: auto; padding-left: 12px; border-left: 1px solid var(--line); }
 .doc-nav .mode button { font-size: 12px; }
 .doc-nav .mode button[aria-pressed="true"] { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.research-count { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.doc-nav-wrap + .wrap .category-layout { padding-top: 16px; }
 
 .doc-panel { display: none; padding-bottom: 40px; max-width: 1180px; }
 .doc-panel.active { display: block; animation: fade .35s ease; }
@@ -529,6 +531,12 @@ mark { background: var(--lime); color: #173d32; padding: 0 2px; border-radius: 2
    Bare $$…$$ in an article body is not wrapped in .formula, so it needs the
    rule too. */
 .prose .katex-display { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
+/* KaTeX keeps an absolutely-positioned MathML copy for assistive technology.
+   Without a positioned ancestor its containing block is the viewport, so a long
+   numeral inside it extends the page even though the box itself is 1px and
+   clipped. Making .katex the containing block keeps the copy — and its
+   accessibility — while confining its layout. */
+.katex { position: relative; }
 .prose .katex-display > .katex { text-align: initial; }
 .katex { font-size: 1.05em; }
 .doc-panel .katex-display > .katex { white-space: normal; }
@@ -576,12 +584,18 @@ table.data td.drivers { color: var(--ink-2); font-family: var(--mono); font-size
 .pacer-time { font-family: var(--mono); font-weight: 600; font-size: 34px; letter-spacing: -.02em; }
 .pacer-controls { display: flex; gap: 8px; width: 100%; }
 .pacer-controls .button { flex: 1; justify-content: center; }
-.pacer-audio { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); margin: 14px 0 0; }
+.pacer-audio { display: flex; gap: 8px; align-items: flex-start; text-align: left; font-size: 12.5px; color: var(--muted); margin: 14px 0 0; }
+.pacer-audio input { margin-top: 3px; flex: 0 0 auto; }
 .pacer-status { font-size: 12.5px; color: var(--muted); margin: 14px 0 0; }
+.pacer-note { font-size: 11.5px; line-height: 1.55; color: var(--muted); margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); text-align: left; }
 .phase-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.phase-list li { --accent: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; opacity: .6; transition: opacity .3s, border-color .3s, background .3s; background: var(--paper); }
+.phase-list li { --accent: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); padding: 0; opacity: .6; transition: opacity .3s, border-color .3s, background .3s; background: var(--paper); overflow: hidden; }
 .phase-list li.active { opacity: 1; border-color: var(--accent); background: var(--accent-soft); }
 .phase-list li.done { opacity: .8; }
+.phase-list li:hover { opacity: 1; border-color: var(--accent); }
+.phase-list li:focus-within { opacity: 1; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.phase-select { display: block; width: 100%; border: 0; padding: 14px 16px; color: inherit; background: transparent; font: inherit; line-height: inherit; text-align: left; cursor: pointer; }
+.phase-select:focus { outline: 0; }
 .phase-list-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 6px; }
 .phase-list h4 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0; }
 .phase-list-head span { font-family: var(--mono); font-size: 10.5px; color: var(--muted); white-space: nowrap; }
@@ -680,10 +694,19 @@ dialog.lex-dialog.closing::backdrop { animation: lexBackdropFadeOut .2s ease-in 
 
 /* the coherence ladder */
 .cal-side .cal-span { grid-column: 1 / -1; }
-.cal-ladder { font-size: 12.5px; }
-.cal-ladder th, .cal-ladder td { font-family: var(--mono); font-size: 12px; padding: 6px 10px; text-align: right; white-space: nowrap; }
-.cal-ladder thead th { font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); text-align: right; }
-.cal-ladder th:first-child, .cal-ladder td:first-child { text-align: left; }
+/* The ladder's five columns of monospace numerals have to fit the card at a
+   desktop width without a sideways scroll, so it overrides the shared
+   data-table geometry — above all `table.data { min-width: 720px }`, which was
+   forcing the scroll whatever the font. `table.data thead th` is (0,1,3), so
+   these selectors carry the class twice to outrank it. */
+table.data.cal-ladder { min-width: 0; font-size: 12.5px; }
+table.data.cal-ladder th,
+table.data.cal-ladder td { font-family: var(--mono); font-size: 11px; padding: 6px 8px; text-align: right; white-space: nowrap; }
+table.data.cal-ladder thead th { font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-align: right; font-weight: 600; }
+table.data.cal-ladder th:first-child,
+table.data.cal-ladder td:first-child { text-align: left; }
+table.data.cal-ladder th:nth-child(2),
+table.data.cal-ladder td:nth-child(2) { text-align: left; }
 .cal-ladder tbody tr.reached td { color: var(--accent); }
 .cal-ladder tbody tr:last-child td { font-weight: 600; color: var(--accent); border-top: 1px solid var(--line-strong); }
 
@@ -700,13 +723,27 @@ dialog.lex-dialog.closing::backdrop { animation: lexBackdropFadeOut .2s ease-in 
 .cal-meter span { transition: width .25s linear; }
 .cal-meter-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
 .cal-meter-label b { font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+/* tau and q are DIFFERENT coordinates and the case carries the whole
+   distinction: q is the recurrence depth, Q is the capacity. Uppercasing a
+   label turns tau into T and q into Q and destroys it. Symbols are wrapped
+   in .sym, which opts out of every transform applied to its label. */
+.sym { text-transform: none !important; font-style: normal; font-variant: normal; letter-spacing: 0; }
+.cal-track { margin: 0 0 6px; }
+.cal-track + .cal-track { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.cal-track .cal-readout { margin-bottom: 0; }
+.cal-track .cal-meter { margin-bottom: 12px; }
+/* Elapsed Matrix time takes the whole first row; the six readings below it
+   divide evenly into rows of three, or of two on a phone, so no trailing cell
+   is ever left stranded. */
 .cal-abs .cal-live { grid-column: 1 / -1; }
 .cal-live b { font-variant-numeric: tabular-nums; }
 .cal-pulse { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-left: 5px; vertical-align: middle; animation: cal-pulse 2s ease-in-out infinite; }
 @keyframes cal-pulse { 0%, 100% { opacity: .25 } 50% { opacity: 1 } }
 @media (prefers-reduced-motion: reduce) { .cal-pulse { animation: none; opacity: .8 } .cal-meter span { transition: none } }
 .cal-ladder tbody tr.here td { color: var(--accent); font-weight: 600; background: var(--accent-soft); }
-@media (max-width: 700px) { .cal-abs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .cal-abs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .dil { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 22px 0 30px; font-family: var(--sans); }
 .dil .card { padding: 20px 22px; }
 .dil .cal-clock { margin: 8px 0 14px; }
@@ -828,5 +865,8 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); backdrop-filter: blur(3px)
 
 /* 17. the coherence ladder on narrow screens — tighten so more columns fit */
 @media (max-width: 640px) {
-  .cal-ladder th, .cal-ladder td { padding: 5px 7px; font-size: 10.5px; }
+  table.data.cal-ladder th, table.data.cal-ladder td { padding: 5px 6px; font-size: 10px; }
 }
+
+/* the retained-state chip: RESOLVING / ABSOLUTE */
+.cal-state { --accent: var(--muted); color: var(--accent); letter-spacing: .06em; }
